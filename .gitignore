@@ -6,3 +6,6 @@ venv/
 
 # Data files or directories (customize as needed)
 data/
+
+# VSCode workspace
+SDS Thesis.code-workspace
