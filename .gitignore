@@ -9,3 +9,6 @@ data/
 
 # VSCode workspace
 SDS Thesis.code-workspace
+
+# Literature folder
+lit/
