@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1704810846.95156 "main.aux" "main.bbl" "main" 1704810849.70024 0
-  "./references.bib" 1704810440 204214 abd5aa90b9d54b4f5dcd0a7b314fbb2e ""
+["bibtex main"] 1704882934.55574 "main.aux" "main.bbl" "main" 1704882970.10907 0
+  "./library.bib" 1704882818 481564 06b8cd632c3d2d3f80e2fe42a8f7d548 ""
   "C:/Users/frbre/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/plain.bst" 1291864736 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "main.aux" 1704810848 2781 24e246708c5ef43f27c1fcb6cb252eb7 "pdflatex"
+  "main.aux" 1704882969 2785 cee1c77ad50c80f6bea40cee90b1a27f "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1704810847.40142 "c:/Users/frbre/OneDrive/01 Dokumenter/01 Uni/SDS Thesis/TeX/main.tex" "main.pdf" "main" 1704810849.70153 0
+["pdflatex"] 1704882968.38512 "c:/Users/frbre/OneDrive/01 Dokumenter/01 Uni/SDS Thesis/TeX/main.tex" "main.pdf" "main" 1704882970.1098 0
   "C:/Users/frbre/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1704810840 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/frbre/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1704810757 24141907 84a8ebadd4c88a9d196090f9d8180dfa ""
   "C:/Users/frbre/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
@@ -93,12 +93,12 @@
   "C:/Users/frbre/AppData/Local/Programs/MiKTeX/tex/latex/tools/tabularx.sty" 1686255640 7147 d80d8cf72d313443d08c13c1af59c90f ""
   "C:/Users/frbre/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/frbre/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
-  "c:/Users/frbre/OneDrive/01 Dokumenter/01 Uni/SDS Thesis/TeX/main.tex" 1704810349 1543 24ba254faabc365b18512b066e6ad706 ""
-  "main.aux" 1704810848 2781 24e246708c5ef43f27c1fcb6cb252eb7 "pdflatex"
-  "main.bbl" 1704810847 351 4ebaa6b6f88cb72e633ec62b0ae64fc9 "bibtex main"
-  "main.out" 1704810848 2140 9700a5f923bd9d90f7f104e02567ca3c "pdflatex"
-  "main.tex" 1704810349 1543 24ba254faabc365b18512b066e6ad706 ""
-  "main.toc" 1704810848 1200 7609a90636d9651e29653ddc46f8ce99 "pdflatex"
+  "c:/Users/frbre/OneDrive/01 Dokumenter/01 Uni/SDS Thesis/TeX/main.tex" 1704882967 1537 8f372bf1ce2cbfe6796f0f398c32ba57 ""
+  "main.aux" 1704882969 2785 cee1c77ad50c80f6bea40cee90b1a27f "pdflatex"
+  "main.bbl" 1704882934 626 6846d02313b3370a8efd90ea9f934cf6 "bibtex main"
+  "main.out" 1704882969 2140 9700a5f923bd9d90f7f104e02567ca3c "pdflatex"
+  "main.tex" 1704882967 1537 8f372bf1ce2cbfe6796f0f398c32ba57 ""
+  "main.toc" 1704882969 1200 7609a90636d9651e29653ddc46f8ce99 "pdflatex"
   (generated)
   "main.aux"
   "main.log"
