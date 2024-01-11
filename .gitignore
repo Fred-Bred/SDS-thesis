@@ -12,3 +12,30 @@ SDS Thesis.code-workspace
 
 # Literature folder
 lit/
+
+# LaTeX Intermediate Files
+*.aux
+*.log
+*.out
+*.nav
+*.snm
+*.vrb
+
+# LaTeX Output Files
+*.dvi
+*.ps
+*.pdf
+*.bbl
+*.blg
+*.toc
+
+# Temporary Files
+*~
+.*.swp
+
+# Other
+.latexmkrc
+.style/*
+*.fdb_latexmk
+*.fls
+*.synctex.gz
