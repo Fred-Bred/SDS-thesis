@@ -118,14 +118,16 @@ def extract_text_and_comments(comments_with_reference_paragraph, as_lists=False)
 
 # Function to create fake data
 # Function to create a random Word document
-def create_random_word_document(filename):
-    """Create a random Word document"""
+def create_random_word_document(filename, n_docs=1):
+    """Create n random Word documents"""
     fake = Faker()
-    doc = Document()
 
-    # Add 3-6 paragraphs
-    for _ in range(random.randint(3, 6)):
-        paragraph = doc.add_paragraph(fake.text())
-        paragraph.add_comment(str(random.randint(0, 59)), author=fake.name(), initials='ab')
+    for i in range(n_docs):
+        doc = Document()
 
-    doc.save(filename)
+        # Add 3-6 paragraphs
+        for _ in range(random.randint(3, 6)):
+            paragraph = doc.add_paragraph(fake.text())
+            paragraph.add_comment(str(random.randint(0, 59)), author=fake.name(), initials='ab')
+
+        doc.save(filename)
