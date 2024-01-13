@@ -5,7 +5,6 @@ Utility functions for working with transcripts.
 from docx import Document
 from docx.oxml.ns import nsdecls
 from docx.oxml import parse_xml
-import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 import xml.etree.ElementTree as ET
@@ -15,9 +14,11 @@ from lxml import etree
 import zipfile
 
 import pandas as pd
+import numpy as np
 
 import random
 from faker import Faker
+import os
 
 # Function to extract text from a docx file
 def get_docx_text(filename, class_df=False):
@@ -60,14 +61,25 @@ def get_document_comments(docxFileName):
     return comments_dict
 
 #Function to fetch all the comments in a paragraph
+# def paragraph_comments(paragraph, comments_dict):
+#     """Returns a list of comments in a given paragraph"""
+#     ooXMLns = {'w':'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+#     comments=[]
+#     for run in paragraph.runs:
+#         comment_reference=run._r.xpath("./w:commentReference")
+#         if comment_reference:
+#             comment_id=comment_reference[0].xpath('@w:id',namespaces=ooXMLns)[0]
+#             comment=comments_dict[comment_id]
+#             comments.append(comment)
+#     return comments
+
 def paragraph_comments(paragraph, comments_dict):
     """Returns a list of comments in a given paragraph"""
-    ooXMLns = {'w':'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
     comments=[]
     for run in paragraph.runs:
         comment_reference=run._r.xpath("./w:commentReference")
         if comment_reference:
-            comment_id=comment_reference[0].xpath('@w:id',namespaces=ooXMLns)[0]
+            comment_id=comment_reference[0].xpath('@w:id')[0]
             comment=comments_dict[comment_id]
             comments.append(comment)
     return comments
@@ -87,7 +99,7 @@ def comments_with_reference_paragraph(docxFileName):
 
 # Function to extract lists of text and comments from a dict where keys are paragraphs and values are comments
 def extract_text_and_comments(comments_with_reference_paragraph, as_lists=False):
-    """Returns a list or df of text and comments from a dict where keys are paragraphs and values are comments"""
+    """Returns a list or df of text and comments from a list of dicts where keys are paragraphs and values are comments"""
     text_list = []
     comments_list = []
     for item in comments_with_reference_paragraph:
@@ -115,15 +127,85 @@ def extract_text_and_comments(comments_with_reference_paragraph, as_lists=False)
 
         return df
 
+# Load data from folder
+def load_data_from_folder(folder_path, as_lists=False, subscales=True):
+    """Load data from folder
+    args:
+        folder_path (str): path to folder containing docx files
+        as_lists (bool): return lists instead of df
+        subscales (bool): return subscales df instead of full df
+    """
+    # Get all the docx files from the folder
+    docx_files = [f for f in os.listdir(folder_path) if f.endswith('.docx')]
+
+    # Extract text and comments from each docx file
+    docs = [comments_with_reference_paragraph(f'{folder_path}/{f}') for f in docx_files]
+
+    # Extract text and comments
+    text_list, comments_list = extract_text_and_comments(docs, as_lists=True)
+
+    if as_lists:
+        return text_list, comments_list
+    else:
+        # Create df
+        df = pd.DataFrame(list(zip(text_list, comments_list)), columns = ["sentence", "labels"])
+        
+        # Convert the list of labels into a series of strings (so that get_dummies can process it)
+        df['labels'] = df['labels'].apply(lambda x: ','.join(map(str, x)))
+
+        # Remove leading 0 from labels with regex
+        df['labels'] = df['labels'].str.replace(r'\b0+', '', regex=True)
+
+        # Convert the labels column into dummy variables
+        df = df.join(df['labels'].str.get_dummies(','))
+
+        # Drop the labels column
+        df = df.drop(columns=['labels'])
+
+        # Get a list of the column names (excluding the first one) and sort it
+        columns = df.columns[1:].to_list()
+        columns.sort(key=int)
+
+        # Index the DataFrame with the first column name and the sorted list of other column names
+        df = df[[df.columns[0]] + columns]
+
+        if subscales: # create subscale df
+            # Define the scale mapping
+            scale_mapping = {
+                1: list(range(1, 11)),
+                2: list(range(11, 16)),
+                3: list(range(16, 25)),
+                4: list(range(25, 39)),
+                5: list(range(39, 60))
+            }
+
+            # Initialize the new DataFrame with zeros
+            scale_df = pd.DataFrame(data=np.zeros((len(df), len(scale_mapping))), columns=[f"scale_{i}" for i in range(1, len(scale_mapping)+1)])
+
+            # Add the 'sentence' column from df to scale_df
+            scale_df.insert(0, 'sentence', df['sentence'])
+
+            # Iterate over the scale mapping
+            for scale, scale_nums in scale_mapping.items():
+                # Get the columns in df that belong to this scale
+                scale_cols = [col for col in df.columns[1:] if int(col) in scale_nums]
+                # If any of these columns have a value in a row, set the corresponding scale in scale_df to 1
+                scale_df[f'scale_{scale}'] = df[scale_cols].any(axis=1).astype(int)
+            return scale_df
+        else:
+            return df
+
 
 # Function to create fake data
 # Function to create a random Word document
-def create_random_word_document(filename, n_docs=1):
+def create_random_word_document(folder_path, n_docs=1):
     """Create n random Word documents"""
     fake = Faker()
+    letters = ['A', 'B', 'C']
 
     for i in range(n_docs):
         doc = Document()
+        filename = f'{folder_path}/random_doc_{i}_{random.choice(letters)}.docx'
 
         # Add 3-6 paragraphs
         for _ in range(random.randint(3, 6)):
