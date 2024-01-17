@@ -1,24 +1,22 @@
 """
 Utility functions for working with transcripts.
 """
+from win32com import client
+import os
+import random
+import zipfile
 
 from docx import Document
 from docx.oxml.ns import nsdecls
 from docx.oxml import parse_xml
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-
 import xml.etree.ElementTree as ET
 from docx.opc.constants import RELATIONSHIP_TYPE as RT
-
 from lxml import etree
-import zipfile
 
 import pandas as pd
 import numpy as np
-
-import random
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from faker import Faker
-import os
 
 # Function to extract text from a docx file
 def get_docx_text(filename, class_df=False):
@@ -213,3 +211,122 @@ def create_random_word_document(folder_path, n_docs=1):
             paragraph.add_comment(str(random.randint(0, 59)), author=fake.name(), initials='ab')
 
         doc.save(filename)
+
+# Function to load patient speech turns from path or doc
+def load_patient_turns(doc, prefix='P: '):
+    """Load the patient speech turns from a document.
+    Args:
+        doc (str or Document): The document to load.
+        prefix (str): The prefix used to indicate a patient speech turn."""
+
+    # Load the document if doc is a path
+    if isinstance(doc, str):
+        if doc.endswith('.docx'):
+            doc = Document(doc)
+            # Extract the text of each paragraph
+            paragraphs = [p.text for p in doc.paragraphs]
+        elif doc.endswith('.doc'):
+            word = client.Dispatch("Word.Application")
+            doc = word.Documents.Open(doc)
+            # Extract the text of each paragraph
+            paragraphs = [p.Range.Text for p in doc.Paragraphs]
+            doc.Close()
+        else:
+            raise ValueError("Unsupported file type. Please provide a .doc or .docx file.")
+
+        # Filter the paragraphs to only include those that start with the specified prefix
+        paragraphs = [p for p in paragraphs if p.startswith(prefix)]
+
+        # Strip the prefix from the paragraphs
+        paragraphs = [p.lstrip(prefix) for p in paragraphs]
+
+    return paragraphs
+
+# Function to load patient speech turns from a folder
+def load_patient_turns_from_folder(folder_path, prefixes=['P: ']):
+    """Load the patient speech turns from all documents in a folder.
+    Returns a list of lists with speech turns per document.
+    Args:
+        folder_path (str): The path to the folder containing the documents.
+        prefixes (list): The prefixes used to indicate a patient speech turn."""
+
+    # Initialize an empty list to hold all the paragraphs
+    all_paragraphs = []
+
+    # Iterate over all files in the folder
+    for filename in os.listdir(folder_path):
+        # Check if the file is a Word document
+        if filename.endswith('.docx'):
+            # Load the document
+            doc = Document(os.path.join(folder_path, filename))
+
+            # Extract the text of each paragraph
+            paragraphs = [p.text for p in doc.paragraphs]
+
+        elif filename.endswith('.doc'):
+            # Load the document
+            word = client.Dispatch("Word.Application")
+            doc = word.Documents.Open(os.path.join(folder_path, filename))
+
+            # Extract the text of each paragraph
+            paragraphs = [p.Range.Text for p in doc.Paragraphs]
+
+            # Close the document
+            doc.Close()
+
+        else:
+            continue
+
+        # Filter the paragraphs to only include those that start with any of the specified prefixes
+        paragraphs = [p for p in paragraphs if any(p.startswith(prefix) for prefix in prefixes)]
+
+        # Strip the prefix from the paragraphs
+        paragraphs = [p.lstrip(prefix) for p in paragraphs for prefix in prefixes if p.startswith(prefix)]
+
+        # Add the paragraphs to the list of all paragraphs
+        all_paragraphs.append(paragraphs)
+
+    return all_paragraphs
+
+# Function to discard speech turns under a certain length
+def filter_by_word_count(data, min_word_count=100):
+    """Filter out strings that are under a specified word count.
+    Args:
+        data (list): A list of strings or a list of lists of strings.
+        min_word_count (int): The minimum word count.
+    Returns:
+        A list of strings or a list of lists of strings, without strings that are under the specified word count."""
+
+    if all(isinstance(i, str) for i in data):
+        # If data is a list of strings, filter out strings that are under the specified word count
+        return [s for s in data if len(s.split()) >= min_word_count]
+    elif all(isinstance(i, list) for i in data):
+        # If data is a list of lists of strings, filter out strings in each list that are under the specified word count
+        return [[s for s in sublist if len(s.split()) >= min_word_count] for sublist in data]
+    else:
+        raise ValueError("Input data should be a list of strings or a list of lists of strings.")
+    
+# Function to split a string into chunks
+def split_string(s, chunk_size):
+    """Split a string into chunks of a specified word count."""
+    words = s.split()
+    return [' '.join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
+
+# Function to split patient speech into even chunks
+def split_into_chunks(data, chunk_size=100):
+    """Split strings into chunks of a specified word count.
+    Args:
+        data (list): A list of strings or a list of lists of strings.
+        chunk_size (int): The size of each chunk.
+    Returns:
+        A list of strings or a list of lists of strings, where the strings within each list have been combined and then split every X words."""
+
+    if all(isinstance(i, str) for i in data):
+        # If data is a list of strings, combine the strings and split into chunks
+        combined_string = ' '.join(data)
+        return split_string(combined_string, chunk_size)
+    elif all(isinstance(i, list) for i in data):
+        # If data is a list of lists of strings, combine the strings in each list and split into chunks
+        return [split_string(' '.join(sublist), chunk_size) for sublist in data]
+    else:
+        raise ValueError("Input data should be a list of strings or a list of lists of strings.")
