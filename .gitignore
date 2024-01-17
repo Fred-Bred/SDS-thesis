@@ -33,6 +33,10 @@ lit/
 *~
 .*.swp
 
+# Python Intermediate Files
+*.pyc
+*__pycache__
+
 # Other
 .latexmkrc
 .style/*
