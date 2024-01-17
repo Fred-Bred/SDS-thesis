@@ -44,6 +44,10 @@ tokenizer = AutoTokenizer.from_pretrained(model_name, max_length=max_length, pad
 #   - Try AutoModelForSequenceClassification from transformers
 #   - Try TorchBaseModel from utils/model.py (requires instantiating a pre-trained model first)
 
+# Instantiate trainer:
+#   - Try Trainer from transformers
+#   - Try Trainer from utils/trainer.py
+
 #%%
 # Metrics
 metric = evaluate.load("accuracy")
