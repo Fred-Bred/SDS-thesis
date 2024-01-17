@@ -128,7 +128,7 @@ def extract_text_and_comments(comments_with_reference_paragraph, as_lists=False)
         return df
 
 # Load data from folder
-def load_data_from_folder(folder_path, as_lists=False, subscales=True):
+def load_data_from_folder(folder_path, as_lists=False, subscales=False):
     """Load data from folder
     args:
         folder_path (str): path to folder containing docx files
