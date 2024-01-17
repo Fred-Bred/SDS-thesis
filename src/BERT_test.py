@@ -7,7 +7,7 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 from sklearn.model_selection import train_test_split
 
-from utils.transcript import load_patient_turns_from_folder, split_into_chunks
+from utils.preprocessing.transcript import load_patient_turns_from_folder, split_into_chunks
 from utils.model import BERTTorch
 
 #%%
