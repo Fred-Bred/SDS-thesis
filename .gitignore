@@ -35,7 +35,8 @@ lit/
 
 # Python Intermediate Files
 *.pyc
-*__pycache__
+*.cpython-311.pyc
+*__pycache__/
 
 # Other
 .latexmkrc
