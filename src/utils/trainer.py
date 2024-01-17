@@ -1,5 +1,19 @@
 """Copied-in trainer class from previous project - ADJUST"""
 
+# Import libraries
+import torch
+import torch.nn as nn
+
+from tqdm import tqdm
+import matplotlib.pyplot as plt
+import os
+
+import datetime
+
+if __name__ == "__main__":
+    # Set device
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 class Trainer:
     def __init__(self):
         self.model = None
@@ -10,12 +24,12 @@ class Trainer:
         self.source = None
         self.history = {'train_loss': [], 'val_loss': [], 'train_loss_batch': [], 'val_loss_batch': []}
 
-    def compile(self, model, optimizer, learning_rate, loss_fn):
+    def compile(self, model, optimizer, learning_rate, loss_fn, weight_decay=0.01):
         self.model = model
-        self.optimizer = optimizer(self.model.parameters(), lr=learning_rate, weight_decay = 0.01)
+        self.optimizer = optimizer(self.model.parameters(), lr=learning_rate, weight_decay = weight_decay)
         self.loss_fn = loss_fn
  
-    def fitID(self, num_epochs, train_loader, val_loader=None, patience=5, min_delta=0.0001):
+    def fit(self, num_epochs, train_loader, val_loader=None, patience=5, min_delta=0.0001):
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.patience = patience
@@ -47,7 +61,7 @@ class Trainer:
             print(f"Training Loss: {avg_loss}")
 
             if self.val_loader is not None:
-                val_loss = self.evaluateID(self.val_loader, "Validation")
+                val_loss = self.evaluate(self.val_loader, "Validation")
                 self.history['val_loss'].append(val_loss)
 
                 # Plot the loss
@@ -100,7 +114,7 @@ class Trainer:
                 except:
                     print('Error generating plot')
 
-    def evaluateID(self, data_loader, mode="Test"):
+    def evaluate(self, data_loader, mode="Test"):
         self.model.eval()
         total_loss = 0.0
         with torch.no_grad():

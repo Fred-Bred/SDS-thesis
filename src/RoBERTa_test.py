@@ -3,6 +3,7 @@
 from transformers import TrainingArguments, Trainer, AutoTokenizer, AutoModelForSequenceClassification, DataCollatorWithPadding
 import numpy as np
 import evaluate
+import torch
 
 from utils.transcript import load_patient_turns_from_folder, split_into_chunks
 from utils.model import RoBERTaTorch
@@ -21,12 +22,19 @@ training_args = TrainingArguments(
     push_to_hub=False,
 )
 
+# Device
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Sequence length
 max_length = 512
 
+# Data folder
 folder_path = r'C:\Users\frbre\OneDrive\01 Dokumenter\01 Uni\SDS Thesis\data\test'
 
+# Base model name
 model_name = 'xlm-r-base'
 
+# Label names
 id2label = {0: "Unclassified", 1: "Avoidant-1", 2: "Avoidant-2", 3: "Secure", 4: "Preoccupied-1", 5: "Preoccupied-2"}
 label2id = {"Unclassified": 0, "Avoidant-1": 1, "Avoidant-2": 2, "Secure": 3, "Preoccupied-1": 4, "Preoccupied-2": 5}
 
