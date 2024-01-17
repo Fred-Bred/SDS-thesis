@@ -74,6 +74,10 @@ for sent in patient_turns:
 # Pad input tokens
 input_ids = pad_tensors(input_ids, max_length)
 
+### NOTE:
+#   - Try using the tokenizer to pad the input tokens??
+#   - Consider padding with DataCollatorWithPadding from transformers to conform with the trainer
+
 # Create attention masks
 attention_masks = []
 
@@ -139,14 +143,17 @@ def compute_metrics(eval_pred):
     logits, labels = eval_pred
     predictions = np.argmax(logits, axis=-1)
     return metric.compute(predictions=predictions, references=labels)
-#%%
-# Trainer
 
+#%%
+# Model
+model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=6, output_attentions=True, output_hidden_states=True)
+#%%
+# Transformers trainer
 trainer = Trainer(
     model=model,
     args=training_args,
-    train_dataset=tokenized_imdb["train"],
-    eval_dataset=tokenized_imdb["test"],
+    train_dataset=train_dataloader,
+    eval_dataset=validation_dataloader,
     tokenizer=tokenizer,
     data_collator=data_collator,
     compute_metrics=compute_metrics,
@@ -155,3 +162,6 @@ trainer = Trainer(
 #%%
 # Train
 trainer.train()
+
+#%%
+# utils trainer
