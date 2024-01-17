@@ -39,3 +39,4 @@ lit/
 *.fdb_latexmk
 *.fls
 *.synctex.gz
+/test_trainer
