@@ -4,6 +4,7 @@ Utility functions for working with transcripts.
 import os
 import random
 import zipfile
+from zipfile import BadZipFile
 
 import docx2txt
 from docx import Document
@@ -253,20 +254,24 @@ def load_patient_turns_from_folder(folder_path, prefixes=['P: ']):
     for filename in os.listdir(folder_path):
         # Check if the file is a Word document
         if filename.endswith(('.doc', '.docx')):
-            # Extract the text from the document
-            text = docx2txt.process(os.path.join(folder_path, filename))
+            try:
+                # Extract the text from the document
+                text = docx2txt.process(os.path.join(folder_path, filename))
 
-            # Split the text into paragraphs
-            paragraphs = text.split('\n')
+                # Split the text into paragraphs
+                paragraphs = text.split('\n')
 
-            # Filter the paragraphs to only include those that start with any of the specified prefixes
-            paragraphs = [p for p in paragraphs if any(p.startswith(prefix) for prefix in prefixes)]
+                # Filter the paragraphs to only include those that start with any of the specified prefixes
+                paragraphs = [p for p in paragraphs if any(p.startswith(prefix) for prefix in prefixes)]
 
-            # Strip the prefix from the paragraphs
-            paragraphs = [p.lstrip(prefix) for p in paragraphs for prefix in prefixes if p.startswith(prefix)]
+                # Strip the prefix from the paragraphs
+                paragraphs = [p.lstrip(prefix) for p in paragraphs for prefix in prefixes if p.startswith(prefix)]
 
-            # Add the paragraphs to the list of all paragraphs
-            all_paragraphs.append(paragraphs)
+                # Add the paragraphs to the list of all paragraphs
+                all_paragraphs.append(paragraphs)
+            except (KeyError, BadZipFile):
+                print(f"File {filename} is not a valid .doc or .docx file.")
+                continue
 
     return all_paragraphs
 
