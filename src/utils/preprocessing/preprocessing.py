@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+import numpy as np
 
 def pad_tensors(input_ids, max_length):
     """Pad input_ids tensors to max_length and truncate if needed"""

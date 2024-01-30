@@ -4,7 +4,7 @@
 import pandas as pd
 import numpy as np
 
-from utils.preprocessing.transcript import *
+from utils.preprocessing.transcript_linux import *
 import utils.preprocessing.preprocessing
 
 # Load data
