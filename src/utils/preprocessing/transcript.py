@@ -213,7 +213,7 @@ def create_random_word_document(folder_path, n_docs=1):
         doc.save(filename)
 
 # Function to load patient speech turns from path or doc
-def load_patient_turns(doc, prefix='P: '):
+def load_patient_turns(doc, prefix='P:'):
     """Load the patient speech turns from a document.
     Args:
         doc (str or Document): The document to load.
@@ -243,7 +243,7 @@ def load_patient_turns(doc, prefix='P: '):
     return paragraphs
 
 # Function to load patient speech turns from a folder
-def load_patient_turns_from_folder(folder_path, prefixes=['P: ']):
+def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:']):
     """Load the patient speech turns from all documents in a folder.
     Returns a list of lists with speech turns per document.
     Args:
