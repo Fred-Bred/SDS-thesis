@@ -235,7 +235,11 @@ def load_patient_turns(doc, prefix='P:'):
 
     return paragraphs
 
-# Function to load patient speech turns from a folder
+import os
+import re
+from docx import Document
+
+# Function to load patient speech turns from all documents in a folder
 def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:', 'P;', 'PATIENT;']):
     """Load the patient speech turns from all documents in a folder.
     Returns a list of lists with speech turns per document.
@@ -245,6 +249,9 @@ def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:', 'P;'
 
     # Initialize an empty list to hold all the paragraphs
     all_paragraphs = []
+
+    # Compile the regular expression for matching the prefixes
+    prefix_re = re.compile(r'^(P\d*:|P:|PATIENT:|P;|PATIENT;)')
 
     # Iterate over all files in the folder
     for filename in os.listdir(folder_path):
@@ -256,17 +263,14 @@ def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:', 'P;'
             # Extract the text of each paragraph
             paragraphs = [p.text for p in doc.paragraphs]
 
-        else:
-            continue
+            # Filter the paragraphs to only include those that start with the prefix
+            paragraphs = [p for p in paragraphs if prefix_re.match(p)]
 
-        # Filter the paragraphs to only include those that start with any of the specified prefixes
-        paragraphs = [p for p in paragraphs if any(p.startswith(prefix) for prefix in prefixes)]
+            # Strip the prefix from the paragraphs
+            paragraphs = [prefix_re.sub('', p) for p in paragraphs]
 
-        # Strip the prefix from the paragraphs
-        paragraphs = [p.lstrip(prefix) for p in paragraphs for prefix in prefixes if p.startswith(prefix)]
-
-        # Add the paragraphs to the list of all paragraphs
-        all_paragraphs.append(paragraphs)
+            # Add the paragraphs to the list of all paragraphs
+            all_paragraphs.append(paragraphs)
 
     return all_paragraphs
 
