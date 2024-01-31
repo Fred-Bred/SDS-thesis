@@ -32,7 +32,7 @@ for lst in patient_chunks:
     n_patient_chunks += length
 
 # Load and chunk (250+ words) all turns from all documents in folder
-all_chunks = load_and_chunk_speech_turns(folder_path=folder_path, chunk_size=250)
+all_chunks = load_and_chunk_speech_turns(folder_path=folder_path)
 
 n_all_chunks = 0
 for lst in all_chunks:
