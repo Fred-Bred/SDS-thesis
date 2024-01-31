@@ -243,7 +243,7 @@ def load_patient_turns(doc, prefix='P:'):
     return paragraphs
 
 # Function to load patient speech turns from a folder
-def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:']):
+def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:', 'P;', 'PATIENT;']):
     """Load the patient speech turns from all documents in a folder.
     Returns a list of lists with speech turns per document.
     Args:
