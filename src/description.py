@@ -7,7 +7,7 @@ import numpy as np
 from utils.preprocessing.transcript import *
 #%%
 # Load data
-folder_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Session PACS validation study"
+folder_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PACS_docx"
 patient_turns = load_patient_turns_from_folder(folder_path=folder_path) # load patient speech turns from all documents in folder
 
 # Split into chunks of 150 words
