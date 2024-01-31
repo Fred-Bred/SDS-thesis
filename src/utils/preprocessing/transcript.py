@@ -4,6 +4,7 @@ Utility functions for working with transcripts.
 import os
 import random
 import zipfile
+import re
 
 from docx import Document
 from docx.oxml.ns import nsdecls
@@ -235,10 +236,6 @@ def load_patient_turns(doc, prefix='P:'):
 
     return paragraphs
 
-import os
-import re
-from docx import Document
-
 # Function to load patient speech turns from all documents in a folder
 def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:', 'P;', 'PATIENT;']):
     """Load the patient speech turns from all documents in a folder.
@@ -316,3 +313,53 @@ def split_into_chunks(data, chunk_size=100):
         return [split_string(' '.join(sublist), chunk_size) for sublist in data]
     else:
         raise ValueError("Input data should be a list of strings or a list of lists of strings.")
+
+# Function to load patient and therapist speech turns from all documents in a folder and split into chunks  of turns with the minimum of a specified word count
+def load_and_chunk_speech_turns(folder_path, min_word_count=250):
+    """Load speech turns from all documents in a folder and combine them into chunks of a specified minimum word count.
+    Args:
+        folder_path (str): The path to the folder containing the documents.
+        min_word_count (int): The minimum word count of each chunk.
+    Returns:
+        A list of lists of strings, where each list represents a document and each string within a list represents a chunk of speech turns."""
+
+    # Initialize an empty list to hold all the chunks
+    all_chunks = []
+
+    # Compile the regular expression for matching the prefixes
+    prefix_re = re.compile(r'^(P\d*:|P:|PATIENT:|P;|PATIENT;|T\d*:|T:|THERAPIST:|T;|THERAPIST;)')
+
+    # Iterate over all files in the folder
+    for filename in os.listdir(folder_path):
+        # Check if the file is a Word document
+        if filename.endswith('.docx'):
+            # Load the document
+            doc = Document(os.path.join(folder_path, filename))
+
+            # Extract the text of each paragraph
+            paragraphs = [p.text for p in doc.paragraphs]
+
+            # Filter the paragraphs to only include those that start with the prefix
+            paragraphs = [p for p in paragraphs if prefix_re.match(p)]
+
+            # Combine the paragraphs into chunks of the specified minimum word count
+            chunks = []
+            chunk = []
+            word_count = 0
+            for paragraph in paragraphs:
+                paragraph_word_count = len(paragraph.split())
+                if word_count + paragraph_word_count >= min_word_count:
+                    chunk.append(paragraph)
+                    chunks.append(' '.join(chunk))
+                    chunk = []
+                    word_count = 0
+                else:
+                    chunk.append(paragraph)
+                    word_count += paragraph_word_count
+            if chunk:
+                chunks.append(' '.join(chunk))
+
+            # Add the chunks to the list of all chunks
+            all_chunks.append(chunks)
+
+    return all_chunks
