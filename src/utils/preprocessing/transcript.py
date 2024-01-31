@@ -1,7 +1,6 @@
 """
 Utility functions for working with transcripts.
 """
-from win32com import client
 import os
 import random
 import zipfile
@@ -225,14 +224,8 @@ def load_patient_turns(doc, prefix='P:'):
             doc = Document(doc)
             # Extract the text of each paragraph
             paragraphs = [p.text for p in doc.paragraphs]
-        elif doc.endswith('.doc'):
-            word = client.Dispatch("Word.Application")
-            doc = word.Documents.Open(doc)
-            # Extract the text of each paragraph
-            paragraphs = [p.Range.Text for p in doc.Paragraphs]
-            doc.Close()
         else:
-            raise ValueError("Unsupported file type. Please provide a .doc or .docx file.")
+            raise ValueError("Unsupported file type. Please provide a .docx file.")
 
         # Filter the paragraphs to only include those that start with the specified prefix
         paragraphs = [p for p in paragraphs if p.startswith(prefix)]
@@ -262,17 +255,6 @@ def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:', 'P;'
 
             # Extract the text of each paragraph
             paragraphs = [p.text for p in doc.paragraphs]
-
-        elif filename.endswith('.doc'):
-            # Load the document
-            word = client.Dispatch("Word.Application")
-            doc = word.Documents.Open(os.path.join(folder_path, filename))
-
-            # Extract the text of each paragraph
-            paragraphs = [p.Range.Text for p in doc.Paragraphs]
-
-            # Close the document
-            doc.Close()
 
         else:
             continue
