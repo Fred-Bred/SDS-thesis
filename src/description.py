@@ -4,7 +4,7 @@
 import pandas as pd
 import numpy as np
 
-from utils.preprocessing.transcript_linux import *
+from utils.preprocessing.transcript import *
 #%%
 # Load data
 folder_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Session PACS validation study"
