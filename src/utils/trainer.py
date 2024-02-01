@@ -1,14 +1,13 @@
 """Copied-in trainer class from previous project - ADJUST"""
 
 # Import libraries
+import os
+import datetime
+
 import torch
 import torch.nn as nn
-
 from tqdm import tqdm
 import matplotlib.pyplot as plt
-import os
-
-import datetime
 
 if __name__ == "__main__":
     # Set device
@@ -24,10 +23,14 @@ class Trainer:
         self.source = None
         self.history = {'train_loss': [], 'val_loss': [], 'train_loss_batch': [], 'val_loss_batch': []}
 
-    def compile(self, model, optimizer, learning_rate, loss_fn, weight_decay=0.01):
+    def compile(self, model, optimizer, learning_rate, loss_fn, weight_decay=0.01, model_name=None):
         self.model = model
         self.optimizer = optimizer(self.model.parameters(), lr=learning_rate, weight_decay = weight_decay)
         self.loss_fn = loss_fn
+        if model_name is None:
+            self.model_name = "unspecified"
+        else:
+            self.model_name = model_name
  
     def fit(self, num_epochs, train_loader, val_loader=None, patience=5, min_delta=0.0001):
         self.train_loader = train_loader
@@ -43,13 +46,12 @@ class Trainer:
             self.model.train()
             total_loss = 0.0
             with tqdm(total=len(self.train_loader), desc=f"Epoch {epoch + 1}/{num_epochs}") as pbar:
-                for images, subject_ids, targets in self.train_loader:
-                    images = images.to(device)
-                    subject_ids = subject_ids.to(device)
-                    targets = targets.to(device)
+                for texts, labels in self.train_loader:
+                    texts = texts.to(device)
+                    labels = labels.to(device)
                     self.optimizer.zero_grad()
-                    outputs = self.model((images, subject_ids))
-                    loss = self.loss_fn(outputs, targets)
+                    outputs = self.model(texts)
+                    loss = self.loss_fn(outputs, labels)
                     loss.backward()
                     self.optimizer.step()
                     total_loss += loss.item()
@@ -90,7 +92,7 @@ class Trainer:
                 ### MODEL
                 try:
                     os.makedirs('../trained_models', exist_ok=True)
-                    model_name = f"checkpoint_PCA_{len(outputs)}_SIMPLEHEAD_{self.simple_head}_SAMPLES_{len(self.data_loader.dataset)}_EPOCHS{num_epochs}_BATCHSIZE_{self.data_loader.batch_size}.pt"
+                    model_name = f"{self.model_name}_checkpoint_EPOCH_{epoch}_SAMPLES_{len(self.data_loader.dataset)}_BATCHSIZE_{self.data_loader.batch_size}.pt"
                     torch.save(self.model.state_dict(), '../trained_models/' + model_name)
                     print(f'Checkpoint after epoch {epoch+1} saved successfully')
                 except Exception as e:
@@ -110,7 +112,7 @@ class Trainer:
                     plt.ylabel('Loss')
                     plt.title('Training History')
                     plt.legend()
-                    plt.savefig(f"../trained_models/checkpoint_PCA_{len(outputs)}_SIMPLEHEAD_{self.simple_head}_SAMPLES_{len(self.data_loader.dataset)}_EPOCHS{num_epochs}_BATCHSIZE_{self.data_loader.batch_size}.png")
+                    plt.savefig(f"../trained_models/{self.model_name}_checkpoint_EPOCH_{epoch}_SAMPLES_{len(self.data_loader.dataset)}_BATCHSIZE_{self.data_loader.batch_size}.png")
                 except:
                     print('Error generating plot')
 
@@ -118,14 +120,13 @@ class Trainer:
         self.model.eval()
         total_loss = 0.0
         with torch.no_grad():
-            for images, ids, targets in data_loader:
+            for texts, labels in data_loader:
                 # Move the data to the GPU
-                images = images.to(device)
-                ids = ids.to(device)
-                targets = targets.to(device) 
+                texts = texts.to(device)
+                labels = labels.to(device) 
 
-                outputs = self.model((images, ids))
-                loss = self.loss_fn(outputs, targets)
+                outputs = self.model(texts)
+                loss = self.loss_fn(outputs, labels)
                 total_loss += loss.item()
 
         avg_loss = total_loss / len(data_loader)
