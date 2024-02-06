@@ -271,6 +271,44 @@ def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:', 'P;'
 
     return all_paragraphs
 
+# Get average word count of speech turns
+def average_word_count(input_list):
+    """Calculate the average word count of the strings in a list of lists of strings or a list of strings.
+    Args:
+        input_list (list): A list of lists of strings or a list of strings.
+    Returns:
+        The average word count of the strings."""
+
+    # Initialize counters for the total word count and the total number of strings
+    total_word_count = 0
+    total_strings = 0
+
+    # Check if the input is a list of lists
+    if isinstance(input_list[0], list):
+        # Iterate over all lists in the list of lists
+        for list_ in input_list:
+            # Iterate over all strings in the list
+            for string in list_:
+                # Increment the total word count by the word count of the string
+                total_word_count += len(string.split())
+
+                # Increment the total number of strings
+                total_strings += 1
+    else:
+        # The input is a list of strings
+        # Iterate over all strings in the list
+        for string in input_list:
+            # Increment the total word count by the word count of the string
+            total_word_count += len(string.split())
+
+            # Increment the total number of strings
+            total_strings += 1
+
+    # Calculate the average word count
+    average_word_count = total_word_count / total_strings
+
+    return average_word_count
+
 # Function to discard speech turns under a certain length
 def filter_by_word_count(data, min_word_count=100):
     """Filter out strings that are under a specified word count.
