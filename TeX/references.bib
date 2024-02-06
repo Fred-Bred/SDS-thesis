@@ -5950,7 +5950,7 @@
     keywords = {Cybersecurity, Data breach, Facebook, Networked privacy, Privacy fatigue, Targeted advertising}
 }
 
-@conference{744f0ae71eaa4398bb7667827f8b9c11,
+@conference{NLPAttachment,
 title = "Exploring the Application of NLP in Narrative Patterns of Adult Attachment",
 abstract = "The Adult Attachment Interview (AAI) is a protocol-based, semi-structured interview method widely used to measure adults{\textquoteright} states of mind with respect to attachment. Recently, transcripts of this interview have been used to code secure base script knowledge, which is script-like knowledge related to the way parents dealt with their distress during childhood (ie., child went to parent for comfort, parent provided instrumental and emotional support, child went back to play). Manually coding the verbatim transcripts is labor-intensive and requires a lot of centralized training. The potential integration of machine learning and natural language processing (NLP) techniques may automate certain aspects of AAI analysis, potentially optimizing the process. The aim of this research project is to explore the practical application of these technologies in analyzing AAI transcripts.The project uses data from a pooled set of 12 studies originating from four countries. Upon reviewing the 1,410 AAI transcripts in this set (conducted in three languages), notable discrepancies in the administration of the interviews emerged, some of which may affect the suitability of the interview to assess secure base script knowledge. The first focus of this research project is therefore to develop a model to automatically assess the quality of the transcripts, first for English studies and then for all studies and languages. This model will prioritize evaluating interview characteristics, including instances of unintelligibility and non-adherence to the prescribed AAI protocol. As a next step in the project, employing sentiment analysis will enable an investigation into the correlation between participant-provided adjectives and their corresponding narratives. Finally, this research project will explore the possibility of automatically coding secure base script knowledge in AAI transcripts. By combining technological advances with nuanced human insights, this research project not only provides a pathway toward research studies at scale, but also presents an opportunity to achieve a deeper understanding of emotional and cognitive dimensions within attachment narratives.",
 keywords = "Adult Attachment Interview, secure base script knowledge, natural language processing, machine learning",
@@ -6103,4 +6103,33 @@ Theory, Research, and Practice},
   Isbn                     = {978-1-4625-2733-7},
   Url                      = {http://www.guilford.com/books/Handbook-of-Attachment-Theory-Research-and-Clinical-Applications/Cassidy-Shaver/9781462527337},
   Timestamp                = {2021.02.09}
+}
+
+@inproceedings{Muller2021,
+   abstract = {Transfer learning based on pretraining language models on a large amount of raw data has become a new norm to reach state-of-the-art performance in NLP. Still, it remains unclear how this approach should be applied for unseen languages that are not covered by any available large-scale multilingual language model and for which only a small amount of raw data is generally available. In this work, by comparing multilingual and monolingual models, we show that such models behave in multiple ways on unseen languages. Some languages greatly benefit from transfer learning and behave similarly to closely related high resource languages whereas others apparently do not. Focusing on the latter, we show that this failure to transfer is largely related to the impact of the script used to write such languages. We show that transliterating those languages significantly improves the potential of large-scale multilingual language models on downstream tasks. This result provides a promising direction towards making these massively multilingual models useful for a new set of unseen languages. 1},
+   author = {Benjamin Muller and Antonios Anastasopoulos and Benoît Sagot and Djamé Seddah},
+   journal = {Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies},
+   pages = {448-462},
+   title = {When Being Unseen from mBERT is just the Beginning: Handling New Languages With Multilingual Language Models},
+   url = {http://commoncrawl.org/},
+   year = {2021},
+}
+
+@inproceedings{Gururangan2020,
+   abstract = {Language models pretrained on text from a wide variety of sources form the foundation of today's NLP. In light of the success of these broad-coverage models, we investigate whether it is still helpful to tailor a pretrained model to the domain of a target task. We present a study across four domains (biomedi-cal and computer science publications, news, and reviews) and eight classification tasks, showing that a second phase of pretraining in-domain (domain-adaptive pretraining) leads to performance gains, under both high-and low-resource settings. Moreover, adapting to the task's unlabeled data (task-adaptive pretraining) improves performance even after domain-adaptive pretraining. Finally, we show that adapting to a task corpus augmented using simple data selection strategies is an effective alternative, especially when resources for domain-adaptive pretraining might be unavailable. Overall, we consistently find that multi-phase adaptive pretraining offers large gains in task performance.},
+   author = {Suchin Gururangan and Ana Marasovíc and Swabha Swayamdipta and Kyle Lo and Iz Beltagy and Doug Downey and Noah A Smith},
+   journal = {Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics},
+   pages = {8342-8360},
+   title = {Don't Stop Pretraining: Adapt Language Models to Domains and Tasks},
+   url = {https://github.com/allenai/},
+   year = {2020},
+}
+
+@inproceedings{Hashimoto2017,
+   abstract = {Transfer and multi-task learning have traditionally focused on either a single source-target pair or very few, similar tasks. Ideally, the linguistic levels of morphology , syntax and semantics would benefit each other by being trained in a single model. We introduce a joint many-task model together with a strategy for successively growing its depth to solve increasingly complex tasks. Higher layers include shortcut connections to lower-level task predictions to reflect linguistic hierarchies. We use a simple regularization term to allow for optimizing all model weights to improve one task's loss without exhibiting catastrophic interference of the other tasks. Our single end-to-end model obtains state-of-the-art or competitive results on five different tasks from tagging, parsing , relatedness, and entailment tasks.},
+   author = {Kazuma Hashimoto and Caiming Xiong and Yoshimasa Tsuruoka and Richard Socher},
+   journal = {Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing},
+   pages = {1923-1933},
+   title = {A Joint Many-Task Model: Growing a Neural Network for Multiple NLP Tasks},
+   year = {2017},
 }
