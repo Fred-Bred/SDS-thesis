@@ -44,7 +44,7 @@ for lst in all_chunks:
 # Print results
 print(f"\nNumber of documents loaded: {len(patient_turns)}\n")
 print(f"Number of patient turns: {n_turns}\n")
-print(f"Average patient turn length: {avg_turn_length}\n")
-print(f"Number of arbitrary patient chunks with at least 150 words: {n_patient_chunks}\n")
+print(f"Average patient turn length: {avg_turn_length} words\n")
 print(f"Number of patient turns with at least 150 words: {n_filtered}\n")
+print(f"Number of arbitrary patient chunks with at least 150 words: {n_patient_chunks}\n")
 print(f"Number of combined chunks with at least 250 words: {n_all_chunks}\n")
