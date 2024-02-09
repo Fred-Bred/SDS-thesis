@@ -37,6 +37,10 @@ folder_path = r'C:\Users\frbre\OneDrive\01 Dokumenter\01 Uni\SDS Thesis\data\tes
 # Base model name
 model_name = 'xlm-r-base'
 
+### NOTE:
+# - Consider using standard RoBERTa model instead of XLM-RoBERTa
+# - Test Llama 2?
+
 # Label names
 id2label = {0: "Unclassified", 1: "Avoidant-1", 2: "Avoidant-2", 3: "Secure", 4: "Preoccupied-1", 5: "Preoccupied-2"}
 label2id = {"Unclassified": 0, "Avoidant-1": 1, "Avoidant-2": 2, "Secure": 3, "Preoccupied-1": 4, "Preoccupied-2": 5}
