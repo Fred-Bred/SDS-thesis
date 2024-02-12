@@ -334,23 +334,38 @@ def split_string(s, chunk_size):
     return [' '.join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
 
 # Function to split patient speech into even chunks
-def split_into_chunks(data, chunk_size=100):
+def split_into_chunks(data, chunk_size=100, n_chunks=10):
     """Split strings into chunks of a specified word count.
     Args:
         data (list): A list of strings or a list of lists of strings.
-        chunk_size (int): The size of each chunk.
+        chunk_size (int): The size of each chunk. (mutually exclusive with n_chunks)
+        n_chunks (int): The number of chunks to split each string into. (mutually exclusive with chunk_size)
     Returns:
-        A list of strings or a list of lists of strings, where the strings within each list have been combined and then split every X words."""
+        A list of strings or a list of lists of strings, where the strings within each list have been combined and then split every chunk_size words or into n_chunks chunks."""
 
-    if all(isinstance(i, str) for i in data):
-        # If data is a list of strings, combine the strings and split into chunks
-        combined_string = ' '.join(data)
-        return split_string(combined_string, chunk_size)
-    elif all(isinstance(i, list) for i in data):
-        # If data is a list of lists of strings, combine the strings in each list and split into chunks
-        return [split_string(' '.join(sublist), chunk_size) for sublist in data]
+    if chunk_size:
+        if all(isinstance(i, str) for i in data):
+            # If data is a list of strings, combine the strings and split into chunks
+            combined_string = ' '.join(data)
+            return split_string(combined_string, chunk_size)
+        elif all(isinstance(i, list) for i in data):
+            # If data is a list of lists of strings, combine the strings in each list and split into chunks
+            return [split_string(' '.join(sublist), chunk_size) for sublist in data]
+        else:
+            raise ValueError("Input data should be a list of strings or a list of lists of strings.")
+    
+    elif n_chunks:
+        if all(isinstance(i, str) for i in data):
+            # If data is a list of strings, combine all strings and split the result into chunks
+            combined_string = ' '.join(data)
+            return split_string(combined_string, len(combined_string.split()) // n_chunks)
+        elif all(isinstance(i, list) for i in data):
+            # If data is a list of lists of strings, combine all strings in each list and split the result into chunks
+            return [split_string(' '.join(sublist), len(' '.join(sublist).split()) // n_chunks) for sublist in data]
+        else:
+            raise ValueError("Input data should be a list of strings or a list of lists of strings.")
     else:
-        raise ValueError("Input data should be a list of strings or a list of lists of strings.")
+        raise ValueError("You must specify either chunk_size or n_chunks, but not both.")
 
 # Function to load patient and therapist speech turns from all documents in a folder and split into chunks  of turns with the minimum of a specified word count
 def load_and_chunk_speech_turns(folder_path, min_word_count=250):
