@@ -40,6 +40,8 @@ model_name = 'xlm-r-base'
 ### NOTE:
 # - Consider using standard RoBERTa model instead of XLM-RoBERTa
 # - Test Llama 2?
+# - Consider using base BERT (it's smaller?)
+# - Test domain-adapted model
 
 # Label names
 id2label = {0: "Unclassified", 1: "Avoidant-1", 2: "Avoidant-2", 3: "Secure", 4: "Preoccupied-1", 5: "Preoccupied-2"}
