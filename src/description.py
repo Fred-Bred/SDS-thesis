@@ -112,6 +112,7 @@ for file in hope_files[1:]:
 # Different splits of patient turns
 hope_patient = hope[hope["Type"] == "P"]
 hope_patient_turns = hope_patient["Utterance"].tolist()
+hope_patient_turns = [elem for elem in hope_patient_turns if isinstance(elem, str)]
 hope_patient_chunks = split_into_chunks(hope_patient_turns, chunk_size=150) # Split into chunks of 150 words
 hope_count_filtered = filter_by_word_count(hope_patient_turns, min_word_count=150) # Filter out turns with less than 150 words
 
