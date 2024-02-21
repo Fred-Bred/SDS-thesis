@@ -140,7 +140,7 @@ memo_files = os.listdir(MEMO_path)
 
 # Load patient speech turns from all documents in folder
 memo = pd.read_csv(os.path.join(MEMO_path, memo_files[0]))
-for file in hope_files[1:]:
+for file in memo_files[1:]:
     df = pd.read_csv(os.path.join(MEMO_path, file))
     memo = pd.concat([memo, df])
 
