@@ -67,9 +67,14 @@ plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figu
 # Load anno-mi data
 annomi = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/AnnoMI/AnnoMI-simple.csv")
 
+# Clean text
+timestamp = r'\b(\d{1,2}:[0-5][0-9]:[0-5][0-9])\b'
+annomi['utterance_text'] = annomi['utterance_text'].str.replace(r'\[unintelligible ' + timestamp + r'\]', '<UNK>', regex=True)
+
+# Filter out client turns
 annomi_client = annomi[annomi['interlocutor'] == 'client']
 
-annomi_client_turns = annomi_client['utterance'].tolist()
+annomi_client_turns = annomi_client['utterance_text'].tolist()
 annomi_client_chunks = split_into_chunks(annomi_client_turns, chunk_size=150) # Split into chunks of 150 words
 annomi_count_filtered = filter_by_word_count(annomi_client_turns, min_word_count=150) # Filter out turns with less than 150 words
 
