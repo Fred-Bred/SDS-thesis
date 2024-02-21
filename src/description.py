@@ -1,6 +1,8 @@
 # Description: This file contains the code for the description of the data set.
 #%%
 # Imports
+from statistics import mean
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -59,7 +61,7 @@ plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figu
 plt.figure(figsize=(10, 6))
 sns.histplot([len(turn.split()) for turn in all_patient_turns], bins=20, color="green")
 plt.title("PACS Distribution of Patient Turn Length")
-plt.xlabel("Turn Length")
+plt.xlabel("Word Count")
 plt.ylabel("Frequency")
 plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/PACS_Patient_turn_length.png")
 
@@ -83,7 +85,7 @@ annomi_count_filtered = filter_by_word_count(annomi_client_turns, min_word_count
 plt.figure(figsize=(10, 6))
 sns.histplot([len(turn.split()) for turn in annomi_client_turns], bins=20, color="orange")
 plt.title("Anno-MI Distribution of Client Turn Length")
-plt.xlabel("Turn Length")
+plt.xlabel("Word Count")
 plt.ylabel("Frequency")
 plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/AnnoMI_Client_turn_length.png")
 
@@ -96,6 +98,11 @@ daic_woz = pd.read_csv(os.path.join(DAIC_WOZ_path, daic_woz_files[0]))
 for file in daic_woz_files[1:]:
     df = pd.read_csv(os.path.join(DAIC_WOZ_path, file))
     daic_woz = pd.concat([daic_woz, df])
+
+# Different splits of patient turns
+daic_woz_turns = daic_woz["Text"].tolist()
+daic_woz_turns = [elem for elem in daic_woz_turns if isinstance(elem, str)]
+utterance_lengths = [len(turn.split()) for turn in daic_woz_turns]
 
 #%% HOPE description
 # HOPE folder path
@@ -122,9 +129,11 @@ plt.figure(figsize=(10, 6))
 
 sns.histplot([len(turn.split()) for turn in hope_patient_turns], bins=20, color="steelblue")
 plt.title("HOPE Distribution of Patient Turn Length")
-plt.xlabel("Turn Length")
+plt.xlabel("Word Count")
 plt.ylabel("Frequency")
 plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/HOPE_Patient_turn_length.png")
+
+#%% MEMO description
 
 #%%
 # Print results
@@ -158,5 +167,5 @@ print("\n***DAIC-WOZ data set description***\n")
 print(f"\nNumber of documents loaded: {len(daic_woz_files)}\n")
 print(f"\nTotalt number of utterances: {len(daic_woz)}\n")
 print(f"\nAverage number of utterances per document: {len(daic_woz)/len(daic_woz_files)}\n")
-# print(f"\nNumber of replacement characters: {n_replacements}\n")
+print(f"\nAverage length of utterances: {mean(utterance_lengths)}\n")
 print("-------")
