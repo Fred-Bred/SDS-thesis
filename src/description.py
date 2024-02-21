@@ -88,14 +88,14 @@ plt.ylabel("Frequency")
 plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/AnnoMI_Client_turn_length.png")
 
 #%% DAIC-WOZ description
-DAIC_WOZ_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/DAIC-WOZ"
+DAIC_WOZ_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/DAIC-WOZ/Transcripts"
 daic_woz_files = os.listdir(DAIC_WOZ_path)
 
 # Load patient speech turns from all documents in folder
 daic_woz = pd.read_csv(os.path.join(DAIC_WOZ_path, daic_woz_files[0]))
 for file in daic_woz_files[1:]:
     df = pd.read_csv(os.path.join(DAIC_WOZ_path, file))
-    daic_woz = daic_woz.concat(df)
+    daic_woz = pd.concat([daic_woz, df])
 
 #%% HOPE description
 # HOPE folder path
@@ -107,11 +107,11 @@ hope_files = os.listdir(HOPE_path)
 hope = pd.read_csv(os.path.join(HOPE_path, hope_files[0]))
 for file in hope_files[1:]:
     df = pd.read_csv(os.path.join(HOPE_path, file))
-    hope = hope.concat(df)
+    hope = pd.concat([hope, df])
 
 # Different splits of patient turns
-hope_patient = hope[hope["type"] == "P"]
-hope_patient_turns = hope_patient["utterance"].tolist()
+hope_patient = hope[hope["Type"] == "P"]
+hope_patient_turns = hope_patient["Utterance"].tolist()
 hope_patient_chunks = split_into_chunks(hope_patient_turns, chunk_size=150) # Split into chunks of 150 words
 hope_count_filtered = filter_by_word_count(hope_patient_turns, min_word_count=150) # Filter out turns with less than 150 words
 
@@ -157,4 +157,5 @@ print("\n***DAIC-WOZ data set description***\n")
 print(f"\nNumber of documents loaded: {len(daic_woz_files)}\n")
 print(f"\nTotalt number of utterances: {len(daic_woz)}\n")
 print(f"\nAverage number of utterances per document: {len(daic_woz)/len(daic_woz_files)}\n")
+# print(f"\nNumber of replacement characters: {n_replacements}\n")
 print("-------")
