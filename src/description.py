@@ -204,7 +204,7 @@ print(f"\nAverage length of utterances: {mean(utterance_lengths)}\n")
 print("-------")
 
 #%% Print to text file
-with open("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/Dataset_descriptives.txt") as f:
+with open("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/Dataset_descriptives.txt", 'w') as f:
     f.write("-------")
     f.write("\n***PACS data set description***\n")
     f.write(f"\nNumber of documents loaded: {len(patient_turns)}\n")
