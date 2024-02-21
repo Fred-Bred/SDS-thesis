@@ -57,7 +57,7 @@ plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figu
 
 # Bar plot of patient turn length
 plt.figure(figsize=(10, 6))
-sns.histplot([len(turn.split()) for turn in all_patient_turns], bins=20, palette="Greens")
+sns.histplot([len(turn.split()) for turn in all_patient_turns], bins=20, color="green")
 plt.title("PACS Distribution of Patient Turn Length")
 plt.xlabel("Turn Length")
 plt.ylabel("Frequency")
@@ -65,7 +65,7 @@ plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figu
 
 #%% Anno-MI description
 # Load anno-mi data
-annomi = pd.load_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/AnnoMI/AnnoMI-simple.csv")
+annomi = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/AnnoMI/AnnoMI-simple.csv")
 
 annomi_client = annomi[annomi['interlocutor'] == 'client']
 
@@ -76,7 +76,7 @@ annomi_count_filtered = filter_by_word_count(annomi_client_turns, min_word_count
 #%% Plot Anno-MI results
 # Bar plot of turn length
 plt.figure(figsize=(10, 6))
-sns.histplot([len(turn.split()) for turn in annomi_client_turns], bins=20, palette="Reds")
+sns.histplot([len(turn.split()) for turn in annomi_client_turns], bins=20, color="orange")
 plt.title("Anno-MI Distribution of Client Turn Length")
 plt.xlabel("Turn Length")
 plt.ylabel("Frequency")
@@ -114,7 +114,7 @@ hope_count_filtered = filter_by_word_count(hope_patient_turns, min_word_count=15
 # Bar plot of turn length
 plt.figure(figsize=(10, 6))
 
-sns.histplot([len(turn.split()) for turn in hope_patient_turns], bins=20, palette="Blues")
+sns.histplot([len(turn.split()) for turn in hope_patient_turns], bins=20, color="steelblue")
 plt.title("HOPE Distribution of Patient Turn Length")
 plt.xlabel("Turn Length")
 plt.ylabel("Frequency")
