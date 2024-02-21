@@ -92,9 +92,9 @@ DAIC_WOZ_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/
 daic_woz_files = os.listdir(DAIC_WOZ_path)
 
 # Load patient speech turns from all documents in folder
-daic_woz = pd.read_csv(os.join(DAIC_WOZ_path, daic_woz_files[0]))
+daic_woz = pd.read_csv(os.path.join(DAIC_WOZ_path, daic_woz_files[0]))
 for file in daic_woz_files[1:]:
-    df = pd.read_csv(os.join(DAIC_WOZ_path, file))
+    df = pd.read_csv(os.path.join(DAIC_WOZ_path, file))
     daic_woz = daic_woz.concat(df)
 
 #%% HOPE description
@@ -104,9 +104,9 @@ hope_files = os.listdir(HOPE_path)
 
 
 # Load patient speech turns from all documents in folder
-hope = pd.read_csv(os.join(HOPE_path, hope_files[0]))
+hope = pd.read_csv(os.path.join(HOPE_path, hope_files[0]))
 for file in hope_files[1:]:
-    df = pd.read_csv(os.join(HOPE_path, file))
+    df = pd.read_csv(os.path.join(HOPE_path, file))
     hope = hope.concat(df)
 
 # Different splits of patient turns
