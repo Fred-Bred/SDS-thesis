@@ -134,7 +134,32 @@ plt.ylabel("Frequency")
 plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/HOPE_Patient_turn_length.png")
 
 #%% MEMO description
+# MEMO folder path
+MEMO_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/MEMO"
+memo_files = os.listdir(MEMO_path)
 
+# Load patient speech turns from all documents in folder
+memo = pd.read_csv(os.path.join(MEMO_path, memo_files[0]))
+for file in hope_files[1:]:
+    df = pd.read_csv(os.path.join(MEMO_path, file))
+    memo = pd.concat([memo, df])
+
+# Different splits of patient turns
+memo_patient = memo[memo["Type"] == "P"]
+memo_patient_turns = memo_patient["Utterance"].tolist()
+memo_patient_turns = [elem for elem in memo_patient_turns if isinstance(elem, str)]
+memo_patient_chunks = split_into_chunks(memo_patient_turns, chunk_size=150) # Split into chunks of 150 words
+memo_count_filtered = filter_by_word_count(memo_patient_turns, min_word_count=150) # Filter out turns with less than 150 words
+
+#%% Plot MEMO results
+# Bar plot of turn length
+plt.figure(figsize=(10, 6))
+
+sns.histplot([len(turn.split()) for turn in memo_patient_turns], bins=20, color="steelblue")
+plt.title("MEMO Distribution of Patient Turn Length")
+plt.xlabel("Word Count")
+plt.ylabel("Frequency")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/MEMO_Patient_turn_length.png")
 #%%
 # Print results
 print("-------")
@@ -154,6 +179,14 @@ print(f"\nNumber of patient turns per document: {len(hope_patient)/len(hope_file
 print(f"\nNumber of patient turns: {len(hope_patient)}\n")
 print(f"Number of patient chunks: {len(hope_patient_chunks)}\n")
 print(f"Number of patient turns with at least 150 words: {len(hope_count_filtered)}\n")
+print("-------")
+
+print("\n***MEMO data set description***\n")
+print(f"\nNumber of documents loaded: {len(memo_files)}\n")
+print(f"\nNumber of patient turns per document: {len(memo_patient)/len(memo_files)}\n")
+print(f"\nNumber of patient turns: {len(memo_patient)}\n")
+print(f"Number of patient chunks: {len(memo_patient_chunks)}\n")
+print(f"Number of patient turns with at least 150 words: {len(memo_count_filtered)}\n")
 print("-------")
 
 print("\n***Anno-MI data set description***\n")
