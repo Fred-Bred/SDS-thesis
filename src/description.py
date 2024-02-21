@@ -11,7 +11,7 @@ import seaborn as sns
 from utils.preprocessing.transcript import *
 #%% PACS data set description
 # PACS folder path
-PACS_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Original data UNTOUCHED/PACS_corrected"
+PACS_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PACS_data"
 
 # load patient speech turns from all documents in folder
 patient_turns = load_patient_turns_from_folder(folder_path=PACS_path)
