@@ -11,6 +11,7 @@ from sklearn.model_selection import train_test_split
 from utils.preprocessing.transcript import *
 from utils.preprocessing.preprocessing import pad_tensors
 from utils.model import RoBERTaTorch
+import utils.trainer
 #%%
 # Training arguments
 training_args = TrainingArguments(
@@ -51,9 +52,13 @@ label2id = {"Unclassified": 0, "Avoidant-1": 1, "Avoidant-2": 2, "Secure": 3, "P
 #%%
 # Load data
 data = load_data_with_labels(labels_path, train_data_path)
+data["label"] = data["label"].astype(int)
 
-# # Combine chunks into one list
+# # Combine turns into one list
 patient_turns = data["text"].to_list()
+
+# Labels
+labels = data["label"].to_list()
 
 # %%
 # Tokenizer
@@ -91,10 +96,10 @@ for sent in input_ids:
 
 #%%
 # Make train/val split
-train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, fake_labels, 
+train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, labels, 
                                                             random_state=2018, test_size=0.11)
 # Performing same steps on the attention masks
-train_masks, validation_masks, _, _ = train_test_split(attention_masks, fake_labels,
+train_masks, validation_masks, _, _ = train_test_split(attention_masks, labels,
                                              random_state=2018, test_size=0.11)
 
 # Convert to tensors
@@ -153,7 +158,7 @@ trainer = Trainer(
     train_dataset=train_dataloader,
     eval_dataset=validation_dataloader,
     tokenizer=tokenizer,
-    data_collator=data_collator,
+    # data_collator=data_collator,
     compute_metrics=compute_metrics,
 
 )
@@ -163,3 +168,13 @@ trainer.train()
 
 #%%
 # utils trainer
+# utrainer = utils.trainer.Trainer()
+
+# # Optimizer
+# optimizer = torch.optim.Adam
+# loss = torch.nn.CrossEntropyLoss()
+
+# utrainer.compile(model, optimizer, learning_rate=training_args.learning_rate, loss_fn=loss)
+
+# # Fit
+# utrainer.fit(num_epochs=training_args.num_train_epochs, train_loader=train_dataloader, val_loader=validation_dataloader, patience=3, min_delta=0.001)
