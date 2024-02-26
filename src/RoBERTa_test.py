@@ -142,9 +142,9 @@ validation_dataloader = DataLoader(validation_data, sampler=validation_sampler, 
 metric = evaluate.load("accuracy")
 
 def compute_metrics(eval_pred):
-    logits, labels = eval_pred
+    logits, _labels = eval_pred
     predictions = np.argmax(logits, axis=-1)
-    return metric.compute(predictions=predictions, references=labels)
+    return metric.compute(predictions=predictions, references=_labels)
 
 #%%
 # Model
@@ -165,6 +165,7 @@ trainer = Trainer(
 # Train
 trainer.train()
 
+print(trainer.evaluate())
 #%%
 # utils trainer
 # utrainer = utils.trainer.Trainer()
