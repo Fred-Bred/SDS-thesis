@@ -213,7 +213,7 @@ def create_random_word_document(folder_path, n_docs=1):
         doc.save(filename)
 
 # Function to load patient speech turns from path or doc
-def load_patient_turns(doc, prefix='P:'):
+def load_patient_turns(doc):
     """Load the patient speech turns from a document.
     Args:
         doc (str or Document): The document to load.
@@ -228,11 +228,14 @@ def load_patient_turns(doc, prefix='P:'):
         else:
             raise ValueError("Unsupported file type. Please provide a .docx file.")
 
-        # Filter the paragraphs to only include those that start with the specified prefix
-        paragraphs = [p for p in paragraphs if p.startswith(prefix)]
+        # Compile the regular expression for matching the prefixes
+        prefix_re = re.compile(r'^(P\d*:|P:|PATIENT:|P;|PATIENT;)')]
+        
+        # Filter the paragraphs to only include those that start with the prefix
+        paragraphs = [p for p in paragraphs if prefix_re.match(p)]
 
         # Strip the prefix from the paragraphs
-        paragraphs = [p.lstrip(prefix) for p in paragraphs]
+        paragraphs = [prefix_re.sub('', p) for p in paragraphs]
 
     return paragraphs
 
@@ -270,6 +273,29 @@ def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:', 'P;'
             all_paragraphs.append(paragraphs)
 
     return all_paragraphs
+
+# Function to load patient speech turns from all documents in a folder and store in df with labels
+def load_data_with_labels(excel_path, folder_path):
+    # Load the Excel sheet
+    df = pd.read_excel(excel_path)
+
+    # Create an empty DataFrame for the result
+    result = pd.DataFrame(columns=['text', 'label'])
+
+    # Iterate over the rows in the DataFrame
+    for index, row in df.iterrows():
+        # Get the document name and label
+        document_name = row['Document']
+        label = row['Class3']
+
+        # Load the corresponding file
+        p_turns = load_patient_turns(os.path.join(folder_path, document_name))
+
+        # For each patient turn, create a new row in the result DataFrame
+        for patient_turn in p_turns:
+            result = result.append({'text': patient_turn, 'label': label}, ignore_index=True)
+
+    return result
 
 # Get average word count of speech turns
 def average_word_count(input_list):
