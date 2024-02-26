@@ -35,10 +35,9 @@ max_length = 512
 folder_path = r'C:\Users\frbre\OneDrive\01 Dokumenter\01 Uni\SDS Thesis\data\test'
 
 # Base model name
-model_name = 'xlm-r-base'
+model_name = 'FacebookAI/roberta-base'
 
 ### NOTE:
-# - Consider using standard RoBERTa model instead of XLM-RoBERTa
 # - Test Llama 2?
 # - Consider using base BERT (it's smaller?)
 # - Test domain-adapted model
