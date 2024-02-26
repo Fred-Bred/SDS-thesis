@@ -9,6 +9,7 @@ import re
 from docx import Document
 from docx.oxml.ns import nsdecls
 from docx.oxml import parse_xml
+from docx.opc.exceptions import PackageNotFoundError
 import xml.etree.ElementTree as ET
 from docx.opc.constants import RELATIONSHIP_TYPE as RT
 from lxml import etree
@@ -285,9 +286,6 @@ def load_data_with_labels(labels_path, folder_path):
     # Load the Excel sheet
     df = pd.read_excel(labels_path)
 
-    # Create an empty DataFrame for the result
-    result = pd.DataFrame(columns=['text', 'label'])
-
     # Counter for the number of documents check
     n_docs = 0
 
@@ -305,10 +303,15 @@ def load_data_with_labels(labels_path, folder_path):
             n_docs += 1
         except FileNotFoundError:
             continue
+        except PackageNotFoundError:
+            continue
 
         # For each patient turn, create a new row in the result DataFrame
+        data = []
         for patient_turn in p_turns:
-            result = result.append({'text': patient_turn, 'label': label}, ignore_index=True)
+            data.append({'text': patient_turn, 'label': label})
+
+        result = pd.DataFrame(data)
     
     print(f"\nLoaded {n_docs} documents.")
     return result
