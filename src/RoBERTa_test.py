@@ -65,7 +65,7 @@ labels = data["label"].to_list()
 
 # %%
 # Tokenizer
-tokenizer = AutoTokenizer.from_pretrained(model_name, max_length=max_length, truncation=True)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 # Tokenize texts and map the tokens to their word IDs.
 input_ids = []
@@ -74,6 +74,7 @@ for sent in patient_turns:
     encoded_text = tokenizer.encode(
                         sent,                      # Sentence to encode.
                         add_special_tokens = True, # Add '[CLS]' and '[SEP]'
+                        truncation = True,    # Truncate all sentences.
                    )
     input_ids.append(encoded_text)
 
@@ -106,14 +107,14 @@ train_masks, validation_masks, _, _ = train_test_split(attention_masks, labels,
                                              random_state=2018, test_size=0.11)
 
 # Convert to tensors
-train_inputs = torch.tensor(train_inputs)
-validation_inputs = torch.tensor(validation_inputs)
+# train_inputs = torch.tensor(train_inputs)
+# validation_inputs = torch.tensor(validation_inputs)
 
 train_labels = torch.tensor(train_labels)
 validation_labels = torch.tensor(validation_labels)
 
-train_masks = torch.tensor(train_masks)
-validation_masks = torch.tensor(validation_masks)
+# train_masks = torch.tensor(train_masks)
+# validation_masks = torch.tensor(validation_masks)
 
 # Create dataloaders
 batch_size = 16
