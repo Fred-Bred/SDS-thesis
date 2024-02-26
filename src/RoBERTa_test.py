@@ -5,9 +5,10 @@ import numpy as np
 import evaluate
 import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from utils.preprocessing.transcript import load_patient_turns_from_folder, split_into_chunks
+from utils.preprocessing.transcript import *
 from utils.preprocessing.preprocessing import pad_tensors
 from utils.model import RoBERTaTorch
 #%%
@@ -32,7 +33,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 max_length = 512
 
 # Data folder
-folder_path = r'C:\Users\frbre\OneDrive\01 Dokumenter\01 Uni\SDS Thesis\data\test'
+train_data_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PASC_train"
+labels_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PACS_labels.xlsx"
 
 # Base model name
 model_name = 'FacebookAI/roberta-base'
@@ -48,20 +50,11 @@ label2id = {"Unclassified": 0, "Avoidant-1": 1, "Avoidant-2": 2, "Secure": 3, "P
 
 #%%
 # Load data
-patient_turns = load_patient_turns_from_folder(folder_path)
+data = load_data_with_labels(labels_path, train_data_path)
 
-# Split into chunks
-patient_chunks = split_into_chunks(patient_turns, max_length=max_length)
+# # Combine chunks into one list
+patient_turns = data["text"].to_list()
 
-# Combine chunks into one list
-patient_turns = [turn for patient in patient_chunks for turn in patient]
-
-#%%
-# Generate fake labels array
-length = len(patient_turns)
-
-# Generate a fake labels array
-fake_labels = np.eye(6)[np.random.choice(6, length)]
 # %%
 # Tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_name, max_length=max_length, padding=True, truncation=True)
@@ -77,7 +70,7 @@ for sent in patient_turns:
     input_ids.append(encoded_text)
 
 # Pad input tokens
-input_ids = pad_tensors(input_ids, max_length)
+# input_ids = pad_tensors(input_ids, max_length)
 
 ### NOTE:
 #   - Try using the tokenizer to pad the input tokens??
@@ -89,8 +82,8 @@ attention_masks = []
 for sent in input_ids:
     
     # Create the attention mask.
-    #   - If a token ID is 0, then it's padding, set the mask to 0.
-    #   - If a token ID is > 0, then it's a real token, set the mask to 1.
+    #   - If a token ID is 0, then it is padding: set the mask to 0.
+    #   - If a token ID is > 0, then it is a real token: set the mask to 1.
     att_mask = [int(token_id > 0) for token_id in sent]
     
     # Store the attention mask for this sentence.
@@ -99,10 +92,10 @@ for sent in input_ids:
 #%%
 # Make train/val split
 train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, fake_labels, 
-                                                            random_state=2018, test_size=0.1)
+                                                            random_state=2018, test_size=0.11)
 # Performing same steps on the attention masks
 train_masks, validation_masks, _, _ = train_test_split(attention_masks, fake_labels,
-                                             random_state=2018, test_size=0.1)
+                                             random_state=2018, test_size=0.11)
 
 # Convert to tensors
 train_inputs = torch.tensor(train_inputs)
@@ -115,7 +108,7 @@ train_masks = torch.tensor(train_masks)
 validation_masks = torch.tensor(validation_masks)
 
 # Create dataloaders
-batch_size = 32
+batch_size = 16
 
 # Create the DataLoader for our training set.
 train_data = TensorDataset(train_inputs, train_masks, train_labels)
@@ -151,7 +144,7 @@ def compute_metrics(eval_pred):
 
 #%%
 # Model
-model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=6, output_attentions=True, output_hidden_states=True)
+model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=3, output_attentions=True, output_hidden_states=True)
 #%%
 # Transformers trainer
 trainer = Trainer(
