@@ -9,7 +9,6 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from utils.preprocessing.transcript import *
-from utils.preprocessing.preprocessing import pad_tensors
 from utils.model import RoBERTaTorch
 import utils.trainer
 #%%
