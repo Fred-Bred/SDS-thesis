@@ -229,7 +229,7 @@ def load_patient_turns(doc):
             raise ValueError("Unsupported file type. Please provide a .docx file.")
 
         # Compile the regular expression for matching the prefixes
-        prefix_re = re.compile(r'^(P\d*:|P:|PATIENT:|P;|PATIENT;)')]
+        prefix_re = re.compile(r'^(P\d*:|P:|PATIENT:|P;|PATIENT;)')
         
         # Filter the paragraphs to only include those that start with the prefix
         paragraphs = [p for p in paragraphs if prefix_re.match(p)]
