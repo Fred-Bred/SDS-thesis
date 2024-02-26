@@ -275,9 +275,9 @@ def load_patient_turns_from_folder(folder_path, prefixes=['P:', 'PATIENT:', 'P;'
     return all_paragraphs
 
 # Function to load patient speech turns from all documents in a folder and store in df with labels
-def load_data_with_labels(excel_path, folder_path):
+def load_data_with_labels(labels_path, folder_path):
     # Load the Excel sheet
-    df = pd.read_excel(excel_path)
+    df = pd.read_excel(labels_path)
 
     # Create an empty DataFrame for the result
     result = pd.DataFrame(columns=['text', 'label'])
