@@ -19,8 +19,8 @@ classes = ["Dismissing", "Secure", "Preoccupied"]
 num_labels = len(classes)
 max_len = 512
 
-id2label = {i: label for i, label in enumerate(classes, start=1)}
-label2id = {label: i for i, label in enumerate(classes, start=1)}
+id2label = {i: label for i, label in enumerate(classes)}
+label2id = {label: i for i, label in enumerate(classes)}
 
 batch_size = 16
 learning_rate = 5e-5
@@ -43,7 +43,7 @@ labels_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PA
 
 # Load data
 data = load_data_with_labels(labels_path, train_data_path)
-data["label"] = data["label"].astype(int)
+data["label"] = data["label"].astype(int) - 1 # Convert labels to 0, 1, 2
 
 dataset = CustomDataset(data, max_len=max_len, tokenizer=tokenizer)
 
