@@ -19,7 +19,7 @@ import utils.trainer
 # Training arguments
 training_args = TrainingArguments(
     output_dir="trained_models",
-    learning_rate=2e-5,
+    learning_rate=5e-5,
     per_device_train_batch_size=16,
     per_device_eval_batch_size=16,
     num_train_epochs=2,
@@ -65,97 +65,73 @@ patient_turns = data["text"].to_list()
 # Labels
 labels = data["label"].to_list()
 
-#%%
-# Preprocess
+%%
+# Tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-def preprocess_function(examples):
-    return tokenizer(examples, truncation=True)
-
 # Tokenize texts and map the tokens to their word IDs.
-tokenized_text = data["text"].map(preprocess_function, batched=True)
+input_ids = []
 
-# Data collator
-data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
+for sent in patient_turns:
+    encoded_text = tokenizer.encode(
+                        sent,                      # Sentence to encode.
+                        add_special_tokens = True, # Add '[CLS]' and '[SEP]'
+                        truncation = True,    # Truncate all sentences.
+                   )
+    input_ids.append(encoded_text)
 
-# Train/val split
-train_text, val_text, train_labels, val_labels = train_test_split(tokenized_text, labels, test_size=0.15, random_state=42)
+# Pad input tokens
+# input_ids = pad_tensors(input_ids, max_length)
 
-# Create datasets
-train_dataset = TensorDataset(train_text, train_labels)
-val_dataset = TensorDataset(val_text, val_labels)
+### NOTE:
+#   - Try using the tokenizer to pad the input tokens??
+#   - Consider padding with DataCollatorWithPadding from transformers to conform with the trainer
+
+# Create attention masks
+attention_masks = []
+
+for sent in input_ids:
+    
+    # Create the attention mask.
+    #   - If a token ID is 0, then it is padding: set the mask to 0.
+    #   - If a token ID is > 0, then it is a real token: set the mask to 1.
+    att_mask = [int(token_id > 0) for token_id in sent]
+    
+    # Store the attention mask for this sentence.
+    attention_masks.append(att_mask)
+
+#%%
+# Make train/val split
+train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, labels, 
+                                                            random_state=2018, test_size=0.15)
+# Performing same steps on the attention masks
+train_masks, validation_masks, _, _ = train_test_split(attention_masks, labels,
+                                             random_state=2018, test_size=0.15)
+
+# Convert to tensors
+# train_inputs = torch.tensor(train_inputs)
+# validation_inputs = torch.tensor(validation_inputs)
+
+# train_labels = torch.tensor(train_labels)
+# validation_labels = torch.tensor(validation_labels)
+
+# train_masks = torch.tensor(train_masks)
+# validation_masks = torch.tensor(validation_masks)
 
 # Create dataloaders
-train_dataloader = DataLoader(train_dataset, batch_size=16, shuffle=True)
-val_dataloader = DataLoader(val_dataset, batch_size=16, shuffle=False)
+batch_size = 16
 
-# %%
-# # Tokenizer
-# tokenizer = AutoTokenizer.from_pretrained(model_name)
+# Create the DataLoader for our training set.
+train_data = TensorDataset(train_inputs, train_masks, train_labels)
+train_sampler = RandomSampler(train_data)
+train_dataloader = DataLoader(train_data, sampler=train_sampler, batch_size=batch_size)
 
-# # Tokenize texts and map the tokens to their word IDs.
-# input_ids = []
+# Create the DataLoader for our validation set.
+validation_data = TensorDataset(validation_inputs, validation_masks, validation_labels)
+validation_sampler = SequentialSampler(validation_data)
+validation_dataloader = DataLoader(validation_data, sampler=validation_sampler, batch_size=batch_size)
 
-# for sent in patient_turns:
-#     encoded_text = tokenizer.encode(
-#                         sent,                      # Sentence to encode.
-#                         add_special_tokens = True, # Add '[CLS]' and '[SEP]'
-#                         truncation = True,    # Truncate all sentences.
-#                    )
-#     input_ids.append(encoded_text)
-
-# # Pad input tokens
-# # input_ids = pad_tensors(input_ids, max_length)
-
-# ### NOTE:
-# #   - Try using the tokenizer to pad the input tokens??
-# #   - Consider padding with DataCollatorWithPadding from transformers to conform with the trainer
-
-# # Create attention masks
-# attention_masks = []
-
-# for sent in input_ids:
-    
-#     # Create the attention mask.
-#     #   - If a token ID is 0, then it is padding: set the mask to 0.
-#     #   - If a token ID is > 0, then it is a real token: set the mask to 1.
-#     att_mask = [int(token_id > 0) for token_id in sent]
-    
-#     # Store the attention mask for this sentence.
-#     attention_masks.append(att_mask)
-
-# #%%
-# # Make train/val split
-# train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, labels, 
-#                                                             random_state=2018, test_size=0.15)
-# # Performing same steps on the attention masks
-# train_masks, validation_masks, _, _ = train_test_split(attention_masks, labels,
-#                                              random_state=2018, test_size=0.15)
-
-# # Convert to tensors
-# # train_inputs = torch.tensor(train_inputs)
-# # validation_inputs = torch.tensor(validation_inputs)
-
-# # train_labels = torch.tensor(train_labels)
-# # validation_labels = torch.tensor(validation_labels)
-
-# # train_masks = torch.tensor(train_masks)
-# # validation_masks = torch.tensor(validation_masks)
-
-# # Create dataloaders
-# batch_size = 16
-
-# # Create the DataLoader for our training set.
-# train_data = TensorDataset(train_inputs, train_masks, train_labels)
-# train_sampler = RandomSampler(train_data)
-# train_dataloader = DataLoader(train_data, sampler=train_sampler, batch_size=batch_size)
-
-# # Create the DataLoader for our validation set.
-# validation_data = TensorDataset(validation_inputs, validation_masks, validation_labels)
-# validation_sampler = SequentialSampler(validation_data)
-# validation_dataloader = DataLoader(validation_data, sampler=validation_sampler, batch_size=batch_size)
-
-# data_collator = DataCollatorWithPadding(tokenizer)
+data_collator = DataCollatorWithPadding(tokenizer)
 
 #%%
 #### NOTES ####
