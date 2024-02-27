@@ -15,8 +15,12 @@ from utils.dataset import CustomDataset
 
 #%% Training arguments
 model_id = 'FacebookAI/roberta-base'
-num_labels = 3
+classes = ["Dismissing", "Secure", "Preoccupied"]
+num_labels = len(classes)
 max_len = 512
+
+id2label = {i: label for i, label in enumerate(classes, start=1)}
+label2id = {label: i for i, label in enumerate(classes, start=1)}
 
 batch_size = 16
 learning_rate = 5e-5
@@ -66,7 +70,11 @@ train_loader = DataLoader(train_dataset, batch_size=batch_size)
 val_loader = DataLoader(val_dataset, batch_size=batch_size)
 
 #%% Initialize model and trainer
-model = AutoModelForSequenceClassification.from_pretrained(model_id, num_labels=num_labels)
+model = AutoModelForSequenceClassification.from_pretrained(
+    model_id,
+    num_labels=num_labels,
+    id2label=id2label,
+    label2id=label2id)
 model.to(device)
 trainer = Trainer()
 trainer.compile(model, optimizer, learning_rate=learning_rate, loss_fn=loss_fn)

@@ -187,8 +187,9 @@ class Trainer:
                     attention_mask = batch['attention_mask'].to(device)
                     labels = batch['targets'].to(device)
                     self.optimizer.zero_grad()
-                    outputs = self.model(texts)
-                    loss = self.loss_fn(outputs, labels)
+                    outputs = self.model(texts, attention_mask=attention_mask)
+                    logits = outputs.logits
+                    loss = self.loss_fn(logits, labels)
                     loss.backward()
                     self.optimizer.step()
                     total_loss += loss.item()
@@ -259,10 +260,10 @@ class Trainer:
                 # Move the data to the GPU
                 texts = batch['input_ids'].to(device)
                 attention_mask = batch['attention_mask'].to(device)
-                labels = batch['targets'].to(device) 
-
-                outputs = self.model(texts)
-                loss = self.loss_fn(outputs, labels)
+                labels = batch['targets'].to(device)
+                outputs = self.model(texts, attention_mask=attention_mask)
+                logits = outputs.logits
+                loss = self.loss_fn(logits, labels)
                 total_loss += loss.item()
 
         avg_loss = total_loss / len(data_loader)
