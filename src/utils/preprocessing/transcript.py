@@ -289,6 +289,9 @@ def load_data_with_labels(labels_path, folder_path):
     # Counter for the number of documents check
     n_docs = 0
 
+    # Initialize a list to store DataFrame objects
+    df_list = []
+
     # Iterate over the rows in the DataFrame
     for index, row in df.iterrows():
         # Get the document name and label
@@ -311,8 +314,12 @@ def load_data_with_labels(labels_path, folder_path):
         for patient_turn in p_turns:
             data.append({'text': patient_turn, 'label': label})
 
-        result = pd.DataFrame(data)
+        # Append the DataFrame to the list
+        df_list.append(pd.DataFrame(data))
     
+    # Concatenate all the DataFrames in the list
+    result = pd.concat(df_list, ignore_index=True)
+
     print(f"\nLoaded {n_docs} documents.")
     return result
 
