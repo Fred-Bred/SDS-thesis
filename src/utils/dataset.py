@@ -7,7 +7,7 @@ class CustomDataset(Dataset):
         self.data = dataframe
         self.max_len = max_len
 
-        # Tokenize the entire corpus at once
+        # Tokenize the texts
         self.encodings = self.tokenizer.batch_encode_plus(
             self.data.text.tolist(),
             truncation=True,
