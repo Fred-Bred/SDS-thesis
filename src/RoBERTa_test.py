@@ -66,20 +66,28 @@ patient_turns = data["text"].to_list()
 labels = data["label"].to_list()
 
 #%%
-# # Preprocess
+# Preprocess
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 def preprocess_function(examples):
-    return tokenizer(examples["text"], truncation=True)
+    return tokenizer(examples, truncation=True)
 
 # Tokenize texts and map the tokens to their word IDs.
-tokenized_data = data.map(preprocess_function, batched=True)
+tokenized_text = data["text"].map(preprocess_function, batched=True)
 
 # Data collator
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
 # Train/val split
-train_data, val_data = train_test_split(tokenized_data, test_size=0.15)
+train_text, val_text, train_labels, val_labels = train_test_split(tokenized_text, labels, test_size=0.15, random_state=42)
+
+# Create datasets
+train_dataset = TensorDataset(train_text, train_labels)
+val_dataset = TensorDataset(val_text, val_labels)
+
+# Create dataloaders
+train_dataloader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+val_dataloader = DataLoader(val_dataset, batch_size=16, shuffle=False)
 
 # %%
 # # Tokenizer
@@ -116,20 +124,20 @@ train_data, val_data = train_test_split(tokenized_data, test_size=0.15)
 #     # Store the attention mask for this sentence.
 #     attention_masks.append(att_mask)
 
-#%%
+# #%%
 # # Make train/val split
 # train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, labels, 
-#                                                             random_state=2018, test_size=0.11)
+#                                                             random_state=2018, test_size=0.15)
 # # Performing same steps on the attention masks
 # train_masks, validation_masks, _, _ = train_test_split(attention_masks, labels,
-#                                              random_state=2018, test_size=0.11)
+#                                              random_state=2018, test_size=0.15)
 
 # # Convert to tensors
 # # train_inputs = torch.tensor(train_inputs)
 # # validation_inputs = torch.tensor(validation_inputs)
 
-# train_labels = torch.tensor(train_labels)
-# validation_labels = torch.tensor(validation_labels)
+# # train_labels = torch.tensor(train_labels)
+# # validation_labels = torch.tensor(validation_labels)
 
 # # train_masks = torch.tensor(train_masks)
 # # validation_masks = torch.tensor(validation_masks)
@@ -179,8 +187,8 @@ model = AutoModelForSequenceClassification.from_pretrained(model_name, num_label
 trainer = Trainer(
     model=model,
     args=training_args,
-    train_dataset=train_data,
-    eval_dataset=val_data,
+    train_dataset=train_dataloader,
+    eval_dataset=val_dataloader,
     tokenizer=tokenizer,
     data_collator=data_collator,
     compute_metrics=compute_metrics,
