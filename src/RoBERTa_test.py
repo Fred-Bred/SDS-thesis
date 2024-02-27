@@ -65,7 +65,7 @@ patient_turns = data["text"].to_list()
 # Labels
 labels = data["label"].to_list()
 
-%%
+#%%
 # Tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
