@@ -24,11 +24,11 @@ label2id = {label: i for i, label in enumerate(classes, start=1)}
 
 batch_size = 16
 learning_rate = 5e-5
-num_epochs = 2
+num_epochs = 5
 weight_decay = 0.01
 loss_fn = nn.CrossEntropyLoss()
 optimizer = torch.optim.AdamW
-patience = 5
+patience = 2
 min_delta = 0.0001
 
 #%% Device
@@ -85,10 +85,10 @@ trainer.fit(num_epochs=num_epochs, train_loader=train_loader, device=device, val
 # define the name for trained model based on set parameters and date
 try:
     os.makedirs('trained_models', exist_ok=True)
-    model_name = f"{model_id}_LR{learning_rate}_EPOCHS{num_epochs}_BATCHSIZE_{batch_size}_TIME_{datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.pt"
+    model_name = f"{model_id}_LR_{learning_rate}__EPOCHS_{num_epochs}__BATCHSIZE_{batch_size}__TIME_{datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.pt"
     trainer.save('trained_models/'+model_name)
 except:
-    model_name = f"trained_model_{model_id}_LR{learning_rate}_EPOCHS{num_epochs}_TIME_{datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.pt"
+    model_name = f"trained_model_{model_id}__LR_{learning_rate}__EPOCHS_{num_epochs}__TIME_{datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.pt"
     trainer.save(model_name)
 
 # Access the history
