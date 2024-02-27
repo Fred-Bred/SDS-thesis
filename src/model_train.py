@@ -4,22 +4,19 @@ import datetime
 
 from transformers import TrainingArguments, Trainer, AutoTokenizer, AutoModelForSequenceClassification, DataCollatorWithPadding
 import numpy as np
-import evaluate
 import torch
 import torch.nn as nn
-from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler, Subset
-import pandas as pd
-from sklearn.model_selection import train_test_split
+from torch.utils.data import DataLoader, Subset
 import matplotlib.pyplot as plt
 
 from utils.preprocessing.transcript import *
-from utils.model import RoBERTaTorch
-import utils.trainer
+from utils.trainer import Trainer
 from utils.dataset import CustomDataset
 
 #%% Training arguments
 model_id = 'FacebookAI/roberta-base'
 num_labels = 3
+max_len = 512
 
 batch_size = 16
 learning_rate = 5e-5
@@ -33,6 +30,7 @@ min_delta = 0.0001
 #%% Device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+tokenizer = AutoTokenizer.from_pretrained(model_id)
 #%% Load data
 
 # Data folder
@@ -43,7 +41,7 @@ labels_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PA
 data = load_data_with_labels(labels_path, train_data_path)
 data["label"] = data["label"].astype(int)
 
-dataset = CustomDataset(data['text'], data['label'])
+dataset = CustomDataset(data, max_len=max_len, tokenizer=tokenizer)
 
 # Create a list of indices from 0 to the length of the dataset
 indices = list(range(len(dataset)))
