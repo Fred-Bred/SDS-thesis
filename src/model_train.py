@@ -14,7 +14,7 @@ from utils.trainer import Trainer
 from utils.dataset import CustomDataset
 
 #%% Training arguments
-model_id = 'FacebookAI/roberta-base'
+model_id = 'roberta-base'
 classes = ["Dismissing", "Secure", "Preoccupied"]
 num_labels = len(classes)
 max_len = 512
