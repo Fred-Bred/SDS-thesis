@@ -228,14 +228,14 @@ class Trainer:
             ### save checkpoint of model and plot
             ### MODEL
             try:
-                os.makedirs('../trained_models', exist_ok=True)
+                os.makedirs('Outputs/trained_models', exist_ok=True)
                 model_name = f"{self.model_name}_checkpoint_EPOCH_{epoch}_SAMPLES_{len(self.data_loader.dataset)}_BATCHSIZE_{self.data_loader.batch_size}.pt"
-                torch.save(self.model.state_dict(), '../trained_models/' + model_name)
+                torch.save(self.model.state_dict(), 'Outputs/trained_models/' + model_name)
                 print(f'Checkpoint after epoch {epoch+1} saved successfully')
             except Exception as e:
                 print(f"Error saving checkpoint with name: {e}")
                 model_name = f"checkpoint_TIME_{datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.pt"
-                torch.save(self.model.state_dict(), '../trained_models/' + model_name)
+                torch.save(self.model.state_dict(), 'Outputs/trained_models/' + model_name)
                 print('Unnamed checkpoint saved successfully')
 
             ### PLOT
@@ -248,7 +248,7 @@ class Trainer:
                 plt.ylabel('Loss')
                 plt.title('Training History')
                 plt.legend()
-                plt.savefig(f"../trained_models/{self.model_name}_checkpoint_EPOCH_{epoch}_SAMPLES_{len(self.data_loader.dataset)}_BATCHSIZE_{self.data_loader.batch_size}.png")
+                plt.savefig(f"Outputs/trained_models/{self.model_name}_checkpoint_EPOCH_{epoch}_SAMPLES_{len(self.data_loader.dataset)}_BATCHSIZE_{self.data_loader.batch_size}.png")
             except:
                 print('Error generating plot')
 
