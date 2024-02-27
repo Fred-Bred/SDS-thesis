@@ -251,7 +251,7 @@ class Trainer:
             except:
                 print('Error generating plot')
 
-    def evaluate(self, data_loader, device mode="Test"):
+    def evaluate(self, data_loader, device, mode="Test"):
         self.model.eval()
         total_loss = 0.0
         with torch.no_grad():
