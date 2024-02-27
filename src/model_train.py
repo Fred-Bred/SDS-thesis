@@ -106,5 +106,5 @@ plt.title(f'Loss ov. epochs | {model_id} | LR = {learning_rate} \n {len(dataset)
 plt.legend()
 
 # Ensure the directory exists
-os.makedirs('Figures', exist_ok=True)
-plt.savefig(f'Figures/loss_plot_{model_name}.png')
+os.makedirs('Outputs/Figures', exist_ok=True)
+plt.savefig(f'Outputs/Figures/loss_plot_{model_name}.png')

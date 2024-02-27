@@ -2,7 +2,7 @@
 
 # Import libraries
 import os
-import datetime
+from datetime import datetime
 
 import torch
 import torch.nn as nn
@@ -201,7 +201,7 @@ class Trainer:
             print(f"Training Loss: {avg_loss}")
 
             if self.val_loader is not None:
-                val_loss = self.evaluate(self.val_loader, "Validation")
+                val_loss = self.evaluate(self.val_loader, device, "Validation")
                 self.history['val_loss'].append(val_loss)
 
                 # Plot the loss
@@ -211,7 +211,8 @@ class Trainer:
                 plt.ylabel('Loss')
                 plt.title('Loss over epochs')
                 plt.legend()
-                plt.savefig(f'plots/loss_plot{str(figure_num)}.png')
+                os.makedirs('Outputs/Figures', exist_ok=True)
+                plt.savefig(f'Outputs/Figures/loss_plot{str(figure_num)}.png')
                 plt.clf()
 
                 # Check for early stopping
@@ -237,9 +238,8 @@ class Trainer:
                 torch.save(self.model.state_dict(), '../trained_models/' + model_name)
                 print('Unnamed checkpoint saved successfully')
 
-            
+            ### PLOT
             try:
-                ### PLOT
                 history = self.history
                 # Plot the loss history
                 plt.plot(history['train_loss'], label='Train Loss')
