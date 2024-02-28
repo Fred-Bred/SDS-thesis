@@ -5,7 +5,7 @@ from torchmetrics import Accuracy, Precision, Recall, ConfusionMatrix
 import torch
 from torch.utils.data import DataLoader, Subset
 import matplotlib.pyplot as plt
-from transformers import AutoModelForSequenceClassification, AutoTokenizerForSequenceClassification
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import numpy as np
 
 from utils.trainer import Trainer
@@ -24,7 +24,7 @@ id2label = {i: label for i, label in enumerate(classes)}
 label2id = {label: i for i, label in enumerate(classes)}
 
 # Instantiate the tokenizer and the model
-tokenizer = AutoTokenizerForSequenceClassification.from_pretrained(model_id)
+tokenizer = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForSequenceClassification.from_pretrained(
     model_id,
     num_labels=num_labels,
