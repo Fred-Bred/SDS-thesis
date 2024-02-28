@@ -1,6 +1,6 @@
 #%% Imports
 import os
-import datetime
+from datetime import datetime
 
 from transformers import TrainingArguments, Trainer, AutoTokenizer, AutoModelForSequenceClassification, DataCollatorWithPadding
 import numpy as np
@@ -89,10 +89,10 @@ trainer.fit(num_epochs=num_epochs, train_loader=train_loader, device=device, val
 # define the name for trained model based on set parameters and date
 try:
     os.makedirs('trained_models', exist_ok=True)
-    model_name = f"{model_id}_LR_{learning_rate}__EPOCHS_{num_epochs}__BATCHSIZE_{batch_size}__TIME_{datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.pt"
+    model_name = f"{model_id}_LR_{learning_rate}__EPOCHS_{num_epochs}__BATCHSIZE_{batch_size}__TIME_{datetime.now().strftime('%Y-%m-%d_%H%M')}.pt"
     trainer.save('trained_models/'+model_name)
 except:
-    model_name = f"trained_model_{model_id}__LR_{learning_rate}__EPOCHS_{num_epochs}__TIME_{datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.pt"
+    model_name = f"trained_model_{model_id}__LR_{learning_rate}__EPOCHS_{num_epochs}__TIME_{datetime.now().strftime('%Y-%m-%d_%H%M')}.pt"
     trainer.save(model_name)
 
 #%% Evaluate model
