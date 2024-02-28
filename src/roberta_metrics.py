@@ -32,9 +32,6 @@ model = AutoModelForSequenceClassification.from_pretrained(
     label2id=label2id)
 model.to(device)
 
-# Instantiate the Trainer
-trainer = Trainer()
-
 # Data folder
 train_data_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PACS_train"
 labels_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PACS_labels.xlsx"
@@ -68,6 +65,10 @@ val_dataset = Subset(dataset, val_indices)
 batch_size = 16
 train_loader = DataLoader(train_dataset, batch_size=batch_size)
 val_loader = DataLoader(val_dataset, batch_size=batch_size)
+
+# Instantiate the Trainer
+trainer = Trainer()
+trainer.model = model
 
 # Load the saved weights into the model
 trainer.load(model_path, source="gpu")
