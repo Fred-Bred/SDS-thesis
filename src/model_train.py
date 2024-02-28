@@ -146,3 +146,14 @@ plt.ylabel('Loss')
 plt.title(f'Loss over epochs | {trainer.model_name} | LR = {learning_rate} \n {len(dataset)} samples | Batch size = {batch_size}')
 plt.legend()
 plt.savefig(f'Outputs/Figures/loss_plot_{trainer.model_name}.png')
+
+# Write metrics to a text file
+with open(f'/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/REPORT__{model_name}.txt', 'w') as file:
+    file.write(f'Train Loss: {train_loss[-1]}\n')
+    file.write(f'Validation Loss: {val_loss[-1]}\n')
+    file.write(f'Train Accuracy: {train_accuracy[-1]}\n')
+    file.write(f'Validation Accuracy: {val_accuracy[-1]}\n')
+    file.write(f'Train Precision: {train_precision[-1]}\n')
+    file.write(f'Validation Precision: {val_precision[-1]}\n')
+    file.write(f'Train Recall: {train_recall[-1]}\n')
+    file.write(f'Validation Recall: {val_recall[-1]}\n')
