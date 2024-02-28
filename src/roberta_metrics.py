@@ -68,10 +68,13 @@ val_loader = DataLoader(val_dataset, batch_size=batch_size)
 
 # Instantiate the Trainer
 trainer = Trainer()
+# trainer.compile(model, torch.optim.AdamW, learning_rate=5e-5, loss_fn=torch.nn.CrossEntropyLoss())
 trainer.model = model
+trainer.val_loader = val_loader
 
 # Load the saved weights into the model
-trainer.load(model_path, source="gpu")
+model_state_dict = torch.load(model_path)
+model.load_state_dict(model_state_dict)
 
 # Initialize the metrics
 accuracy = Accuracy()
