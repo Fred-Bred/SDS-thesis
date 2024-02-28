@@ -77,7 +77,7 @@ model = AutoModelForSequenceClassification.from_pretrained(
     id2label=id2label,
     label2id=label2id)
 model.to(device)
-trainer = Trainer()
+trainer = Trainer(num_labels=num_labels)
 trainer.compile(model, optimizer, learning_rate=learning_rate, loss_fn=loss_fn, model_name=model_id)
 
 #%% Train model and save
