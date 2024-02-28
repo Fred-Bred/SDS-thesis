@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 from tqdm import tqdm
 import matplotlib.pyplot as plt
-from torchmetrics import Accuracy, Precision, Recall, F1
+from torchmetrics import Accuracy, Precision, Recall
 
 if __name__ == "__main__":
     # Set device
