@@ -92,19 +92,57 @@ except:
     trainer.save(model_name)
 
 # Access the history
+# Access the history
 train_loss = trainer.history['train_loss']
 val_loss = trainer.history['val_loss']
+train_accuracy = trainer.history['train_accuracy']
+val_accuracy = trainer.history['val_accuracy']
+train_precision = trainer.history['train_precision']
+val_precision = trainer.history['val_precision']
+train_recall = trainer.history['train_recall']
+val_recall = trainer.history['val_recall']
 
-# plot the loss over epochs
-plt.plot(train_loss, label='train_loss')
-plt.plot(val_loss, label='val_loss')
+# Create a figure with 5 subplots
+fig, axs = plt.subplots(5, sharex=True, figsize=(10, 15))
+
+# Plot the loss
+axs[0].plot(train_loss, label='Train Loss')
+axs[0].plot(val_loss, label='Validation Loss')
+axs[0].set_ylabel('Loss')
+axs[0].legend()
+
+# Plot the accuracy
+axs[1].plot(train_accuracy, label='Train Accuracy')
+axs[1].plot(val_accuracy, label='Validation Accuracy')
+axs[1].set_ylabel('Accuracy')
+axs[1].legend()
+
+# Plot the precision
+axs[2].plot(train_precision, label='Train Precision')
+axs[2].plot(val_precision, label='Validation Precision')
+axs[2].set_ylabel('Precision')
+axs[2].legend()
+
+# Plot the recall
+axs[3].plot(train_recall, label='Train Recall')
+axs[3].plot(val_recall, label='Validation Recall')
+axs[3].set_ylabel('Recall')
+axs[3].legend()
 
 # Add labels and title
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
-plt.title(f'Loss ov. epochs | {model_id} | LR = {learning_rate} \n {len(dataset)} samples | Batch size = {batch_size}')
-plt.legend()
+axs[4].set_xlabel('Epochs')
+fig.suptitle(f'Metrics over epochs | {trainer.model_name} | LR = {learning_rate} \n {len(dataset)} samples | Batch size = {batch_size}')
 
 # Ensure the directory exists
 os.makedirs('Outputs/Figures', exist_ok=True)
-plt.savefig(f'Outputs/Figures/loss_plot_{model_name}.png')
+plt.savefig(f'Outputs/Figures/metrics_plot_{trainer.model_name}.png')
+
+# Plot the loss over epochs separately
+plt.figure(figsize=(10, 5))
+plt.plot(train_loss, label='Train Loss')
+plt.plot(val_loss, label='Validation Loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.title(f'Loss over epochs | {trainer.model_name} | LR = {learning_rate} \n {len(dataset)} samples | Batch size = {batch_size}')
+plt.legend()
+plt.savefig(f'Outputs/Figures/loss_plot_{trainer.model_name}.png')
