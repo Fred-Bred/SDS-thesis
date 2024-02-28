@@ -70,7 +70,7 @@ train_loader = DataLoader(train_dataset, batch_size=batch_size)
 val_loader = DataLoader(val_dataset, batch_size=batch_size)
 
 # Load the saved weights into the model
-trainer.load(model_path)
+trainer.load(model_path, source="gpu")
 
 # Initialize the metrics
 accuracy = Accuracy()
