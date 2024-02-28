@@ -179,9 +179,9 @@ class Trainer:
         self.val_loader = None
         self.source = None
         self.num_labels = num_labels
-        self.accuracy = Accuracy(average='weighted', num_classes=self.num_labels)
-        self.precision = Precision(average='weighted', num_classes=self.num_labels)
-        self.recall = Recall(average='weighted', num_classes=self.num_labels)
+        self.accuracy = Accuracy(task="multiclass", average=None, num_classes=self.num_labels)
+        self.precision = Precision(task="multiclass", average=None, num_classes=self.num_labels)
+        self.recall = Recall(task="multiclass", average=None, num_classes=self.num_labels)
         self.history = {
             'train_loss': [],
             'val_loss': [],
