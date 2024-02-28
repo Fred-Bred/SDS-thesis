@@ -279,7 +279,7 @@ class Trainer:
                 plt.title('Loss over epochs')
                 plt.legend()
                 os.makedirs('Outputs/Figures', exist_ok=True)
-                plt.savefig(f'Outputs/Figures/loss_plot{str(figure_num)}.png')
+                plt.savefig(f'Outputs/Figures/loss_plot_{self.model_name}_{datetime.now().strftime('%Y-%m-%d_%H%M')}_{str(figure_num)}.png')
                 plt.clf()
 
                 # Check for early stopping
@@ -296,13 +296,13 @@ class Trainer:
             ### MODEL
             try:
                 os.makedirs('Outputs/trained_models', exist_ok=True)
-                model_name = f"{self.model_name}_checkpoint_EPOCH_{epoch}_SAMPLES_{len(self.train_loader.dataset)}_BATCHSIZE_{self.train_loader.batch_size}.pt"
+                model_name = f"{self.model_name}_checkpoint_EPOCH_{epoch+1}_SAMPLES_{len(self.train_loader.dataset)}_BATCHSIZE_{self.train_loader.batch_size}.pt"
                 # torch.save(self.model.state_dict(), 'Outputs/trained_models/' + model_name)
                 self.save("Outputs/trained_models/" + model_name)
                 print(f'Checkpoint after epoch {epoch+1} saved successfully')
             except Exception as e:
                 print(f"Error saving checkpoint with name: {e}")
-                model_name = f"checkpoint_TIME_{datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.pt"
+                model_name = f"checkpoint_TIME_{datetime.now().strftime('%Y-%m-%d_%H%M')}.pt"
                 # torch.save(self.model.state_dict(), 'Outputs/trained_models/' + model_name)
                 self.save("Outputs/trained_models/" + model_name)
                 print('Unnamed checkpoint saved successfully')
@@ -317,7 +317,7 @@ class Trainer:
                 plt.ylabel('Loss')
                 plt.title('Training History')
                 plt.legend()
-                plt.savefig(f"Outputs/trained_models/{self.model_name}_checkpoint_EPOCH_{epoch}_SAMPLES_{len(self.train_loader.dataset)}_BATCHSIZE_{self.train_loader.batch_size}.png")
+                plt.savefig(f"Outputs/trained_models/{self.model_name}_checkpoint_EPOCH_{epoch}_SAMPLES_{len(self.train_loader.dataset)}_BATCHSIZE_{self.train_loader.batch_size}_{datetime.now().strftime('%Y-%m-%d_%H%M')}.png")
             except:
                 print('Error generating plot')
 
