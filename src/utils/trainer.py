@@ -171,16 +171,17 @@ if __name__ == "__main__":
 #         print(f"Model and training history loaded from {filepath}")
     
 class Trainer:
-    def __init__(self):
+    def __init__(self, num_labels):
         self.model = None
         self.optimizer = None
         self.loss_fn = None
         self.train_loader = None
         self.val_loader = None
         self.source = None
-        self.accuracy = Accuracy(average='weighted', num_classes=num_labels)
-        self.precision = Precision(average='weighted', num_classes=num_labels)
-        self.recall = Recall(average='weighted', num_classes=num_labels)
+        self.num_labels = num_labels
+        self.accuracy = Accuracy(average='weighted', num_classes=self.num_labels)
+        self.precision = Precision(average='weighted', num_classes=self.num_labels)
+        self.recall = Recall(average='weighted', num_classes=self.num_labels)
         self.history = {
             'train_loss': [],
             'val_loss': [],
