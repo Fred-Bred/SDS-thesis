@@ -51,7 +51,8 @@ dataset = CustomDataset(data, max_len=max_len, tokenizer=tokenizer)
 indices = list(range(len(dataset)))
 
 # Shuffle the indices
-np.random.shuffle(indices, random_state=42)
+np.random.seed(42)
+np.random.shuffle(indices)
 
 # Create a train and validation subset of variable dataset with torch
 train_size = int(0.89 * len(dataset))
