@@ -44,32 +44,19 @@ tokenizer = AutoTokenizer.from_pretrained(model_id)
 
 # Data folder
 train_data_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_train"
+val_data_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_val"
 labels_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_labels.xlsx"
 
-# Load data
-data = load_data_with_labels(labels_path, train_data_path)
-data["label"] = data["label"].astype(int) - 1 # Convert labels to 0, 1, 2
+# Load training data
+train_data = load_data_with_labels(labels_path, train_data_path)
+train_data["label"] = train_data["label"].astype(int) - 1 # Convert labels to 0, 1, 2
+train_dataset = CustomDataset(train_data, max_len=max_len, tokenizer=tokenizer)
 
-dataset = CustomDataset(data, max_len=max_len, tokenizer=tokenizer)
+# Load validation data
+val_data = load_data_with_labels(labels_path, val_data_path)
+val_data["label"] = val_data["label"].astype(int) - 1 # Convert labels to 0, 1, 2
+val_dataset = CustomDataset(val_data, max_len=max_len, tokenizer=tokenizer)
 
-# Create a list of indices from 0 to the length of the dataset
-indices = list(range(len(dataset)))
-
-# Shuffle the indices
-np.random.seed(42)
-np.random.shuffle(indices)
-
-# Create a train and validation subset of variable dataset with torch
-train_size = int(0.89 * len(dataset))
-val_size = len(dataset) - train_size
-
-# Split the indices into train and validation sets
-train_indices = indices[:train_size]
-val_indices = indices[train_size:]
-
-# Use the Subset class for the train and validation subsets
-train_dataset = Subset(dataset, train_indices)
-val_dataset = Subset(dataset, val_indices)
 
 # Put train dataset into a loader with 2 batches and put test data in val loader
 train_loader = DataLoader(train_dataset, batch_size=batch_size)
