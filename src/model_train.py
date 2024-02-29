@@ -18,6 +18,8 @@ from utils.dataset import CustomDataset
 
 #%% Training arguments
 model_id = 'roberta-base'
+model_source = "base"
+model_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models/unspecified_checkpoint_EPOCH_2_SAMPLES_5629_BATCHSIZE_16.pt"
 classes = ["Dismissing", "Secure", "Preoccupied"]
 num_labels = len(classes)
 max_len = 512
@@ -74,14 +76,22 @@ train_loader = DataLoader(train_dataset, batch_size=batch_size)
 val_loader = DataLoader(val_dataset, batch_size=batch_size)
 
 #%% Initialize model and trainer
+
+# Instantiate the model
 model = AutoModelForSequenceClassification.from_pretrained(
     model_id,
     num_labels=num_labels,
     id2label=id2label,
     label2id=label2id)
-model.to(device)
+model.to(device) # Send to device
+
+# Instantiate the Trainer
 trainer = Trainer(num_labels=num_labels)
 trainer.compile(model, optimizer, learning_rate=learning_rate, loss_fn=loss_fn, model_name=model_id)
+
+# Load the saved weights into the model if model_source == fine-tuned
+if model_source == "fine-tuned":
+    model = trainer.load(model_path)
 
 #%% Train model and save
 trainer.fit(num_epochs=num_epochs, train_loader=train_loader, device=device, val_loader=val_loader, patience=patience, min_delta=min_delta)
