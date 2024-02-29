@@ -61,20 +61,21 @@ While attachment is measured with a variety of methods with varying degrees of g
 - Levels of analysis
 	- 3, 4, or 7
 - Stability
+	- An individuals state of mind with regards to attachment is theorised to be relatively stable throughout the lifespan.
+		- This is mostly based on... GET SOURCE
 	- \cite{Scharfe1994}
 	- \cite{Zhang2004}
 		- In the empirical literature, attachement classifications tend to show both stability and fluidity, with studies involving younger individuals finding somewhat stable patterns with a greater degree of fluidity and studies of older individuals finding much greater stability.
 		- In a study by Zhang and Labouvie-Vief \cite{Zhang2004}, a sample of 370 individuals ranging in age form 15 to 87 was assessed regarding attachment, well-being, coping strategies, and depressive symptoms three times over a six year period. Attachment style was found to be reasonably stable but it did fluctuate. Test-rest reliability in this sample was between .40 and .49 between the first and second assessment and between .24 and .45 between the first and third measurement.
 		- The changes observed are themselves relevant to our understanding of the development, stability, and significance of attachment. Namely, Zhang and Labouvie-Vief found that change towards greater attachment insecurity was associated with defensive coping strategies characterised by rigid, immature and maladaptive ways of interacting with the world. Depressive symptoms was also a significant predictor of change towards greater insecurity. In contrast, change towards greater security was predicted by flexible and reality-oriented coping strategies and better perceived well-being \cite{Zhang2004}.
 		- Over time, adults may become more secure and more dismissive but less preoccupied, according to the effect of age observed by Zhang and Labouvie-Vief \cite{Zhang2004}.
-	- Cannot find this study: Consedine & Magai, 2006
+	- \cite{Magai2006}
 		- Lending further support to the notion of increased attachment stability with age, Consedine and Magai assessed attachement in 415 older adults at age 72 and again at age 78. In this sample, 81.4 % of participants remained stable in their classification.
-	- \cite{McConnell2011}
-			- McConnel \cite{McConnell2011} points out that the factors influencing attachment in adulthood are more complex, ranging from internal and behavioural factors such as coping and well-being to external factors like life events and environmental stress. This may make attachment more malleable through deliberately intervention in adulthood and more difficult to predict over very long periods \cite{Pinquart2013}.
-	- An individuals state of mind with regards to attachment is theorised to be relatively stable throughout the lifespan.
-		- This is mostly based on... GET SOURCE
 	- \cite{Pinquart2013}
-		- Empirical evidence also points to mostly stable patterns of attachment over long periods of time. For samples not comprised of at-risk children and for periods less than 15 years, attachment was found to be stable \cite{Pinquart2013}
+		- Empirical evidence also points to mostly stable patterns of attachment over long periods of time. This is perhaps most convincingly demonstrated by a 2013 meta-analysis of 127 studies on attachment stability with a total \textit{n} of 21,072 by Pinquart, Fueßner, and Ahnert \cite{Pinquart2013}. Here, the authors found medium-sized stability with an test-retest coefficient of .39. However, while no significant stability was detectable in studies running longer than 15 years, coefficients were larger for shorter time intervals and for samples not comprised of at-risk children.
+		- This suggests that the applied attachment measures have good reliability, and that while attachment displays good stability for shorter time intervals, life events, circumstances and perhaps deliberate interventions can change it over longer intervals.
+	- \cite{McConnell2011}
+		- McConnel \cite{McConnell2011} points out that the factors influencing attachment in adulthood are more complex, ranging from internal and behavioural factors such as coping and well-being to external factors like life events and environmental stress. This may make attachment more malleable through deliberately intervention in adulthood and more difficult to predict over very long periods \cite{Pinquart2013}.
 	- However, it is important to note that even if attachment is mostly stable, with changes due to circumstances, it is not immutable. In fact, change in attachment style is a common goal in psychotherapy and changes are not uncommonly observed following major life events such as loss, change in relationship status, or becoming a parent.
 		- \cite{Kirkpatrick1994} (for relationship initiation or breakup mediating attachment stability)
 	- With the relative stability and some understanding of the changing of attachment styles established, I will now turn to the importance of attachment security in a wider context. As such, the next sections cover the predictive value of the theory and its constructs in regards to relationships, daily life, health, psychopathology, and mental health. This is not meant to be an exhaustive review but rather I aim to elucidate the remarkable extent to which attachment permeates pivotal facets of human experience. Consequently it will serve to illustrate the value of the construct as pliable, accessible, and informative variable for patients and clinicians alike.
