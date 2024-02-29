@@ -41,8 +41,8 @@ tokenizer = AutoTokenizer.from_pretrained(model_id)
 #%% Load data
 
 # Data folder
-train_data_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PACS_train"
-labels_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PACS_labels.xlsx"
+train_data_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_train"
+labels_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_labels.xlsx"
 
 # Load data
 data = load_data_with_labels(labels_path, train_data_path)
