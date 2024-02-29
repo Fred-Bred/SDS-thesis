@@ -96,8 +96,8 @@ except:
 # Access the history
 train_loss = trainer.history['train_loss']
 val_loss = trainer.history['val_loss']
-train_accuracy = trainer.history['train_accuracy']
-val_accuracy = trainer.history['val_accuracy']
+train_accuracy = trainer.history['train_acc']
+val_accuracy = trainer.history['val_acc']
 train_precision = trainer.history['train_precision']
 val_precision = trainer.history['val_precision']
 train_recall = trainer.history['train_recall']
