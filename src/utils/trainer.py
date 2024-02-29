@@ -279,7 +279,7 @@ class Trainer:
                 plt.title('Loss over epochs')
                 plt.legend()
                 os.makedirs('Outputs/Figures', exist_ok=True)
-                plt.savefig(f'Outputs/Figures/loss_plot_{self.model_name}_{datetime.now().strftime('%Y-%m-%d_%H%M')}_{str(figure_num)}.png')
+                plt.savefig(f"Outputs/Figures/loss_plot_{self.model_name}_{datetime.now().strftime('%Y-%m-%d_%H%M')}_{str(figure_num)}.png")
                 plt.clf()
 
                 # Check for early stopping
