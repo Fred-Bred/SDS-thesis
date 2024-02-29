@@ -12,4 +12,4 @@ train_files, val_files = train_test_split(file_list, test_size=0.15, random_stat
 
 # Copy files to respective directories
 for file in val_files:
-    shutil.copy2(os.path.join(train_dir, file), os.path.join(val_dir, file))
+    shutil.move(os.path.join(train_dir, file), os.path.join(val_dir, file))
