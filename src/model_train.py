@@ -91,7 +91,7 @@ trainer.compile(model, optimizer, learning_rate=learning_rate, loss_fn=loss_fn, 
 
 # Load the saved weights into the model if model_source == fine-tuned
 if model_source == "fine-tuned":
-    model = trainer.load(model_path)
+    model = trainer.load(model_path, "gpu" if device.type == "cuda" else "cpu")
 
 #%% Train model and save
 trainer.fit(num_epochs=num_epochs, train_loader=train_loader, device=device, val_loader=val_loader, patience=patience, min_delta=min_delta)
