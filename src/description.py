@@ -11,7 +11,7 @@ import seaborn as sns
 from utils.preprocessing.transcript import *
 #%% PACS data set description
 # PACS folder path
-PACS_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PACS_data"
+PACS_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_data"
 
 # load patient speech turns from all documents in folder
 patient_turns = load_patient_turns_from_folder(folder_path=PACS_path)
@@ -55,7 +55,7 @@ sns.histplot(turns_per_doc, bins=20)
 plt.xlabel('Turn Length')
 plt.ylabel('Frequency')
 plt.title('PACS Distribution of Patient Turns per Document')
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/PACS_Turns_per_document.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_Turns_per_document.png")
 
 # Bar plot of patient turn length
 plt.figure(figsize=(10, 6))
@@ -63,11 +63,123 @@ sns.histplot([len(turn.split()) for turn in all_patient_turns], bins=20, color="
 plt.title("PACS Distribution of Patient Turn Length")
 plt.xlabel("Word Count")
 plt.ylabel("Frequency")
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/PACS_Patient_turn_length.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_Patient_turn_length.png")
+
+#%% PACS training data description
+# PACS folder path
+PACS_train_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_train"
+
+# load patient speech turns from all documents in folder
+train_turns = load_patient_turns_from_folder(folder_path=PACS_train_path)
+
+# Different splits of patient turns
+patient_chunks = split_into_chunks(train_turns, chunk_size=150) # Split into chunks of 150 words
+count_filtered = filter_by_word_count(train_turns, min_word_count=150) # Filter out turns with less than 150 words
+
+all_train_turns = [item for sublist in train_turns for item in sublist]
+
+n_turns = 0
+for lst in train_turns:
+    length = len(lst)
+    n_turns += length
+
+n_filtered = 0
+for lst in count_filtered:
+    length = len(lst)
+    n_filtered += length
+
+n_patient_chunks = 0
+for lst in patient_chunks:
+    length = len(lst)
+    n_patient_chunks += length
+
+avg_turn_length = average_word_count(train_turns)
+
+# Load and chunk (250+ words) all turns from all documents in folder
+all_chunks = load_and_chunk_speech_turns(folder_path=PACS_train_path)
+
+n_all_chunks = 0
+for lst in all_chunks:
+    length = len(lst)
+    n_all_chunks += length
+
+#%% Plot PACS results
+# Bar plot of turns per document
+turns_per_doc = [len(lst) for lst in train_turns]
+plt.figure(figsize=(10, 6))
+sns.histplot(turns_per_doc, bins=20)
+plt.xlabel('Turn Length')
+plt.ylabel('Frequency')
+plt.title('PACS_train Distribution of Patient Turns per Document')
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_train_Turns_per_document.png")
+
+# Bar plot of patient turn length
+plt.figure(figsize=(10, 6))
+sns.histplot([len(turn.split()) for turn in all_train_turns], bins=20, color="mediumseagreen")
+plt.title("PACS_train Distribution of Patient Turn Length")
+plt.xlabel("Word Count")
+plt.ylabel("Frequency")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_train_Patient_turn_length.png")
+
+#%% PACS validation data description
+# PACS folder path
+PACS_val_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_val"
+
+# load patient speech turns from all documents in folder
+val_turns = load_patient_turns_from_folder(folder_path=PACS_val_path)
+
+# Different splits of patient turns
+patient_chunks = split_into_chunks(val_turns, chunk_size=150) # Split into chunks of 150 words
+count_filtered = filter_by_word_count(val_turns, min_word_count=150) # Filter out turns with less than 150 words
+
+all_val_turns = [item for sublist in val_turns for item in sublist]
+
+n_turns = 0
+for lst in val_turns:
+    length = len(lst)
+    n_turns += length
+
+n_filtered = 0
+for lst in count_filtered:
+    length = len(lst)
+    n_filtered += length
+
+n_patient_chunks = 0
+for lst in patient_chunks:
+    length = len(lst)
+    n_patient_chunks += length
+
+avg_turn_length = average_word_count(val_turns)
+
+# Load and chunk (250+ words) all turns from all documents in folder
+all_chunks = load_and_chunk_speech_turns(folder_path=PACS_val_path)
+
+n_all_chunks = 0
+for lst in all_chunks:
+    length = len(lst)
+    n_all_chunks += length
+
+#%% Plot PACS results
+# Bar plot of turns per document
+turns_per_doc = [len(lst) for lst in val_turns]
+plt.figure(figsize=(10, 6))
+sns.histplot(turns_per_doc, bins=20)
+plt.xlabel('Turn Length')
+plt.ylabel('Frequency')
+plt.title('PACS_val Distribution of Patient Turns per Document')
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_val_Turns_per_document.png")
+
+# Bar plot of patient turn length
+plt.figure(figsize=(10, 6))
+sns.histplot([len(turn.split()) for turn in all_val_turns], bins=20, color="lime")
+plt.title("PACS_val Distribution of Patient Turn Length")
+plt.xlabel("Word Count")
+plt.ylabel("Frequency")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_val_Patient_turn_length.png")
 
 #%% Anno-MI description
 # Load anno-mi data
-annomi = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/AnnoMI/AnnoMI-simple.csv")
+annomi = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/AnnoMI/AnnoMI-simple.csv")
 
 # Clean text
 timestamp = r'\b(\d{1,2}:[0-5][0-9]:[0-5][0-9])\b'
@@ -87,10 +199,10 @@ sns.histplot([len(turn.split()) for turn in annomi_client_turns], bins=20, color
 plt.title("Anno-MI Distribution of Client Turn Length")
 plt.xlabel("Word Count")
 plt.ylabel("Frequency")
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/AnnoMI_Client_turn_length.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/AnnoMI_Client_turn_length.png")
 
 #%% DAIC-WOZ description
-DAIC_WOZ_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/DAIC-WOZ/Transcripts"
+DAIC_WOZ_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/DAIC-WOZ/Transcripts"
 daic_woz_files = os.listdir(DAIC_WOZ_path)
 
 # Load patient speech turns from all documents in folder
@@ -106,7 +218,7 @@ utterance_lengths = [len(turn.split()) for turn in daic_woz_turns]
 
 #%% HOPE description
 # HOPE folder path
-HOPE_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/HOPE"
+HOPE_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/HOPE"
 hope_files = os.listdir(HOPE_path)
 
 
@@ -131,11 +243,11 @@ sns.histplot([len(turn.split()) for turn in hope_patient_turns], bins=20, color=
 plt.title("HOPE Distribution of Patient Turn Length")
 plt.xlabel("Word Count")
 plt.ylabel("Frequency")
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/HOPE_Patient_turn_length.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/HOPE_Patient_turn_length.png")
 
 #%% MEMO description
 # MEMO folder path
-MEMO_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/MEMO"
+MEMO_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/MEMO"
 memo_files = os.listdir(MEMO_path)
 
 # Load patient speech turns from all documents in folder
