@@ -135,8 +135,8 @@ axs[4].set_xlabel('Epochs')
 fig.suptitle(f'Metrics over epochs | {trainer.model_name} | LR = {learning_rate} \n {len(train_dataset)} samples | Batch size = {batch_size}')
 
 # Ensure the directory exists
-os.makedirs('Outputs/Figures', exist_ok=True)
-plt.savefig(f'Outputs/Figures/metrics_plot_{trainer.model_name}.png')
+os.makedirs(f{trainer.model_dir}, exist_ok=True)
+plt.savefig(f'{trainer.model_dir}/METRICS_{trainer.model_name}.png')
 
 # Plot the loss over epochs separately
 plt.figure(figsize=(10, 5))
@@ -146,7 +146,7 @@ plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.title(f'Loss over epochs | {trainer.model_name} | LR = {learning_rate} \n {len(train_dataset)} samples | Batch size = {batch_size}')
 plt.legend()
-plt.savefig(f'Outputs/Figures/loss_plot_{trainer.model_name}.png')
+plt.savefig(f'{trainer.model_dir}/loss_plot_{trainer.model_name}.png')
 
 # Initialize the metrics
 accuracy = Accuracy(task="multiclass", average=None, num_classes=num_labels)
@@ -207,7 +207,7 @@ print("\nClassification report:")
 print(classification_report(true_labels, pred_labels, target_names=classes))
 
 # Write metrics to text file
-with open(f'/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/{trainer.model_dir}/REPORT__{model_name}.txt', 'w') as f:
+with open(f'{trainer.model_dir}/REPORT__{model_name}.txt', 'w') as f:
     f.write('\n\nValidation metrics:\n')
     f.write(f'Accuracy: {final_accuracy}\n')
     f.write(f'Precision: {final_precision}\n')
