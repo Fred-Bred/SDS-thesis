@@ -171,7 +171,7 @@ if __name__ == "__main__":
 #         print(f"Model and training history loaded from {filepath}")
     
 class Trainer:
-    def __init__(self, num_labels):
+    def __init__(self, num_labels=3):
         self.model = None
         self.optimizer = None
         self.loss_fn = None
