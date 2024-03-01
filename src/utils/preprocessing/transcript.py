@@ -60,18 +60,6 @@ def get_document_comments(docxFileName):
     return comments_dict
 
 #Function to fetch all the comments in a paragraph
-# def paragraph_comments(paragraph, comments_dict):
-#     """Returns a list of comments in a given paragraph"""
-#     ooXMLns = {'w':'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
-#     comments=[]
-#     for run in paragraph.runs:
-#         comment_reference=run._r.xpath("./w:commentReference")
-#         if comment_reference:
-#             comment_id=comment_reference[0].xpath('@w:id',namespaces=ooXMLns)[0]
-#             comment=comments_dict[comment_id]
-#             comments.append(comment)
-#     return comments
-
 def paragraph_comments(paragraph, comments_dict):
     """Returns a list of comments in a given paragraph"""
     comments=[]

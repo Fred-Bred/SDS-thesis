@@ -17,7 +17,7 @@ from utils.dataset import CustomDataset
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 model_id = "roberta-base"
-model_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models/unspecified_checkpoint_EPOCH_2_SAMPLES_5629_BATCHSIZE_16.pt"
+model_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/trained_models/roberta-base_LR_5e-05__EPOCHS_5__BATCHSIZE_16__TIME_2024-02-29_1952.pt"
 
 classes = ["Dismissing", "Secure", "Preoccupied"]
 num_labels = len(classes)
@@ -56,8 +56,10 @@ trainer.model = model
 trainer.val_loader = val_loader
 
 # Load the saved weights into the model
-model_state_dict = torch.load(model_path)
-model.load_state_dict(model_state_dict)
+# model_state_dict = torch.load(model_path)
+# model.load_state_dict(model_state_dict)
+
+trainer.load(model_path, source="cpu")
 
 # Initialize the metrics
 accuracy = Accuracy(task="multiclass", average=None, num_classes=num_labels)
@@ -113,7 +115,7 @@ print(f"Recall: {final_recall}")
 
 # Print the classification report
 print("\nClassification report:")
-print(classification_report(true_labels, pred_labels, target_names=classes))
+print(classification_report(true_labels, pred_labels, target_names=classes, zero_division=0))
 
 # Create output folder
 model_name = model_path.split("/")[-1].split(".")[0]
@@ -135,7 +137,7 @@ plt.ylabel('True label')
 plt.savefig(f'Outputs/{model_name}/confusion_matrix_{model_name}.png')
 
 # Write metrics to text file
-with open(f'/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/{trainer.model_dir}/REPORT__{model_name}.txt', 'w') as f:
+with open(f'{output_folder}/REPORT__{model_name}.txt', 'w') as f:
     f.write('\n\nValidation metrics:\n')
     f.write(f'Accuracy: {final_accuracy}\n')
     f.write(f'Precision: {final_precision}\n')
@@ -143,4 +145,4 @@ with open(f'/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outpu
     f.write('\nConfusion matrix:\n')
     f.write(str(cm))
     f.write('\nClassification report:\n')
-    f.write(classification_report(true_labels, pred_labels, target_names=classes))
+    f.write(classification_report(true_labels, pred_labels, target_names=classes, zero_division=0))
