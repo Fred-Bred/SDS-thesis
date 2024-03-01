@@ -133,3 +133,14 @@ plt.yticks(tick_marks, classes)
 plt.xlabel('Predicted label')
 plt.ylabel('True label')
 plt.savefig(f'Outputs/{model_name}/confusion_matrix_{model_name}.png')
+
+# Write metrics to text file
+with open(f'/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/{trainer.model_dir}/REPORT__{model_name}.txt', 'w') as f:
+    f.write('\n\nValidation metrics:\n')
+    f.write(f'Accuracy: {final_accuracy}\n')
+    f.write(f'Precision: {final_precision}\n')
+    f.write(f'Recall: {final_recall}\n')
+    f.write('\nConfusion matrix:\n')
+    f.write(str(cm))
+    f.write('\nClassification report:\n')
+    f.write(classification_report(true_labels, pred_labels, target_names=classes))
