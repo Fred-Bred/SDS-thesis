@@ -213,6 +213,7 @@ class Trainer:
         self.current_patience = 0
         self.epochs_without_improvement = 0
         self.min_delta = min_delta
+        
         os.makedirs(self.model_dir, exist_ok=True)
         figure_num = 0
 
@@ -281,7 +282,7 @@ class Trainer:
                 plt.title('Loss over epochs')
                 plt.legend()
                 os.makedirs('Outputs/Figures', exist_ok=True)
-                plt.savefig(self.model_dir + f"/loss_plot_{self.model_name}_{datetime.now().strftime('%Y-%m-%d_%H%M')}_{str(figure_num)}.png")
+                plt.savefig(f"{self.model_dir}/loss_plot_{self.model_name}_{datetime.now().strftime('%Y-%m-%d_%H%M')}_{str(figure_num)}.png")
                 plt.clf()
 
                 # Check for early stopping
@@ -299,7 +300,7 @@ class Trainer:
             os.makedirs(self.model_dir, exist_ok=True)
             model_name = f"{self.model_name}_checkpoint_EPOCH_{epoch+1}_SAMPLES_{len(self.train_loader.dataset)}_BATCHSIZE_{self.train_loader.batch_size}.pt"
             # torch.save(self.model.state_dict(), 'Outputs/trained_models/' + model_name)
-            self.save(f"{model_dir}/" + model_name)
+            self.save(f"{self.model_dir}/{model_name}")
             print(f'Checkpoint after epoch {epoch+1} saved successfully')
             # except Exception as e:
             #     print(f"Error saving checkpoint with name: {e}")
@@ -318,7 +319,7 @@ class Trainer:
                 plt.ylabel('Loss')
                 plt.title('Training History')
                 plt.legend()
-                plt.savefig(f"{model_dir}/{self.model_name}_checkpoint_EPOCH_{epoch}_SAMPLES_{len(self.train_loader.dataset)}_BATCHSIZE_{self.train_loader.batch_size}_{datetime.now().strftime('%Y-%m-%d_%H%M')}.png")
+                plt.savefig(f"{self.model_dir}/{self.model_name}_checkpoint_EPOCH_{epoch}_SAMPLES_{len(self.train_loader.dataset)}_BATCHSIZE_{self.train_loader.batch_size}_{datetime.now().strftime('%Y-%m-%d_%H%M')}.png")
             except:
                 print('Error generating plot')
 
