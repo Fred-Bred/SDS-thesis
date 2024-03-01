@@ -135,7 +135,7 @@ axs[4].set_xlabel('Epochs')
 fig.suptitle(f'Metrics over epochs | {trainer.model_name} | LR = {learning_rate} \n {len(train_dataset)} samples | Batch size = {batch_size}')
 
 # Ensure the directory exists
-os.makedirs(f{trainer.model_dir}, exist_ok=True)
+os.makedirs({trainer.model_dir}, exist_ok=True)
 plt.savefig(f'{trainer.model_dir}/METRICS_{trainer.model_name}.png')
 
 # Plot the loss over epochs separately
