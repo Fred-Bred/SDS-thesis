@@ -34,39 +34,19 @@ model = AutoModelForSequenceClassification.from_pretrained(
     label2id=label2id)
 model.to(device)
 
-# Data folder
-train_data_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PACS_train"
-labels_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/PACS_labels.xlsx"
+# Data folders
+val_data_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_val"
+labels_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_labels.xlsx"
 
 # Load data
-data = load_data_with_labels(labels_path, train_data_path)
-data["label"] = data["label"].astype(int) - 1 # Convert labels to 0, 1, 2
+val_data = load_data_with_labels(labels_path, val_data_path)
+val_data["label"] = val_data["label"].astype(int) - 1 # Convert labels to 0, 1, 2
 
 max_len = 512
-dataset = CustomDataset(data, max_len=max_len, tokenizer=tokenizer)
+val_dataset = CustomDataset(val_data, max_len=max_len, tokenizer=tokenizer)
 
-# Create a list of indices from 0 to the length of the dataset
-np.random.seed(42)
-indices = list(range(len(dataset)))
-
-# Shuffle the indices
-np.random.shuffle(indices)
-
-# Create a train and validation subset of variable dataset with torch
-train_size = int(0.89 * len(dataset))
-val_size = len(dataset) - train_size
-
-# Split the indices into train and validation sets
-train_indices = indices[:train_size]
-val_indices = indices[train_size:]
-
-# Use the Subset class for the train and validation subsets
-train_dataset = Subset(dataset, train_indices)
-val_dataset = Subset(dataset, val_indices)
-
-# Put train dataset into a loader with 2 batches and put test data in val loader
+# Put datasets into loaders
 batch_size = 16
-train_loader = DataLoader(train_dataset, batch_size=batch_size)
 val_loader = DataLoader(val_dataset, batch_size=batch_size)
 
 # Instantiate the Trainer
@@ -134,3 +114,19 @@ print(f"Recall: {final_recall}")
 # Print the classification report
 print("\nClassification report:")
 print(classification_report(true_labels, pred_labels, target_names=classes))
+
+# Create output folder
+model_name = model_path.split("/")[-1].split(".")[0]
+output_folder = f"Outputs/{model_name}"
+
+# Save the confusion matrix
+plt.figure(figsize=(10, 10))
+plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+plt.title('Confusion matrix')
+plt.colorbar()
+tick_marks = np.arange(len(classes))
+plt.xticks(tick_marks, classes, rotation=45)
+plt.yticks(tick_marks, classes)
+plt.xlabel('Predicted label')
+plt.ylabel('True label')
+plt.savefig(f'Outputs/{model_name}/confusion_matrix_{model_name}.png')
