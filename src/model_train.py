@@ -132,7 +132,7 @@ axs[3].legend()
 
 # Add labels and title
 axs[4].set_xlabel('Epochs')
-fig.suptitle(f'Metrics over epochs | {trainer.model_name} | LR = {learning_rate} \n {len(dataset)} samples | Batch size = {batch_size}')
+fig.suptitle(f'Metrics over epochs | {trainer.model_name} | LR = {learning_rate} \n {len(train_dataset)} samples | Batch size = {batch_size}')
 
 # Ensure the directory exists
 os.makedirs('Outputs/Figures', exist_ok=True)
@@ -144,7 +144,7 @@ plt.plot(train_loss, label='Train Loss')
 plt.plot(val_loss, label='Validation Loss')
 plt.xlabel('Epochs')
 plt.ylabel('Loss')
-plt.title(f'Loss over epochs | {trainer.model_name} | LR = {learning_rate} \n {len(dataset)} samples | Batch size = {batch_size}')
+plt.title(f'Loss over epochs | {trainer.model_name} | LR = {learning_rate} \n {len(train_dataset)} samples | Batch size = {batch_size}')
 plt.legend()
 plt.savefig(f'Outputs/Figures/loss_plot_{trainer.model_name}.png')
 
@@ -207,7 +207,7 @@ print("\nClassification report:")
 print(classification_report(true_labels, pred_labels, target_names=classes))
 
 # Write metrics to text file
-with open(f'/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/REPORT__{model_name}.txt', 'w') as f:
+with open(f'/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/{trainer.model_dir}/REPORT__{model_name}.txt', 'w') as f:
     f.write('\n\nValidation metrics:\n')
     f.write(f'Accuracy: {final_accuracy}\n')
     f.write(f'Precision: {final_precision}\n')
@@ -227,4 +227,4 @@ plt.xticks(tick_marks, classes, rotation=45)
 plt.yticks(tick_marks, classes)
 plt.xlabel('Predicted label')
 plt.ylabel('True label')
-plt.savefig(f'Outputs/Figures/confusion_matrix_{model_name}.png')
+plt.savefig(f'Outputs/{trainer.model_dir}/confusion_matrix_{model_name}.png')
