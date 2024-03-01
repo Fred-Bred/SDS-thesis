@@ -96,12 +96,12 @@ except:
 # Access the history
 train_loss = trainer.history['train_loss']
 val_loss = trainer.history['val_loss']
-train_accuracy = trainer.history['train_acc']
-val_accuracy = trainer.history['val_acc']
-train_precision = trainer.history['train_precision']
-val_precision = trainer.history['val_precision']
-train_recall = trainer.history['train_recall']
-val_recall = trainer.history['val_recall']
+train_accuracy = trainer.history['train_acc'].detach().cpu().numpy()
+val_accuracy = trainer.history['val_acc'].detach().cpu().numpy()
+train_precision = trainer.history['train_precision'].detach().cpu().numpy()
+val_precision = trainer.history['val_precision'].detach().cpu().numpy()
+train_recall = trainer.history['train_recall'].detach().cpu().numpy()
+val_recall = trainer.history['val_recall'].detach().cpu().numpy()
 
 # Create a figure with 5 subplots
 fig, axs = plt.subplots(5, sharex=True, figsize=(10, 15))
