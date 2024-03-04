@@ -203,7 +203,7 @@ class Trainer:
             self.model_name = "unspecified"
         else:
             self.model_name = model_name
-        self.model_dir = f"/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/{self.model_name}_{datetime.now().strftime('%Y-%m-%d_%H%M')}"
+        self.model_dir = f"/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models/{self.model_name}_{datetime.now().strftime('%Y-%m-%d_%H%M')}"
 
     def fit(self, num_epochs, train_loader, device, val_loader=None, patience=5, min_delta=0.0001):
         self.train_loader = train_loader

@@ -85,9 +85,11 @@ trainer.fit(num_epochs=num_epochs, train_loader=train_loader, device=device, val
 
 # define the name for trained model based on set parameters and date
 try:
-    os.makedirs("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models", exist_ok=True)
+    # os.makedirs(f"/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models/{trainer.model_id}_{datetime.now().strftime('%Y-%m-%d_%H%M')}", exist_ok=True)
+    os.makedirs(trainer.model_dir, exist_ok=True)
     model_name = f"{model_id}_LR_{learning_rate}__EPOCHS_{num_epochs}__BATCHSIZE_{batch_size}__TIME_{datetime.now().strftime('%Y-%m-%d_%H%M')}.pt"
-    trainer.save('/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models/' + model_name)
+    # trainer.save('/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models/' + model_name)
+    trainer.save(trainer.model_dir + model_name)
 except:
     model_name = f"trained_model_{model_id}__LR_{learning_rate}__EPOCHS_{num_epochs}__TIME_{datetime.now().strftime('%Y-%m-%d_%H%M')}.pt"
     trainer.save('/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models/' + model_name)
@@ -96,12 +98,30 @@ except:
 # Access the history
 train_loss = trainer.history['train_loss']
 val_loss = trainer.history['val_loss']
-train_accuracy = trainer.history['train_acc'].detach().cpu().numpy()
-val_accuracy = trainer.history['val_acc'].detach().cpu().numpy()
-train_precision = trainer.history['train_precision'].detach().cpu().numpy()
-val_precision = trainer.history['val_precision'].detach().cpu().numpy()
-train_recall = trainer.history['train_recall'].detach().cpu().numpy()
-val_recall = trainer.history['val_recall'].detach().cpu().numpy()
+if all(isinstance(i, torch.Tensor) for i in trainer.history['train_acc']):
+    train_accuracy = [i.item() for i in trainer.history['train_acc']]
+else:
+    train_accuracy = trainer.history['train_acc']
+if all(isinstance(i, torch.Tensor) for i in trainer.history['val_acc']):
+    val_accuracy = [i.item() for i in trainer.history['val_acc']]
+else:
+    val_accuracy = trainer.history['val_acc']
+if all(isinstance(i, torch.Tensor) for i in trainer.history['train_precision']):
+    train_precision = [i.item() for i in trainer.history['train_precision']]
+else:
+    train_precision = trainer.history['train_precision']
+if all(isinstance(i, torch.Tensor) for i in trainer.history['val_precision']):
+    val_precision = [i.item() for i in trainer.history['val_precision']]
+else:
+    val_precision = trainer.history['val_precision']
+if all(isinstance(i, torch.Tensor) for i in trainer.history['train_recall']):
+    train_recall = [i.item() for i in trainer.history['train_recall']]
+else:
+    train_recall = trainer.history['train_recall']
+if all(isinstance(i, torch.Tensor) for i in trainer.history['val_recall']):
+    val_recall = [i.item() for i in trainer.history['val_recall']]
+else:
+    val_recall = trainer.history['val_recall']
 
 # Create a figure with 5 subplots
 fig, axs = plt.subplots(5, sharex=True, figsize=(10, 15))
