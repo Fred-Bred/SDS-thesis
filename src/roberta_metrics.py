@@ -17,7 +17,7 @@ from utils.dataset import CustomDataset
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 model_id = "roberta-base"
-model_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/trained_models/roberta-base_LR_5e-05__EPOCHS_5__BATCHSIZE_16__TIME_2024-02-29_1952.pt"
+model_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/roberta-base_checkpoint_EPOCH_1_SAMPLES_5208_BATCHSIZE_16.pt"
 
 classes = ["Dismissing", "Secure", "Preoccupied"]
 num_labels = len(classes)
@@ -119,7 +119,7 @@ print(classification_report(true_labels, pred_labels, target_names=classes, zero
 
 # Create output folder
 model_name = model_path.split("/")[-1].split(".")[0]
-output_folder = f"Outputs/{model_name}"
+output_folder = f"Outputs/trained_models_{model_name}"
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
@@ -134,7 +134,7 @@ plt.xticks(tick_marks, classes, rotation=45)
 plt.yticks(tick_marks, classes)
 plt.xlabel('Predicted label')
 plt.ylabel('True label')
-plt.savefig(f'Outputs/{model_name}/confusion_matrix_{model_name}.png')
+plt.savefig(f'{output_folder}/confusion_matrix_{model_name}.png')
 
 # Write metrics to text file
 with open(f'{output_folder}/REPORT__{model_name}.txt', 'w') as f:
