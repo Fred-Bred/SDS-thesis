@@ -55,7 +55,7 @@ sns.histplot(turns_per_doc, bins=20)
 plt.xlabel('Turn Length')
 plt.ylabel('Frequency')
 plt.title('PACS Distribution of Patient Turns per Document')
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_Turns_per_document.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/Figures/PACS_Turns_per_document.png")
 
 # Bar plot of patient turn length
 plt.figure(figsize=(10, 6))
@@ -63,7 +63,7 @@ sns.histplot([len(turn.split()) for turn in all_patient_turns], bins=20, color="
 plt.title("PACS Distribution of Patient Turn Length")
 plt.xlabel("Word Count")
 plt.ylabel("Frequency")
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_Patient_turn_length.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/Figures/PACS_Patient_turn_length.png")
 
 #%% PACS training data description
 # PACS folder path
@@ -111,7 +111,7 @@ sns.histplot(turns_per_doc, bins=20)
 plt.xlabel('Turn Length')
 plt.ylabel('Frequency')
 plt.title('PACS_train Distribution of Patient Turns per Document')
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_train_Turns_per_document.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/Figures/PACS_train_Turns_per_document.png")
 
 # Bar plot of patient turn length
 plt.figure(figsize=(10, 6))
@@ -119,7 +119,7 @@ sns.histplot([len(turn.split()) for turn in all_train_turns], bins=20, color="me
 plt.title("PACS_train Distribution of Patient Turn Length")
 plt.xlabel("Word Count")
 plt.ylabel("Frequency")
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_train_Patient_turn_length.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/Figures/PACS_train_Patient_turn_length.png")
 
 #%% PACS validation data description
 # PACS folder path
@@ -167,7 +167,7 @@ sns.histplot(turns_per_doc, bins=20)
 plt.xlabel('Turn Length')
 plt.ylabel('Frequency')
 plt.title('PACS_val Distribution of Patient Turns per Document')
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_val_Turns_per_document.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/Figures/PACS_val_Turns_per_document.png")
 
 # Bar plot of patient turn length
 plt.figure(figsize=(10, 6))
@@ -175,7 +175,7 @@ sns.histplot([len(turn.split()) for turn in all_val_turns], bins=20, color="lime
 plt.title("PACS_val Distribution of Patient Turn Length")
 plt.xlabel("Word Count")
 plt.ylabel("Frequency")
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/PACS_val_Patient_turn_length.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/Figures/PACS_val_Patient_turn_length.png")
 
 #%% Anno-MI description
 # Load anno-mi data
@@ -199,7 +199,7 @@ sns.histplot([len(turn.split()) for turn in annomi_client_turns], bins=20, color
 plt.title("Anno-MI Distribution of Client Turn Length")
 plt.xlabel("Word Count")
 plt.ylabel("Frequency")
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/AnnoMI_Client_turn_length.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/Figures/AnnoMI_Client_turn_length.png")
 
 #%% DAIC-WOZ description
 DAIC_WOZ_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/DAIC-WOZ/Transcripts"
@@ -243,7 +243,7 @@ sns.histplot([len(turn.split()) for turn in hope_patient_turns], bins=20, color=
 plt.title("HOPE Distribution of Patient Turn Length")
 plt.xlabel("Word Count")
 plt.ylabel("Frequency")
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Figures/HOPE_Patient_turn_length.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/Figures/HOPE_Patient_turn_length.png")
 
 #%% MEMO description
 # MEMO folder path
@@ -271,7 +271,7 @@ sns.histplot([len(turn.split()) for turn in memo_patient_turns], bins=20, color=
 plt.title("MEMO Distribution of Patient Turn Length")
 plt.xlabel("Word Count")
 plt.ylabel("Frequency")
-plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/MEMO_Patient_turn_length.png")
+plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/Figures/MEMO_Patient_turn_length.png")
 #%%
 # Print results
 print("-------")
@@ -316,7 +316,7 @@ print(f"\nAverage length of utterances: {mean(utterance_lengths)}\n")
 print("-------")
 
 #%% Print to text file
-with open("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Figures/Dataset_descriptives.txt", 'w') as f:
+with open("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/Dataset_descriptives.txt", 'w') as f:
     f.write("-------")
     f.write("\n***PACS data set description***\n")
     f.write(f"\nNumber of documents loaded: {len(patient_turns)}\n")
