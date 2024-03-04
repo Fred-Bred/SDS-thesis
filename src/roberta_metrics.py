@@ -17,7 +17,7 @@ from utils.dataset import CustomDataset
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 model_id = "roberta-base"
-model_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/roberta-base_2024-03-01_1958/roberta-base_checkpoint_EPOCH_1_SAMPLES_5208_BATCHSIZE_16.pt"
+model_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/roberta-base_2024-03-01_1958/roberta-base_checkpoint_EPOCH_3_SAMPLES_5208_BATCHSIZE_16.pt"
 
 classes = ["Dismissing", "Secure", "Preoccupied"]
 num_labels = len(classes)
