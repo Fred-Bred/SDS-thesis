@@ -119,7 +119,7 @@ print(classification_report(true_labels, pred_labels, target_names=classes, zero
 
 # Create output folder
 model_name = model_path.split("/")[-1].split(".")[0]
-output_folder = f"Outputs/trained_models_{model_name}"
+output_folder = f"Outputs/trained_models/{model_name}"
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
