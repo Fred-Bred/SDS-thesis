@@ -1,2 +1,2 @@
-# SDS Thesis for Frederik Bredgaard
-This repo contains the scripts, notebooks, and LaTeX files for my thesis in Social Data Science to be written in spring 2024
+# PACS AI
+This project aims to demonstrate the feasibility of classifying a patient's attachment style based on a transcript of any single therapy session.
