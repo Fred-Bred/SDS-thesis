@@ -85,10 +85,8 @@ trainer.fit(num_epochs=num_epochs, train_loader=train_loader, device=device, val
 
 # define the name for trained model based on set parameters and date
 try:
-    # os.makedirs(f"/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models/{trainer.model_id}_{datetime.now().strftime('%Y-%m-%d_%H%M')}", exist_ok=True)
     os.makedirs(trainer.model_dir, exist_ok=True)
     model_name = f"{model_id}_LR_{learning_rate}__EPOCHS_{num_epochs}__BATCHSIZE_{batch_size}__TIME_{datetime.now().strftime('%Y-%m-%d_%H%M')}.pt"
-    # trainer.save('/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models/' + model_name)
     trainer.save(trainer.model_dir + model_name)
 except:
     model_name = f"trained_model_{model_id}__LR_{learning_rate}__EPOCHS_{num_epochs}__TIME_{datetime.now().strftime('%Y-%m-%d_%H%M')}.pt"
@@ -247,4 +245,4 @@ plt.xticks(tick_marks, classes, rotation=45)
 plt.yticks(tick_marks, classes)
 plt.xlabel('Predicted label')
 plt.ylabel('True label')
-plt.savefig(f'Outputs/{trainer.model_dir}/confusion_matrix_{model_name}.png')
+plt.savefig(f'{trainer.model_dir}/confusion_matrix_{model_name}.png')
