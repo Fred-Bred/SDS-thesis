@@ -226,13 +226,13 @@ print(classification_report(true_labels, pred_labels, target_names=classes))
 
 # Write metrics to text file
 with open(f'{trainer.model_dir}/REPORT__{model_name}.txt', 'w') as f:
-    f.write('\n\nValidation metrics:\n')
+    f.write('Validation metrics:\n')
     f.write(f'Accuracy: {final_accuracy}\n')
     f.write(f'Precision: {final_precision}\n')
     f.write(f'Recall: {final_recall}\n')
     f.write('\nConfusion matrix:\n')
     f.write(str(cm))
-    f.write('\nClassification report:\n')
+    f.write('\n\nClassification report:\n')
     f.write(classification_report(true_labels, pred_labels, target_names=classes))
 
 # Save the confusion matrix
