@@ -146,12 +146,6 @@ class Trainer:
             # torch.save(self.model.state_dict(), 'Outputs/trained_models/' + model_name)
             self.save(f"{self.model_dir}/{model_name}")
             print(f'Checkpoint after epoch {epoch+1} saved successfully')
-            # except Exception as e:
-            #     print(f"Error saving checkpoint with name: {e}")
-            #     model_name = f"checkpoint_TIME_{datetime.now().strftime('%Y-%m-%d_%H%M')}.pt"
-            #     # torch.save(self.model.state_dict(), 'Outputs/trained_models/' + model_name)
-            #     self.save("Outputs/trained_models/" + model_name)
-            #     print('Unnamed checkpoint saved successfully')
 
             ### PLOT
             try:
