@@ -78,22 +78,22 @@ count_filtered = filter_by_word_count(train_turns, min_word_count=150) # Filter 
 
 all_train_turns = [item for sublist in train_turns for item in sublist]
 
-n_turns = 0
+n_train_turns = 0
 for lst in train_turns:
     length = len(lst)
-    n_turns += length
+    n_train_turns += length
 
-n_filtered = 0
+n_train_filtered = 0
 for lst in count_filtered:
     length = len(lst)
-    n_filtered += length
+    n_train_filtered += length
 
-n_patient_chunks = 0
+n_train_patient_chunks = 0
 for lst in patient_chunks:
     length = len(lst)
-    n_patient_chunks += length
+    n_train_patient_chunks += length
 
-avg_turn_length = average_word_count(train_turns)
+avg_train_turn_length = average_word_count(train_turns)
 
 # Load and chunk (250+ words) all turns from all documents in folder
 all_chunks = load_and_chunk_speech_turns(folder_path=PACS_train_path)
@@ -134,22 +134,22 @@ count_filtered = filter_by_word_count(val_turns, min_word_count=150) # Filter ou
 
 all_val_turns = [item for sublist in val_turns for item in sublist]
 
-n_turns = 0
+n_val_turns = 0
 for lst in val_turns:
     length = len(lst)
-    n_turns += length
+    n_val_turns += length
 
-n_filtered = 0
+n_val_filtered = 0
 for lst in count_filtered:
     length = len(lst)
-    n_filtered += length
+    n_val_filtered += length
 
-n_patient_chunks = 0
+n_val_patient_chunks = 0
 for lst in patient_chunks:
     length = len(lst)
-    n_patient_chunks += length
+    n_val_patient_chunks += length
 
-avg_turn_length = average_word_count(val_turns)
+avg_val_turn_length = average_word_count(val_turns)
 
 # Load and chunk (250+ words) all turns from all documents in folder
 all_chunks = load_and_chunk_speech_turns(folder_path=PACS_val_path)
