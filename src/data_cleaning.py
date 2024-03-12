@@ -37,7 +37,7 @@ test_data.to_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS
 # AnnoMI dataset
 
 # Load data
-annomi = pd.read_csv("..\data\AnnoMI\AnnoMI-simple.csv")
+annomi = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/AnnoMI/AnnoMI-simple.csv")
 
 # Clean text
 timestamp = r'\b(\d{1,2}:[0-5][0-9]:[0-5][0-9])\b'
