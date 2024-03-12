@@ -27,7 +27,7 @@ max_len = 512
 id2label = {i: label for i, label in enumerate(classes)}
 label2id = {label: i for i, label in enumerate(classes)}
 
-batch_size = 16
+batch_size = 32
 learning_rate = 5e-5
 num_epochs = 5
 weight_decay = 0.01
