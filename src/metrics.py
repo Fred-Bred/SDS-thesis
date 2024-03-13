@@ -19,8 +19,8 @@ preds = pd.read_csv(f'{output_folder}/pacs.csv', sep='\t')
 pred_labels = preds.iloc[:, 1].tolist()
 
 # Load true labels
-y = pd.read_csv('Data/PACS_val.csv', sep='\t')
-true_labels = y.iloc[:, 1].tolist()
+targets = pd.read_csv('Data/PACS_val.csv', sep='\t')
+true_labels = targets.iloc[:, 1].tolist()
 
 # Compute metrics
 cm = confusion_matrix(true_labels, pred_labels)
@@ -61,3 +61,41 @@ with open(f'{output_folder}/metrics_model_{model_number}.txt', 'w') as f:
     f.write(str(cm))
     f.write('\n\nClassification report:\n')
     f.write(str(cr))
+
+# Add a new column to the dataframes representing the length of the instances
+preds['length'] = preds.iloc[:, 0].apply(lambda x: len(x.split()))
+targets['length'] = targets.iloc[:, 0].apply(lambda x: len(x.split()))
+
+# Group the data by length
+grouped_preds = preds.groupby('length')
+grouped_targets = targets.groupby('length')
+
+# Initialize lists to store the metrics for each length
+lengths = []
+accuracies = []
+precisions = []
+recalls = []
+
+# Compute the metrics for each length
+for length in grouped_preds.groups.keys():
+    pred_labels = grouped_preds.get_group(length).iloc[:, 1].tolist()
+    true_labels = grouped_targets.get_group(length).iloc[:, 1].tolist()
+    
+    accuracy = accuracy_score(true_labels, pred_labels)
+    precision = precision_score(true_labels, pred_labels, average='macro')
+    recall = recall_score(true_labels, pred_labels, average='macro')
+    
+    lengths.append(length)
+    accuracies.append(accuracy)
+    precisions.append(precision)
+    recalls.append(recall)
+
+# Plot the results
+plt.figure(figsize=(10, 10))
+plt.plot(lengths, accuracies, label='Accuracy')
+plt.plot(lengths, precisions, label='Precision')
+plt.plot(lengths, recalls, label='Recall')
+plt.xlabel('Sentence Length (words)')
+plt.ylabel('Metric Value')
+plt.legend()
+plt.show()
