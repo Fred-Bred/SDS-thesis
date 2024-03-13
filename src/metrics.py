@@ -15,11 +15,11 @@ output_folder = f"Outputs/trained_models/{model_date}"
 classes = ["Dismissing", "Secure", "Preoccupied"]
 
 # Load predictions 
-preds = pd.read_csv(f'{output_folder}/pacs.csv')
+preds = pd.read_csv(f'{output_folder}/pacs.csv', sep='\t')
 pred_labels = preds.iloc[:, 1].tolist()
 
 # Load true labels
-y = pd.read_csv('Data/PACS_val.csv')
+y = pd.read_csv('Data/PACS_val.csv', sep='\t')
 true_labels = y.iloc[:, 1].tolist()
 
 # Compute metrics
@@ -59,5 +59,5 @@ with open(f'{output_folder}/metrics_model_{model_number}.txt', 'w') as f:
     f.write(f'Recall: {recall}\n')
     f.write('\nConfusion matrix:\n')
     f.write(str(cm))
-    f.write('\nClassification report:\n')
+    f.write('\n\nClassification report:\n')
     f.write(str(cr))
