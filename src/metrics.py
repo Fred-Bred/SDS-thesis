@@ -5,10 +5,12 @@ import numpy as np
 import sys
 
 # Parse arguments
-model_name = sys.argv[1]
+model_date = sys.argv[1]
+model_number = sys.argv[2]
 
 # Define paths
-output_folder = f"Outputs/trained_models/{model_name}"
+output_folder = f"Outputs/trained_models/{model_date}"
+model_path = f"{model_date}/model_{model_number}.pt"
 
 # Define the classes
 classes = ["Dismissing", "Secure", "Preoccupied"]
@@ -41,17 +43,17 @@ print(cr)
 # Plot and save the confusion matrix
 plt.figure(figsize=(10, 10))
 plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
-plt.title('Confusion matrix')
+plt.title(f'Confusion Matrix | Model {model_number} | {model_date}')
 plt.colorbar()
 tick_marks = np.arange(len(classes))
 plt.xticks(tick_marks, classes, rotation=45)
 plt.yticks(tick_marks, classes)
 plt.xlabel('Predicted label')
 plt.ylabel('True label')
-plt.savefig(f'{output_folder}/confusion_matrix_{model_name}.png')
+plt.savefig(f'{output_folder}/confusion_matrix_{model_date}.png')
 
 # Write metrics to text file
-with open(f'{output_folder}/metrics.txt', 'w') as f:
+with open(f'{output_folder}/metrics_model_{model_number}.txt', 'w') as f:
     f.write('\n\nValidation metrics:\n')
     f.write(f'Accuracy: {accuracy}\n')
     f.write(f'Precision: {precision}\n')
