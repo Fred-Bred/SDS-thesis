@@ -10,7 +10,6 @@ model_number = sys.argv[2]
 
 # Define paths
 output_folder = f"Outputs/trained_models/{model_date}"
-model_path = f"{model_date}/model_{model_number}.pt"
 
 # Define the classes
 classes = ["Dismissing", "Secure", "Preoccupied"]
