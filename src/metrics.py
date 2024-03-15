@@ -98,12 +98,18 @@ targets['bin'] = targets['length'].apply(bin_length)
 grouped_preds = preds.groupby('bin')
 grouped_targets = targets.groupby('bin')
 
+# Define a function to sort the bins
+def sort_bins(bin):
+    if bin == '751+':
+        return 10000  # Return a large number for '751+' so it is sorted last
+    return int(bin.split('-')[1]) if '-' in bin else int(bin.split('+')[0])
+
 # Initialize lists to store the metrics for each bin
 bins = []
 accuracies = []
 
 # Compute the metrics for each bin
-for bin in sorted(grouped_preds.groups.keys()):
+for bin in sorted(grouped_preds.groups.keys(), key=sort_bins):
     pred_labels = grouped_preds.get_group(bin).iloc[:, 1].tolist()
     true_labels = grouped_targets.get_group(bin).iloc[:, 1].tolist()
     
