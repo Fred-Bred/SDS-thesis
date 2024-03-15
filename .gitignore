@@ -4,6 +4,9 @@ venv/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
+# Exploration notebook
+exploration.ipynb
+
 # Data files or directories (customize as needed)
 data/
 
