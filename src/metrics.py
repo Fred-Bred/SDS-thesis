@@ -118,61 +118,83 @@ for bin in sorted(grouped_preds.groups.keys(), key=sort_bins):
     bins.append(bin)
     accuracies.append(accuracy)
 
+# # Plot the results
+# plt.figure(figsize=(10, 10))
+# plt.plot(bins, accuracies, label='Accuracy')
+# plt.xlabel('Turn Length (words)')
+# plt.ylabel('Accuracy')
+# plt.title(f'Accuracy by Turn Length | Model {model_number} | {model_date}')
+# plt.savefig(f'{output_folder}/metrics_by_length_{model_date}_model {model_number}.png')
+
+# Compute the metrics for each bin
+for bin in sorted(grouped_preds.groups.keys(), key=sort_bins):
+    pred_labels = grouped_preds.get_group(bin).iloc[:, 1].tolist()
+    true_labels = grouped_targets.get_group(bin).iloc[:, 1].tolist()
+    
+    accuracy = accuracy_score(true_labels, pred_labels)
+    
+    bins.append(bin)
+    accuracies.append(accuracy)
+
 # Plot the results
-plt.figure(figsize=(10, 10))
-plt.plot(bins, accuracies, label='Accuracy')
-plt.xlabel('Turn Length (words)')
-plt.ylabel('Accuracy')
+fig, ax1 = plt.subplots(figsize=(10, 10))
+
+# Plot the histogram
+counts = [len(grouped_preds.get_group(bin)) for bin in bins]
+ax1.bar(bins, counts, color='gray', alpha=0.5, label='Number of Samples')
+
+# Plot the line graph
+ax2 = ax1.twinx()
+ax2.plot(bins, accuracies, label='Accuracy', color='b')
+
+# Set labels and title
+ax1.set_xlabel('Turn Length (words)')
+ax1.set_ylabel('Number of Samples', color='gray')
+ax2.set_ylabel('Accuracy', color='b')
 plt.title(f'Accuracy by Turn Length | Model {model_number} | {model_date}')
+
+# Set legend
+fig.legend(loc="upper right")
+
 plt.savefig(f'{output_folder}/metrics_by_length_{model_date}_model {model_number}.png')
 
-# Initialize a dictionary to store the class distributions for each bin
-class_distributions = {}
+# # Initialize a dictionary to store the class distributions for each bin
+# class_distributions = {}
 
-# Compute the class distribution for each bin
-for bin in sorted(grouped_targets.groups.keys()):
-    true_labels = grouped_targets.get_group(bin).iloc[:, 1].tolist()
-    class_distribution = Counter(true_labels)
-    class_distributions[bin] = class_distribution
+# # Compute the class distribution for each bin
+# for bin in sorted(grouped_targets.groups.keys()):
+#     true_labels = grouped_targets.get_group(bin).iloc[:, 1].tolist()
+#     class_distribution = Counter(true_labels)
+#     class_distributions[bin] = class_distribution
 
-# Define a function to sort the bins
-def sort_bins(bin):
-    if bin == '751+':
-        return 10000  # Return a large number for '751+' so it is sorted last
-    return int(bin.split('-')[0])
+# # Define a function to sort the bins
+# def sort_bins(bin):
+#     if bin == '751+':
+#         return 10000  # Return a large number for '751+' so it is sorted last
+#     return int(bin.split('-')[0])
 
-# Sort the bins using the custom function
-sorted_bins = sorted(class_distributions.keys(), key=sort_bins)
+# # Sort the bins using the custom function
+# sorted_bins = sorted(class_distributions.keys(), key=sort_bins)
 
 # # Plot the class distributions
 # plt.figure(figsize=(10, 10))
-# for class_label in sorted(list(class_distributions.values())[0].keys()):
-#     plt.plot(sorted_bins, [class_distributions[bin][class_label] for bin in sorted_bins], label=f'Class {class_label}')
+
+# # Get the unique class labels
+# class_labels = sorted(list(class_distributions.values())[0].keys())
+
+# # Create a bar plot for each class
+# bar_width = 0.8 / len(class_labels)  # Adjust the bar width based on the number of classes
+# for i, class_label in enumerate(class_labels):
+#     plt.bar([j + i * bar_width for j in range(len(sorted_bins))],
+#             [class_distributions[bin][class_label] for bin in sorted_bins],
+#             width=bar_width,
+#             label=f'Class {class_label}')
+
+# # Set the x-ticks to be the bin names
+# plt.xticks(range(len(sorted_bins)), sorted_bins)
+
 # plt.xlabel('Turn Length (words)')
 # plt.ylabel('Number of Instances')
-# plt.title(f'Class Distribution by Turn Length | Model {model_number} | {model_date}')
+# plt.title(f'Class Distribution by Turn Length (Validation Set)')
 # plt.legend()
-# plt.savefig(f'{output_folder}/class_distribution_by_length_{model_date}_model {model_number}.png')
-
-# Plot the class distributions
-plt.figure(figsize=(10, 10))
-
-# Get the unique class labels
-class_labels = sorted(list(class_distributions.values())[0].keys())
-
-# Create a bar plot for each class
-bar_width = 0.8 / len(class_labels)  # Adjust the bar width based on the number of classes
-for i, class_label in enumerate(class_labels):
-    plt.bar([j + i * bar_width for j in range(len(sorted_bins))],
-            [class_distributions[bin][class_label] for bin in sorted_bins],
-            width=bar_width,
-            label=f'Class {class_label}')
-
-# Set the x-ticks to be the bin names
-plt.xticks(range(len(sorted_bins)), sorted_bins)
-
-plt.xlabel('Turn Length (words)')
-plt.ylabel('Number of Instances')
-plt.title(f'Class Distribution by Turn Length (Validation Set)')
-plt.legend()
-plt.savefig(f'{output_folder}/class_distribution_by_length.png')
+# plt.savefig(f'{output_folder}/class_distribution_by_length.png')
