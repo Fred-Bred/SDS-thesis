@@ -118,24 +118,6 @@ for bin in sorted(grouped_preds.groups.keys(), key=sort_bins):
     bins.append(bin)
     accuracies.append(accuracy)
 
-# # Plot the results
-# plt.figure(figsize=(10, 10))
-# plt.plot(bins, accuracies, label='Accuracy')
-# plt.xlabel('Turn Length (words)')
-# plt.ylabel('Accuracy')
-# plt.title(f'Accuracy by Turn Length | Model {model_number} | {model_date}')
-# plt.savefig(f'{output_folder}/metrics_by_length_{model_date}_model {model_number}.png')
-
-# Compute the metrics for each bin
-for bin in sorted(grouped_preds.groups.keys(), key=sort_bins):
-    pred_labels = grouped_preds.get_group(bin).iloc[:, 1].tolist()
-    true_labels = grouped_targets.get_group(bin).iloc[:, 1].tolist()
-    
-    accuracy = accuracy_score(true_labels, pred_labels)
-    
-    bins.append(bin)
-    accuracies.append(accuracy)
-
 # Plot the results
 fig, ax1 = plt.subplots(figsize=(10, 10))
 
