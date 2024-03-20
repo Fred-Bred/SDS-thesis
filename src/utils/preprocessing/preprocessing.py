@@ -61,7 +61,7 @@ def sendto_txt(input, output_dir, dataset_name, input_dir=None, save_txt=False):
     Send the cleaned dataset to a txt file.
 
     Args:
-        input: list, containing the cleaned dataset. Mutually exclusive with input_dir.
+        input: list or pandas dataframe, containing the cleaned dataset. Mutually exclusive with input_dir.
         input_dir: str, the input directory. Mutually exclusive with input.
         output_dir: str, the output directory.
         dataset_name: str, the name of the dataset.
