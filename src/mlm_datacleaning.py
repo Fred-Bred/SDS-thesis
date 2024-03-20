@@ -14,7 +14,7 @@ daicwoz_dir = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Da
 #%%
 # Load and clean annomi data
 annomi_df = pd.read_csv(annomi)
-annomi_client = annomi[annomi['interlocutor'] == 'client']
+annomi_client = annomi_df[annomi_df['interlocutor'] == 'client']
 
 # Remove unintelligible utterances
 timestamp = r'\b(\d{1,2}:[0-5][0-9]:[0-5][0-9])\b'
