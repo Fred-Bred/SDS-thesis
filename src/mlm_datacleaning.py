@@ -18,7 +18,7 @@ annomi_client = annomi_df[annomi_df['interlocutor'] == 'client']
 
 # Remove unintelligible utterances
 timestamp = r'\b(\d{1,2}:[0-5][0-9]:[0-5][0-9])\b'
-annomi_client['utterance_text'] = annomi_client['utterance_text'].str.replace(r'\[unintelligible ' + timestamp + r'\]', '<UNK>', regex=True)
+annomi_client.loc[:, 'utterance_text'] = annomi_client['utterance_text'].str.replace(r'\[unintelligible ' + timestamp + r'\]', '<UNK>', regex=True)
 
 # Write to txt
 sendto_txt(annomi_client, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data", "annomi", save_txt=True)
@@ -49,3 +49,10 @@ hope_client = hope[hope['Type'] == 'P']
 
 # Write to txt
 sendto_txt(hope_client, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data", "hope", save_txt=True)
+
+#%%
+# Send PACS training data to txt
+pacs_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_train.csv"
+
+pacs = pd.read_csv(pacs_path, sep='\t')
+sendto_txt(pacs, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data", "pacs_train", save_txt=True)
