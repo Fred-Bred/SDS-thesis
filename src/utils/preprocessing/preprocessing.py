@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 import numpy as np
+import pandas as pd
 
 import os
 
@@ -47,5 +48,50 @@ def group_texts(examples):
     }
     return result
 
-# def sendto_txt(input, output_dir):
-#     for file in os.listdir(output_dir):
+def csv_to_txtlist(input_dir):
+    texts = []
+    for file in os.listdir(input_dir):
+        df = pd.read_csv(os.path.join(input_dir, file))
+        text = df['text'].tolist()
+        texts.extend(text)
+    return texts
+
+def sendto_txt(input, output_dir, dataset_name, input_dir=None, save_txt=False):
+    """
+    Send the cleaned dataset to a txt file.
+
+    Args:
+        input: list, containing the cleaned dataset. Mutually exclusive with input_dir.
+        input_dir: str, the input directory. Mutually exclusive with input.
+        output_dir: str, the output directory.
+        dataset_name: str, the name of the dataset.
+    """
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    if input_dir:
+        text = csv_to_txtlist(input_dir)
+
+    if input:
+        if isinstance(input, pd.DataFrame):
+            try:
+                text = input['text'].tolist()
+            except KeyError:
+                try:
+                    text = input['Text'].tolist()
+                except KeyError:
+                    try:
+                        text = input['utterance_text'].tolist()
+                    except KeyError:
+                        text = input['Utterance'].tolist()
+        
+        elif isinstance(input, list):
+            text = [str(turn) for turn in input]
+
+    if save_txt:
+        with open(os.path.join(output_dir, f"{dataset_name}.txt"), 'w') as f:
+            for turn in text:
+                f.write(turn + '\n')
+        print(f"{dataset_name} saved to {output_dir}/{dataset_name}.txt")
+    else:
+        return text
