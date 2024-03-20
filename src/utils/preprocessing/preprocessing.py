@@ -72,7 +72,7 @@ def sendto_txt(input, output_dir, dataset_name, input_dir=None, save_txt=False):
     if input_dir:
         text = csv_to_txtlist(input_dir)
 
-    if input:
+    if input is not None:
         if isinstance(input, pd.DataFrame):
             try:
                 text = input['text'].tolist()
@@ -91,7 +91,7 @@ def sendto_txt(input, output_dir, dataset_name, input_dir=None, save_txt=False):
     if save_txt:
         with open(os.path.join(output_dir, f"{dataset_name}.txt"), 'w') as f:
             for turn in text:
-                f.write(turn + '\n')
+                f.write(str(turn) + '\n')
         print(f"{dataset_name} saved to {output_dir}/{dataset_name}.txt")
     else:
         return text
