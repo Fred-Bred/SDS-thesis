@@ -20,8 +20,13 @@ annomi_client = annomi_df[annomi_df['interlocutor'] == 'client']
 timestamp = r'\b(\d{1,2}:[0-5][0-9]:[0-5][0-9])\b'
 annomi_client.loc[:, 'utterance_text'] = annomi_client['utterance_text'].str.replace(r'\[unintelligible ' + timestamp + r'\]', '<UNK>', regex=True)
 
+# make train/test split
+annomi_train = annomi_client.sample(frac=0.8, random_state=42)
+annomi_test = annomi_client.drop(annomi_train.index)
+
 # Write to txt
-sendto_txt(annomi_client, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data", "annomi", save_txt=True)
+sendto_txt(annomi_train, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretaining_train", "annomi_train", save_txt=True)
+sendto_txt(annomi_test, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretaining_test", "annomi_test", save_txt=True)
 
 #%%
 # Load and clean daicwoz data
@@ -33,8 +38,13 @@ for file in daic_list[1:]:
 
 daic = daic.reset_index(drop=True)
 
+# Make train/test split
+daic_train = daic.sample(frac=0.8, random_state=42)
+daic_test = daic.drop(daic_train.index)
+
 # Write to txt
-sendto_txt(daic, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data", "daic-woz", save_txt=True)
+sendto_txt(daic_train, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining_train", "daic-woz_train", save_txt=True)
+sendto_txt(daic_test, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining_test", "daic-woz_test", save_txt=True)
 
 #%%
 # Load and clean hope data
@@ -47,12 +57,21 @@ for file in hope_list[1:]:
 hope = hope.reset_index(drop=True)
 hope_client = hope[hope['Type'] == 'P']
 
+# Make train/test split
+hope_train = hope_client.sample(frac=0.8, random_state=42)
+hope_test = hope_client.drop(hope_train.index)
+
 # Write to txt
-sendto_txt(hope_client, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data", "hope", save_txt=True)
+sendto_txt(hope_train, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining_train", "hope_train", save_txt=True)
+sendto_txt(hope_test, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining_test", "hope_test", save_txt=True)
 
 #%%
 # Send PACS training data to txt
-pacs_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_train.csv"
+pacs_train_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_train.csv"
 
-pacs = pd.read_csv(pacs_path, sep='\t')
-sendto_txt(pacs, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data", "pacs_train", save_txt=True)
+pacs_train = pd.read_csv(pacs_train_path, sep='\t')
+sendto_txt(pacs_train, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining_train", "pacs_train", save_txt=True)
+
+pacs_test_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_test.csv"
+pacs_test = pd.read_csv(pacs_test_path, sep='\t')
+sendto_txt(pacs_test, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining_test", "pacs_test", save_txt=True)
