@@ -23,8 +23,8 @@ w_decay = 0.01 if not args.weight_decay else args.weight_decay
 
 # Paths
 train_files = []
-train_dir = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data" if not args.train_dir else args.train_dir
-test_dir = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data" if not args.train_dir else args.test_dir
+train_dir = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining" if not args.train_dir else args.train_dir
+test_dir = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining" if not args.train_dir else args.test_dir
 output_dir = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/trained_models/pretrained" if not args.output_dir else args.output_dir
 
 # Load data
