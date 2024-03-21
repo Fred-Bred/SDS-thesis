@@ -2,6 +2,7 @@ import torch
 from torch import nn
 import numpy as np
 import pandas as pd
+from transformers import AutoTokenizer
 
 import os
 
@@ -18,19 +19,23 @@ def pad_tensors(input_ids, max_length):
 
     return padded_sequence
 
-def preprocess_mlm(samples, tokenizer):
-    return tokenizer([" ".join(sample) for sample in samples["text"]])
+# if __name__ == "__main__":
+#     tokenizer = AutoTokenizer.from_pretrained("roberta-base")
+
+#     def preprocess_mlm(samples):
+#         return tokenizer([" ".join(sample) for sample in samples["text"]])
 
 
-def group_texts(examples):
+def group_texts(examples, block_size):
     """
     Concatenate all texts and return a dictionary with keys as the input keys and values as lists of lists of tokens.
     
     Args:
         examples: dict, containing input keys as keys and lists of tokens as values.
-        """
+        block_size: int, the size of the blocks to split the concatenated examples into.
+    """
     # Concatenate all texts.
-    concatenated_examples = {k: sum(examples[k], []) for k in examples.keys()}
+    concatenated_examples = {k: [item for sublist in examples[k] for item in sublist] for k in examples.keys()}
     total_length = len(concatenated_examples[list(examples.keys())[0]])
    
     total_length = (total_length // block_size) * block_size

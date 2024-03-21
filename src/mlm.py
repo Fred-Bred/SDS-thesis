@@ -1,6 +1,6 @@
 from transformers import AutoTokenizer, AutoModelForMaskedLM, DataCollatorForLanguageModeling, Trainer, TrainingArguments
 from datasets import load_dataset
-from utils.preprocessing.preprocessing import preprocess_mlm, group_texts
+from utils.preprocessing.preprocessing import group_texts
 import argparse
 
 import math
@@ -33,14 +33,18 @@ therapy_train = load_dataset("text", data_dir=train_dir, sample_by='paragraph')
 therapy_test = load_dataset("text", data_dir=test_dir, sample_by='paragraph')
 
 # Preprocess data
-tokenizer = AutoTokenizer("roberta-base")
+tokenizer = AutoTokenizer.from_pretrained("roberta-base")
+
+def preprocess_mlm(samples):
+    return tokenizer([" ".join(sample) for sample in samples["text"]])
+
 
 train_dataset = therapy_train.map(preprocess_mlm, batched=True)
 test_dataset = therapy_test.map(preprocess_mlm, batched=True)
 
 block_size = 128
-mlm_train_dataset = train_dataset.map(group_texts, batched=True)
-mlm_test_dataset = test_dataset.map(group_texts, batched=True)
+mlm_train_dataset = train_dataset.map(lambda examples: group_texts(examples, block_size), batched=True)
+mlm_test_dataset = test_dataset.map(lambda examples: group_texts(examples, block_size), batched=True)
 
 # Dynamic padding
 tokenizer.pad_token = tokenizer.eos_token
@@ -62,8 +66,8 @@ training_args = TrainingArguments(
 trainer = Trainer(
     model=model,
     args=training_args,
-    train_dataset=mlm_train_dataset,
-    eval_dataset=mlm_test_dataset,
+    train_dataset=mlm_train_dataset['train'],
+    eval_dataset=mlm_test_dataset['test'],
     data_collator=data_collator,
 )
 
