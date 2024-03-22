@@ -25,8 +25,8 @@ annomi_train = annomi_client.sample(frac=0.8, random_state=42)
 annomi_test = annomi_client.drop(annomi_train.index)
 
 # Write to txt
-sendto_txt(annomi_train, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretaining_train", "annomi_train", save_txt=True)
-sendto_txt(annomi_test, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretaining_test", "annomi_test", save_txt=True)
+sendto_txt(annomi_train, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining_train", "annomi_train", save_txt=True)
+sendto_txt(annomi_test, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining_test", "annomi_test", save_txt=True)
 
 #%%
 # Load and clean daicwoz data
@@ -70,8 +70,8 @@ sendto_txt(hope_test, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS
 pacs_train_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_train.csv"
 
 pacs_train = pd.read_csv(pacs_train_path, sep='\t')
-sendto_txt(pacs_train, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining_train", "pacs_train", save_txt=True)
+sendto_txt(pacs_train, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data", "pacs_mlm_train", save_txt=True)
 
 pacs_test_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_test.csv"
 pacs_test = pd.read_csv(pacs_test_path, sep='\t')
-sendto_txt(pacs_test, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/pretraining_test", "pacs_test", save_txt=True)
+sendto_txt(pacs_test, "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data", "pacs_mlm_test", save_txt=True)
