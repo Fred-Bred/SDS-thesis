@@ -36,7 +36,7 @@ therapy_test = load_dataset("text", data_dir=test_dir, sample_by='paragraph')
 tokenizer = AutoTokenizer.from_pretrained("roberta-base")
 
 def preprocess_mlm(samples):
-    return tokenizer([" ".join(sample) for sample in samples["text"]])
+    return tokenizer([" ".join(sample) for sample in samples["text"]], truncation=True, max_length=512)
 
 
 train_dataset = therapy_train.map(preprocess_mlm, batched=True)
