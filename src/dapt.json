@@ -1,0 +1,13 @@
+{
+    "DAPT": {
+        "train_data_path": "../Data/mlm_combined_train.txt",
+        "dev_data_path": "../Data/mlm_combined_test.txt",
+        "sent_idxs": [0],
+        "tasks": {
+            "DAPT": {
+                "column_idx": 0,
+                "task_type": "mlm"
+            }
+        }
+    }
+}
