@@ -13,7 +13,7 @@ pacs_train = load_data_with_labels("Data/PACS_labels.xlsx", "Data/PACS_train")
 pacs_dev = load_data_with_labels("Data/PACS_labels.xlsx", "Data/PACS_val")
 pacs_test = load_data_with_labels("Data/PACS_labels.xlsx", "Data/PACS_test")
 
-# Combine turns within documents until the target length is reached
+# Combine turns within documents to reach the target length
 def combine_turns(data, target_length):
     combined_data = pd.DataFrame(columns=["text", "label", "document"])
     current_length = 0
@@ -28,8 +28,9 @@ def combine_turns(data, target_length):
             current_label = row["label"]
             current_length += turn_length
         else:
-            new_row = pd.DataFrame({"text": [current_turn], "label": [current_label], "document": [current_document]})
-            combined_data = pd.concat([combined_data, new_row], ignore_index=True)
+            if current_length >= target_length:  # Add this line
+                new_row = pd.DataFrame({"text": [current_turn], "label": [current_label], "document": [current_document]})
+                combined_data = pd.concat([combined_data, new_row], ignore_index=True)
             current_length = turn_length
             current_document = row["document"]
             current_turn = row["text"] + " "
