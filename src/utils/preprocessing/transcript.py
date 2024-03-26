@@ -300,7 +300,7 @@ def load_data_with_labels(labels_path, folder_path):
         # For each patient turn, create a new row in the result DataFrame
         data = []
         for patient_turn in p_turns:
-            data.append({'text': patient_turn, 'label': label})
+            data.append({'text': patient_turn, 'label': label, 'document': document_name})
 
         # Append the DataFrame to the list
         df_list.append(pd.DataFrame(data))
