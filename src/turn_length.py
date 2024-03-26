@@ -28,7 +28,8 @@ def combine_turns(data, target_length):
             current_label = row["label"]
             current_length += turn_length
         else:
-            combined_data = combined_data.append({"text": current_turn, "label": current_label, "document": current_document}, ignore_index=True)
+            new_row = pd.DataFrame({"text": [current_turn], "label": [current_label], "document": [current_document]})
+            combined_data = pd.concat([combined_data, new_row], ignore_index=True)
             current_length = turn_length
             current_document = row["document"]
             current_turn = row["text"] + " "
