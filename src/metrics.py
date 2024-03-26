@@ -2,12 +2,20 @@ from sklearn.metrics import confusion_matrix, classification_report, accuracy_sc
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-import sys
+import argparse
 from collections import Counter
 
 # Parse arguments
-model_date = sys.argv[1] # Model date (e.g. 2024.03.13_11.54.44)
-model_number = sys.argv[2] # Model number (e.g. 7)
+parser = argparse.ArgumentParser(description="Compute metrics for a model")
+parser.add_argument("--model_date", type=str, help="Model date (e.g. 2024.03.13_11.54.44)")
+parser.add_argument("--model_number", type=int, help="Model number (e.g. 7)")
+parser.add_argument("--min_length", type=int, help="Minimum length of the instances (0 for single pt turns)")
+
+args = parser.parse_args()
+
+model_date = args.model_date # Model date (e.g. 2024.03.13_11.54.44)
+model_number = args.model_number # Model number (e.g. 7)
+min_length = args.min_length # Minimum length of the instances (0 for single pt turns)
 
 # Define paths
 output_folder = f"Outputs/trained_models/{model_date}"
@@ -20,7 +28,7 @@ preds = pd.read_csv(f'{output_folder}/pacs.csv', sep='\t')
 pred_labels = preds.iloc[:, 1].tolist()
 
 # Load true labels
-targets = pd.read_csv('Data/PACS_val.csv', sep='\t')
+targets = pd.read_csv('Data/PACS_val.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/PACS_varying_lengths/val_length_{min_length}.csv', sep='\t')
 true_labels = targets.iloc[:, 1].tolist()
 
 # Compute metrics
