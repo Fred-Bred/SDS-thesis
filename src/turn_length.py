@@ -34,6 +34,7 @@ def combine_turns(data, target_length):
             current_document = row["document"]
             current_turn = row["text"] + " "
             current_label = row["label"]
+    combined_data.reset_index(drop=True, inplace=True)
     return combined_data
 
 pacs_train_combined = combine_turns(pacs_train, int(target_length))
