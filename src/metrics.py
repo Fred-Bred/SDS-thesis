@@ -9,12 +9,14 @@ from collections import Counter
 parser = argparse.ArgumentParser(description="Compute metrics for a model")
 parser.add_argument("--model_date", type=str, help="Model date (e.g. 2024.03.13_11.54.44)")
 parser.add_argument("--model_number", type=int, help="Model number (e.g. 7)")
+parser.add_argument("--model_name", type=str, help="Model name (e.g. roberta-base)")
 parser.add_argument("--min_length", type=int, help="Minimum length of the instances (0 for single pt turns)")
 
 args = parser.parse_args()
 
 model_date = args.model_date # Model date (e.g. 2024.03.13_11.54.44)
 model_number = args.model_number # Model number (e.g. 7)
+model_name = args.model_name # Model name (e.g. roberta-base)
 min_length = args.min_length # Minimum length of the instances (0 for single pt turns)
 
 # Define paths
@@ -141,12 +143,16 @@ ax2.plot(bins, accuracies, label='Accuracy', color='b')
 ax1.set_xlabel('Turn Length (words)')
 ax1.set_ylabel('Number of Samples', color='gray')
 ax2.set_ylabel('Accuracy', color='b')
-plt.title(f'Accuracy by Turn Length | Model {model_number} | {model_date}')
+
+if min_length == 0:
+    plt.title(f'Accuracy by Turn Length | {model_name} | Single PT Turns')
+else:
+    plt.title(f'Accuracy by Turn Length | {model_name} | Min Input Length: {min_length} Words')
 
 # Set legend
 fig.legend(loc="upper right")
 
-plt.savefig(f'{output_folder}/metrics_by_length_{model_date}_model {model_number}.png')
+plt.savefig(f'{output_folder}/metrics_by_length_{model_date}_model_{model_number}.png')
 
 # # Initialize a dictionary to store the class distributions for each bin
 # class_distributions = {}
