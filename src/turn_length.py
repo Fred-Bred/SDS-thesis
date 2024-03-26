@@ -37,9 +37,24 @@ def combine_turns(data, target_length):
     combined_data.reset_index(drop=True, inplace=True)
     return combined_data
 
+# Combine and clean train turns
 pacs_train_combined = combine_turns(pacs_train, int(target_length))
+# Remove tabs and newlines from text
+pacs_train_combined['text'] = pacs_train_combined['text'].str.replace(r'\t', ' ', regex=True)
+pacs_train_combined['text'] = pacs_train_combined['text'].str.replace(r'\n', ' ', regex=True)
+
+# Combine and clean dev and test turns
 pacs_dev_combined = combine_turns(pacs_dev, int(target_length))
+
+# Remove tabs and newlines from text
+pacs_dev_combined['text'] = pacs_dev_combined['text'].str.replace(r'\t', ' ', regex=True)
+pacs_dev_combined['text'] = pacs_dev_combined['text'].str.replace(r'\n', ' ', regex=True)
+
+# Combine and clean test turns
 pacs_test_combined = combine_turns(pacs_test, int(target_length))
+# Remove tabs and newlines from text
+pacs_test_combined['text'] = pacs_test_combined['text'].str.replace(r'\t', ' ', regex=True)
+pacs_test_combined['text'] = pacs_test_combined['text'].str.replace(r'\n', ' ', regex=True)
 
 # Save the combined data
 pacs_train_combined.to_csv(f"Data/PACS_varying_lengths/train_length_{target_length}.csv", index=False, sep="\t")
