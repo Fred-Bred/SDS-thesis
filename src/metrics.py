@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import argparse
 from collections import Counter
+import os
 
 # Parse arguments
 parser = argparse.ArgumentParser(description="Compute metrics for a model")
@@ -21,6 +22,7 @@ min_length = args.min_length # Minimum length of the instances (0 for single pt 
 
 # Define paths
 output_folder = f"Outputs/trained_models/{model_date}"
+os.makedirs(output_folder, exist_ok=True)
 
 # Define the classes
 classes = ["Dismissing", "Secure", "Preoccupied"]
