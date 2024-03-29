@@ -81,26 +81,42 @@ targets['length'] = targets.iloc[:, 0].apply(lambda x: len(x.split()))
 
 # Define a function to categorize the lengths into bins
 def bin_length(length):
-    if length <= 5:
-        return '0-5'
-    elif length <= 50:
-        return '6-50'
-    elif length <= 100:
-        return '51-100'
-    elif length <= 150:
-        return '101-150'
-    elif length <= 200:
-        return '151-200'
-    elif length <= 300:
-        return '201-300'
-    elif length <= 400:
-        return '301-400'
-    elif length <= 500:
-        return '401-500'
-    elif length <= 750:
-        return '501-750'
+    if min_length == 100:
+        if length <= 150:
+            return '100-150'
+        elif length <= 200:
+            return '151-200'
+        elif length <= 300:
+            return '201-300'
+        elif length <= 400:
+            return '301-400'
+        elif length <= 500:
+            return '401-500'
+        elif length <= 750:
+            return '501-750'
+        else:
+            return '751+'
     else:
-        return '751+'
+        if length <= 5:
+            return '0-5'
+        elif length <= 50:
+            return '6-50'
+        elif length <= 100:
+            return '51-100'
+        elif length <= 150:
+            return '101-150'
+        elif length <= 200:
+            return '151-200'
+        elif length <= 300:
+            return '201-300'
+        elif length <= 400:
+            return '301-400'
+        elif length <= 500:
+            return '401-500'
+        elif length <= 750:
+            return '501-750'
+        else:
+            return '751+'
 
 # Apply the function to the 'length' column to create a new 'bin' column
 preds['bin'] = preds['length'].apply(bin_length)
