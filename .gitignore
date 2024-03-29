@@ -12,6 +12,7 @@ data/
 
 # VSCode workspace
 SDS Thesis.code-workspace
+.vscode/
 
 # Literature folder
 lit/
