@@ -39,7 +39,12 @@ pred_labels = preds.iloc[:, 1].tolist()
 if split == "old":
     targets = pd.read_csv('Data/PACS_val.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/PACS_varying_lengths/val_length_{min_length}.csv', sep='\t')
 elif split == "new":
-    targets = pd.read_csv('Data/val_PACS.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/varying_lengths/val_length_{min_length}.csv', sep='\t')
+    if mode == "test":
+        targets = pd.read_csv('Data/test_PACS.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/varying_lengths/test_combined_{min_length}.csv', sep='\t')
+    elif mode == "val":
+        targets = pd.read_csv('Data/val_PACS.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/varying_lengths/val_combined_{min_length}.csv', sep='\t')
+    else:
+        raise ValueError("Invalid mode argument. Must be 'val' or 'test'.")
 else:
     raise ValueError("Invalid split argument. Must be 'old' or 'new'.")
 true_labels = targets.iloc[:, 1].tolist()
@@ -52,12 +57,16 @@ accuracy = accuracy_score(true_labels, pred_labels)
 precision = precision_score(true_labels, pred_labels, average='macro')
 recall = recall_score(true_labels, pred_labels, average='macro')
 
+# Compute normalised confusion matrix
+cm_norm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+
 # Print metrics
 print(f'Accuracy: {accuracy}')
 print(f'Precision: {precision}')
 print(f'Recall: {recall}')
 print('\nConfusion matrix:')
 print(cm)
+print('\nNormalised confusion matrix:')
 print('\nClassification report:')
 print(cr)
 
