@@ -12,6 +12,7 @@ parser.add_argument("--model_date", type=str, help="Model date (e.g. 2024.03.13_
 parser.add_argument("--model_number", type=int, help="Model number (e.g. 7)")
 parser.add_argument("--model_name", type=str, help="Model name (e.g. roberta-base)")
 parser.add_argument("--min_length", type=int, help="Minimum length of the instances (0 for single pt turns)")
+parser.add_argument("--mode", type=str, help="Mode (val or test)", default="val")
 
 args = parser.parse_args()
 
@@ -19,6 +20,7 @@ model_date = args.model_date # Model date (e.g. 2024.03.13_11.54.44)
 model_number = args.model_number # Model number (e.g. 7)
 model_name = args.model_name # Model name (e.g. roberta-base)
 min_length = args.min_length # Minimum length of the instances (0 for single pt turns)
+mode = args.mode # Mode (val or test)
 
 # Define paths
 output_folder = f"Outputs/trained_models/{model_date}"
@@ -163,14 +165,14 @@ ax1.set_ylabel('Number of Samples', color='gray')
 ax2.set_ylabel('Accuracy', color='b')
 
 if min_length == 0:
-    plt.title(f'Accuracy by Turn Length | {model_name} | Single PT Turns')
+    plt.title(f'Accuracy by Turn Length | {model_name} | Single PT Turns | Mode: {mode}')
 else:
     plt.title(f'Accuracy by Turn Length | {model_name} | Min Input Length: {min_length} Words')
 
 # Set legend
 fig.legend(loc="upper right")
 
-plt.savefig(f'{output_folder}/metrics_by_length_{model_date}_model_{model_number}.png')
+plt.savefig(f'{output_folder}/accuracy_by_length_{model_date}_model_{model_number}_{mode}.png')
 
 # # Initialize a dictionary to store the class distributions for each bin
 # class_distributions = {}
