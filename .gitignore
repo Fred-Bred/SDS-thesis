@@ -51,8 +51,7 @@ src/utils/__pycache__/
 *.fls
 *.synctex.gz
 /test_trainer
-
-
+/src/configs/archive
 
 
 ###  LaTeX  ###
