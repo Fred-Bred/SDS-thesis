@@ -13,6 +13,7 @@ parser.add_argument("--model_number", type=int, help="Model number (e.g. 7)")
 parser.add_argument("--model_name", type=str, help="Model name (e.g. roberta-base)")
 parser.add_argument("--min_length", type=int, help="Minimum length of the instances (0 for single pt turns)")
 parser.add_argument("--mode", type=str, help="Mode (val or test)", default="val")
+parser.add_argument("--split", type=str, help="Whether to use the new (stratified) or the old (random) split", default="new")
 
 args = parser.parse_args()
 
@@ -21,6 +22,7 @@ model_number = args.model_number # Model number (e.g. 7)
 model_name = args.model_name # Model name (e.g. roberta-base)
 min_length = args.min_length # Minimum length of the instances (0 for single pt turns)
 mode = args.mode # Mode (val or test)
+split = args.split # Whether to use the new (stratified) or the old (random) split
 
 # Define paths
 output_folder = f"Outputs/trained_models/{model_date}"
@@ -34,7 +36,12 @@ preds = pd.read_csv(f'{output_folder}/pacs.csv', sep='\t')
 pred_labels = preds.iloc[:, 1].tolist()
 
 # Load true labels
-targets = pd.read_csv('Data/PACS_val.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/PACS_varying_lengths/val_length_{min_length}.csv', sep='\t')
+if split == "old":
+    targets = pd.read_csv('Data/PACS_val.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/PACS_varying_lengths/val_length_{min_length}.csv', sep='\t')
+elif split == "new":
+    targets = pd.read_csv('Data/val_PACS.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/varying_lengths/val_length_{min_length}.csv', sep='\t')
+else:
+    raise ValueError("Invalid split argument. Must be 'old' or 'new'.")
 true_labels = targets.iloc[:, 1].tolist()
 
 # Compute metrics
