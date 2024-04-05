@@ -67,6 +67,7 @@ print(f'Recall: {recall}')
 print('\nConfusion matrix:')
 print(cm)
 print('\nNormalised confusion matrix:')
+print(cm_norm)
 print('\nClassification report:')
 print(cr)
 
@@ -90,6 +91,8 @@ with open(f'{output_folder}/metrics_model_{model_number}.txt', 'w') as f:
     f.write(f'Recall: {recall}\n')
     f.write('\nConfusion matrix:\n')
     f.write(str(cm))
+    f.write('\n\nNormalised confusion matrix:\n')
+    f.write(str(cm_norm))
     f.write('\n\nClassification report:\n')
     f.write(str(cr))
 
