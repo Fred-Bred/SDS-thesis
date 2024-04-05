@@ -157,12 +157,17 @@ def sort_bins(bin):
 bins = []
 accuracies = []
 
-# Compute the metrics for each bin
+# Compute the metrics for each bin and also count the class distribution
+class_counts = []
 for bin in sorted(grouped_preds.groups.keys(), key=sort_bins):
     pred_labels = grouped_preds.get_group(bin).iloc[:, 1].tolist()
     true_labels = grouped_targets.get_group(bin).iloc[:, 1].tolist()
     
     accuracy = accuracy_score(true_labels, pred_labels)
+    
+    # Count the class distribution
+    class_count = np.bincount(true_labels)
+    class_counts.append(class_count)
     
     bins.append(bin)
     accuracies.append(accuracy)
@@ -192,6 +197,36 @@ else:
 fig.legend(loc="upper right")
 
 plt.savefig(f'{output_folder}/accuracy_by_length_{model_date}_model_{model_number}_{mode}.png')
+
+# Plot with stacked bars instead of a histogram
+
+# Plot the results
+fig, ax1 = plt.subplots(figsize=(10, 10))
+
+# Plot the stacked bar chart for class distribution
+class_counts = np.array(class_counts).T
+ax1.bar(bins, class_counts[0], color='gray', alpha=0.5, label='Class 0')
+for i in range(1, class_counts.shape[0]):
+    ax1.bar(bins, class_counts[i], bottom=np.sum(class_counts[:i], axis=0), alpha=0.5, label=f'Class {i}')
+
+# Plot the line graph for accuracy
+ax2 = ax1.twinx()
+ax2.plot(bins, accuracies, label='Accuracy', color='b')
+
+# Set labels and title
+ax1.set_xlabel('Turn Length (words)')
+ax1.set_ylabel('Number of Samples', color='gray')
+ax2.set_ylabel('Accuracy', color='b')
+
+if min_length == 0:
+    plt.title(f'Accuracy by Turn Length | {model_name} | Single PT Turns | Mode: {mode}')
+else:
+    plt.title(f'Accuracy by Turn Length | {model_name} | Min Input Length: {min_length} Words')
+
+# Set legend
+fig.legend(loc="upper right")
+
+plt.savefig(f'{output_folder}/accuracy_by_length_wclasses_{model_date}_model_{model_number}_{mode}.png')
 
 # # Initialize a dictionary to store the class distributions for each bin
 # class_distributions = {}
