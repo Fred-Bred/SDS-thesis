@@ -270,7 +270,7 @@ def load_data_with_labels(labels_path, folder_path):
         labels_path (str): The path to the Excel sheet with the labels.
         folder_path (str): The path to the folder containing the documents.
     Returns:
-        A DataFrame with the patient speech turns and their labels."""
+        A DataFrame with the patient speech turns, their labels, and their source document."""
     # Load the Excel sheet
     df = pd.read_excel(labels_path)
 
