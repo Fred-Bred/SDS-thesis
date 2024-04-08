@@ -192,7 +192,7 @@ for bin in sorted(grouped_preds.groups.keys(), key=sort_bins):
 # Plot the results
 fig, ax1 = plt.subplots(figsize=(10, 10))
 
-# Plot the histogram
+# Plot histogram
 counts = [len(grouped_preds.get_group(bin)) for bin in bins]
 ax1.bar(bins, counts, color='gray', alpha=0.5, label='Number of Samples')
 
@@ -215,7 +215,7 @@ fig.legend(loc="upper right")
 
 plt.savefig(f'{output_folder}/accuracy_by_length_{model_date}_model_{model_number}_{mode}.png')
 
-# Plot with stacked bars instead of a histogram
+# Plot with stacked bars instead of histogram
 
 # Plot the results
 fig, ax1 = plt.subplots(figsize=(10, 10))
