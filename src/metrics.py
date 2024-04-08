@@ -117,6 +117,23 @@ def bin_length(length):
             return '501-750'
         else:
             return '751+'
+    elif min_length == 50:
+        if length <= 100:
+            return '50-100'
+        elif length <= 150:
+            return '101-150'
+        elif length <= 200:
+            return '151-200'
+        elif length <= 300:
+            return '201-300'
+        elif length <= 400:
+            return '301-400'
+        elif length <= 500:
+            return '401-500'
+        elif length <= 750:
+            return '501-750'
+        else:
+            return '751+'
     else:
         if length <= 5:
             return '0-5'
