@@ -127,34 +127,37 @@ plt.title("Turn length distribution in test set")
 plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/test_turn_length_distribution.png")
 
 # Plot turn length distributions by class
+# Define the color palette
+palette = {1: 'blue', 2: 'orange', 3: 'green'}
+
 plt.figure(figsize=(10, 5))
-sns.histplot(data=full, x="turn_length", hue="label", bins=50, multiple="dodge")
+sns.histplot(data=full, x="turn_length", bins=50, hue="label", palette=palette, multiple="dodge", legend=True)
 plt.title("Turn length distribution by class in full PACS data set")
-plt.legend(title="Class")
 plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/turn_length_distribution_by_class.png")
 
 plt.figure(figsize=(10, 5))
-sns.histplot(data=train, x="turn_length", hue="label", bins=50, multiple="dodge")
+sns.histplot(data=train, x="turn_length", bins=50, hue="label", palette=palette, multiple="dodge", legend=True)
 plt.title("Turn length distribution by class in train set")
-plt.legend(title="Class")
 plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/train_turn_length_distribution_by_class.png")
 
 plt.figure(figsize=(10, 5))
-sns.histplot(data=val, x="turn_length", hue="label", bins=50, multiple="dodge")
+sns.histplot(data=val, x="turn_length", bins=50, hue="label", palette=palette, multiple="dodge", legend=True)
 plt.title("Turn length distribution by class in validation set")
-plt.legend(title="Class")
 plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/val_turn_length_distribution_by_class.png")
 
 plt.figure(figsize=(10, 5))
-sns.histplot(data=test, x="turn_length", hue="label", bins=50, multiple="dodge")
+sns.histplot(data=test, x="turn_length", bins=50, hue="label", palette=palette, multiple="dodge", legend=True)
 plt.title("Turn length distribution by class in test set")
-plt.legend(title="Class")
 plt.savefig("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/test_turn_length_distribution_by_class.png")
 
 print("Plotting... Done!")
 
 # varying lengths
 print("Loading varying lengths...")
+
+train_combined_50 = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_varying_lengths/train_combined_50.csv", sep="\t")
+val_combined_50 = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_varying_lengths/val_combined_50.csv", sep="\t")
+test_combined_50 = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_varying_lengths/test_combined_50.csv", sep="\t")
 
 train_combined_100 = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_varying_lengths/train_combined_100.csv", sep="\t")
 val_combined_100 = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_varying_lengths/val_combined_100.csv", sep="\t")
@@ -169,6 +172,10 @@ val_combined_250 = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/S
 test_combined_250 = pd.read_csv("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_varying_lengths/test_combined_250.csv", sep="\t")
 
 # Turn lengths
+train_combined_50["turn_length"] = train_combined_50["text"].apply(lambda x: len(x.split()))
+val_combined_50["turn_length"] = val_combined_50["text"].apply(lambda x: len(x.split()))
+test_combined_50["turn_length"] = test_combined_50["text"].apply(lambda x: len(x.split()))
+
 train_combined_100["turn_length"] = train_combined_100["text"].apply(lambda x: len(x.split()))
 train_combined_150["turn_length"] = train_combined_150["text"].apply(lambda x: len(x.split()))
 train_combined_250["turn_length"] = train_combined_250["text"].apply(lambda x: len(x.split()))
@@ -185,6 +192,26 @@ print("Writing to txt...")
 
 # Write to txt
 with open("/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Outputs/Descriptives/PACS_varying_lengths_descriptives.txt", 'w') as f:
+    f.write("Minimum length: 50\n")
+    f.write("Train set min_len 50: \n")
+    f.write(train_combined_50["turn_length"].describe().to_string())
+    f.write("\n")
+    f.write("Class balance:\n")
+    f.write(train_combined_50["label"].value_counts(normalize=True).to_string())
+    f.write("\n\n")
+    f.write("Validation set min_len 50: \n")
+    f.write(val_combined_50["turn_length"].describe().to_string())
+    f.write("\n")
+    f.write("Class balance:\n")
+    f.write(val_combined_50["label"].value_counts(normalize=True).to_string())
+    f.write("\n\n")
+    f.write("Test set min_len 50: \n")
+    f.write(test_combined_50["turn_length"].describe().to_string())
+    f.write("\n")
+    f.write("Class balance:\n")
+    f.write(test_combined_50["label"].value_counts(normalize=True).to_string())
+    f.write("\n\n")
+    f.write("--------------------\n\n")
     f.write("Minimum length: 100\n")
     f.write("Train set min_len 100: \n")
     f.write(train_combined_100["turn_length"].describe().to_string())
