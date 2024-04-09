@@ -1,4 +1,4 @@
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, precision_score, recall_score
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -40,9 +40,9 @@ if split == "old":
     targets = pd.read_csv('Data/PACS_val.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/PACS_varying_lengths/val_length_{min_length}.csv', sep='\t')
 elif split == "new":
     if mode == "test":
-        targets = pd.read_csv('Data/test_PACS.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/varying_lengths/test_combined_{min_length}.csv', sep='\t')
+        targets = pd.read_csv('Data/test_PACS.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/PACS_varying_lengths/test_combined_{min_length}.csv', sep='\t')
     elif mode == "val":
-        targets = pd.read_csv('Data/val_PACS.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/varying_lengths/val_combined_{min_length}.csv', sep='\t')
+        targets = pd.read_csv('Data/val_PACS.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/PACS_varying_lengths/val_combined_{min_length}.csv', sep='\t')
     else:
         raise ValueError("Invalid mode argument. Must be 'val' or 'test'.")
 else:
@@ -50,20 +50,20 @@ else:
 true_labels = targets.iloc[:, 1].tolist()
 
 # Compute metrics
-cm = confusion_matrix(true_labels, pred_labels)
+cm = confusion_matrix(true_labels, pred_labels, labels=[1, 2, 3])
 cr = classification_report(true_labels, pred_labels, target_names=classes, zero_division=0)
 
 accuracy = accuracy_score(true_labels, pred_labels)
-precision = precision_score(true_labels, pred_labels, average='macro')
-recall = recall_score(true_labels, pred_labels, average='macro')
+recall = recall_score(true_labels, pred_labels, average='macro', zero_division=0)
+precision = precision_score(true_labels, pred_labels, average='macro', zero_division=0)
+f1 = f1_score(true_labels, pred_labels, average='macro', zero_division=0)
 
 # Compute normalised confusion matrix
-cm_norm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+cm_norm = confusion_matrix(true_labels, pred_labels, labels=[1, 2, 3], normalize='true')
+cm_norm = np.round(cm_norm, 2)
 
 # Print metrics
 print(f'Accuracy: {accuracy}')
-print(f'Precision: {precision}')
-print(f'Recall: {recall}')
 print('\nConfusion matrix:')
 print(cm)
 print('\nNormalised confusion matrix:')
@@ -87,8 +87,6 @@ plt.savefig(f'{output_folder}/confusion_matrix_{model_date}.png')
 with open(f'{output_folder}/metrics_model_{model_number}.txt', 'w') as f:
     f.write('\n\nValidation metrics:\n')
     f.write(f'Accuracy: {accuracy}\n')
-    f.write(f'Precision: {precision}\n')
-    f.write(f'Recall: {recall}\n')
     f.write('\nConfusion matrix:\n')
     f.write(str(cm))
     f.write('\n\nNormalised confusion matrix:\n')
@@ -173,21 +171,30 @@ def sort_bins(bin):
 # Initialize lists to store the metrics for each bin
 bins = []
 accuracies = []
+recalls = []
+precisions = []
+f1s = []
 
 # Compute the metrics for each bin and also count the class distribution
-class_counts = []
+# class_counts = []
 for bin in sorted(grouped_preds.groups.keys(), key=sort_bins):
     pred_labels = grouped_preds.get_group(bin).iloc[:, 1].tolist()
     true_labels = grouped_targets.get_group(bin).iloc[:, 1].tolist()
     
     accuracy = accuracy_score(true_labels, pred_labels)
-    
-    # Count the class distribution
-    class_count = np.bincount(true_labels)
-    class_counts.append(class_count)
+    recall = recall_score(true_labels, pred_labels, average='macro', zero_division=0)
+    precision = precision_score(true_labels, pred_labels, average='macro', zero_division=0)
+    f1 = f1_score(true_labels, pred_labels, average='macro', zero_division=0)
+        
+    # # Count the class distribution
+    # class_count = np.bincount(true_labels)
+    # class_counts.append(class_count)
     
     bins.append(bin)
     accuracies.append(accuracy)
+    recalls.append(recall)
+    precisions.append(precision)
+    f1s.append(f1)
 
 # Plot the results
 fig, ax1 = plt.subplots(figsize=(10, 10))
@@ -215,35 +222,67 @@ fig.legend(loc="upper right")
 
 plt.savefig(f'{output_folder}/accuracy_by_length_{model_date}_model_{model_number}_{mode}.png')
 
-# Plot with stacked bars instead of histogram
-
-# Plot the results
+# New plot with all metrics
 fig, ax1 = plt.subplots(figsize=(10, 10))
 
-# Plot the stacked bar chart for class distribution
-class_counts = np.array(class_counts).T
-ax1.bar(bins, class_counts[0], color='gray', alpha=0.5, label='Class 0')
-for i in range(1, class_counts.shape[0]):
-    ax1.bar(bins, class_counts[i], bottom=np.sum(class_counts[:i], axis=0), alpha=0.5, label=f'Class {i}')
+# Plot histogram
+counts = [len(grouped_preds.get_group(bin)) for bin in bins]
+ax1.bar(bins, counts, color='gray', alpha=0.5, label='Number of Samples')
 
-# Plot the line graph for accuracy
+# Plot the line graphs
 ax2 = ax1.twinx()
 ax2.plot(bins, accuracies, label='Accuracy', color='b')
+ax2.plot(bins, recalls, label='Recall', color='g')
+ax2.plot(bins, precisions, label='Precision', color='r')
+ax2.plot(bins, f1s, label='F1', color='c')
 
 # Set labels and title
 ax1.set_xlabel('Turn Length (words)')
 ax1.set_ylabel('Number of Samples', color='gray')
-ax2.set_ylabel('Accuracy', color='b')
+ax2.set_ylabel('Metric', color='b')
 
 if min_length == 0:
-    plt.title(f'Accuracy by Turn Length | {model_name} | Single PT Turns | Mode: {mode}')
+    plt.title(f'Metrics by Turn Length | {model_name} | Single PT Turns | Mode: {mode}')
 else:
-    plt.title(f'Accuracy by Turn Length | {model_name} | Min Input Length: {min_length} Words')
+    plt.title(f'Metrics by Turn Length | {model_name} | Min Input Length: {min_length} Words')
 
 # Set legend
 fig.legend(loc="upper right")
 
-plt.savefig(f'{output_folder}/accuracy_by_length_wclasses_{model_date}_model_{model_number}_{mode}.png')
+plt.savefig(f'{output_folder}/metrics_by_length_{model_date}_model_{model_number}_{mode}.png')
+
+# # Plot with stacked bars instead of histogram
+
+# # Plot the results
+# fig, ax1 = plt.subplots(figsize=(10, 10))
+
+# # Plot the stacked bar chart for class distribution
+# # Ensure all inner lists in class_counts have the same length
+# max_len = max(len(lst) for lst in class_counts)
+# class_counts = [lst + [None]*(max_len-len(lst)) for lst in class_counts]
+# class_counts = np.array(class_counts).T
+# ax1.bar(bins, class_counts[0], color='gray', alpha=0.5, label='Class 0')
+# for i in range(1, class_counts.shape[0]):
+#     ax1.bar(bins, class_counts[i], bottom=np.sum(class_counts[:i], axis=0), alpha=0.5, label=f'Class {i}')
+
+# # Plot the line graph for accuracy
+# ax2 = ax1.twinx()
+# ax2.plot(bins, accuracies, label='Accuracy', color='b')
+
+# # Set labels and title
+# ax1.set_xlabel('Turn Length (words)')
+# ax1.set_ylabel('Number of Samples', color='gray')
+# ax2.set_ylabel('Metric', color='b')
+
+# if min_length == 0:
+#     plt.title(f'Accuracy by Turn Length | {model_name} | Single PT Turns | Mode: {mode}')
+# else:
+#     plt.title(f'Accuracy by Turn Length | {model_name} | Min Input Length: {min_length} Words')
+
+# # Set legend
+# fig.legend(loc="upper right")
+
+# plt.savefig(f'{output_folder}/accuracy_by_length_wclasses_{model_date}_model_{model_number}_{mode}.png')
 
 # # Initialize a dictionary to store the class distributions for each bin
 # class_distributions = {}
