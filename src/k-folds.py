@@ -8,10 +8,25 @@ import pandas as pd
 labels_path = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_labels_updated.xlsx"
 data_dir = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/PACS_data"
 
+train_dir = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/train_PACS"
+val_dir = "/home/unicph.domain/wqs493/ucph/securegroupdir/SAMF-SODAS-PACS/Data/val_PACS"
+
 # Load doc names and labels
 pacs_labels = pd.read_excel(labels_path)
-docs = pacs_labels["Document"]
-labels = pacs_labels["Class3"]
+train_docs = os.listdir(train_dir)
+val_docs = os.listdir(val_dir)
+pacs_docs = train_docs + val_docs
+
+# Keep only the rows in the labels file that correspond to the docs in the train and val sets
+pacs = pacs_labels[pacs_labels["Document"].isin(pacs_docs)]
+
+docs = pacs["Document"]
+labels = pacs["Class3"]
+
+print("Length of PACS dataset:", len(pacs))
+print("Number of unique documents:", len(pacs["Document"].unique()))
+print("Number of docs:", len(docs))
+print("Number of labels:", len(labels))
 
 # Make 5 splits of the data
 for i in range (1, 6):
