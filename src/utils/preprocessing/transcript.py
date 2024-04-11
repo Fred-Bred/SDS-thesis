@@ -456,3 +456,39 @@ def load_and_chunk_speech_turns(folder_path, min_word_count=250):
             all_chunks.append(chunks)
 
     return all_chunks
+
+# Combine turns within documents to reach the target length
+def combine_turns(data, target_length):
+    """
+    Combine consecutive turns in the given data to create longer turns with a target length.
+
+    Args:
+        data (pandas.DataFrame): The input data containing columns "text", "label", and "document".
+        target_length (int): The desired length of the combined turns.
+
+    Returns:
+        pandas.DataFrame: A new DataFrame with combined turns, where each row contains a speech turn of a least the specified word count.
+
+    """
+    combined_data = pd.DataFrame(columns=["text", "label", "document"])
+    current_length = 0
+    current_document = ""
+    current_turn = ""
+    current_label = ""
+    for index, row in data.iterrows():
+        turn_length = len(row["text"].split())
+        if current_length + turn_length < target_length and (current_document == row["document"] or current_document == ""):
+            current_document = row["document"]
+            current_turn += row["text"] + " "
+            current_label = row["label"]
+            current_length += turn_length
+        else:
+            if current_length >= target_length:
+                new_row = pd.DataFrame({"text": [current_turn], "label": [current_label], "document": [current_document]})
+                combined_data = pd.concat([combined_data, new_row], ignore_index=True)
+            current_length = turn_length
+            current_document = row["document"]
+            current_turn = row["text"] + " "
+            current_label = row["label"]
+    combined_data.reset_index(drop=True, inplace=True)
+    return combined_data
