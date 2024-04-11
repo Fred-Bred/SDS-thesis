@@ -1,0 +1,13 @@
+{
+    "PACS": {
+        "train_data_path": "../Data/k-folds/split1/train_250.csv",
+        "dev_data_path": "../Data/k-folds/split1/val_250.csv",
+        "sent_idxs": [0],
+        "tasks": {
+            "pacs": {
+                "column_idx": 1,
+                "task_type": "classification"
+            }
+        }
+    }
+}
