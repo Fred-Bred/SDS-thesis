@@ -37,7 +37,7 @@ for i in range (1, 6):
 
     # Stratified split for train/val sets
     X_train, X_val, y_train, y_val = train_test_split(
-        docs, labels, test_size=0.40, stratify=labels, random_state=i, shuffle=True
+        docs, labels, test_size=0.15, stratify=labels, random_state=i, shuffle=True
     )
 
     # Copy files to respective directories
