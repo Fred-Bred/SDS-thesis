@@ -1,4 +1,4 @@
-parent_dirs=("logs/split1_50" "logs/split2_50" "logs/split3_50" "logs/split4_50" "logs/split5_50")
+parent_dirs=("logs/split1_full" "logs/split2_full" "logs/split3_full" "logs/split4_full" "logs/split5_full")
 
 # Specific string to search for in file names
 search_string="model_"
@@ -16,7 +16,13 @@ for parent_dir in "${parent_dirs[@]}"; do
             for file in "$dir"/*; do
                 # Check if the file name contains the search string
                 if [[ $file == *"$search_string"* ]]; then
-                    python3 predict.py "$file" "../Data/split${split_num}/val_50" "../Outputs/trained_models/k-folds/roberta-base_50/split${split_num}_val_preds.csv"
+                    # Define the output directory
+                    output_dir="../Outputs/trained_models/k-folds/roberta-large_full"
+                    
+                    # Create the output directory if it doesn't exist
+                    mkdir -p "$output_dir"
+                    
+                    python3 predict.py "$file" "../Data/k-folds/split${split_num}/val_PACS.csv" "$output_dir/split${split_num}_val_preds.csv"
                     break 2
                 fi
             done

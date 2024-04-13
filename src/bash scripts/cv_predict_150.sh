@@ -16,7 +16,13 @@ for parent_dir in "${parent_dirs[@]}"; do
             for file in "$dir"/*; do
                 # Check if the file name contains the search string
                 if [[ $file == *"$search_string"* ]]; then
-                    python3 predict.py "$file" "../Data/split${split_num}/val_150" "../Outputs/trained_models/k-folds/roberta-base_150/split${split_num}_val_preds.csv"
+                    # Define the output directory
+                    output_dir="../Outputs/trained_models/k-folds/roberta-large_150"
+                    
+                    # Create the output directory if it doesn't exist
+                    mkdir -p "$output_dir"
+                    
+                    python3 predict.py "$file" "../Data/k-folds/split${split_num}/val_150.csv" "$output_dir/split${split_num}_val_preds.csv"
                     break 2
                 fi
             done
