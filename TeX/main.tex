@@ -47,17 +47,21 @@ As such, the present thesis will investigate the following research question:
     Can automatic natural language processing be applied to assess patients' attachment characteristics in ways meaningful for research and clinical applications in psychotherapy?
 \end{quote}
 To do this, I will investigate the feasibility and utility of automatically assessing psychotherapy patients' attachment characteristics.
-The clinical utility of the approach is assessed first, through a review of the link between theory and empirical data, including implications on health, happiness, and well-being.
+The clinical utility of the approach is assessed first, through a review of the link between theory and empirical data, including the implications of attachment style on health, happiness, and well-being.
 
 Second, the feasibility of automatically classifying a patient's attachment style is investigated through a series of language modelling experiments, based on the limited available data.
+% Add something on the discussion here.
 \chapter{Attachment: Background and Theory}
 This section outlines the most central elements of attachment theory from its development to the clinical relevance of different patterns of attachment and how the theory more broadly explains or mediates the effects of psychotherapy.
 
-From this theoretical perspective, an attachment may be understood as an affectional tie formed between an individual and some other and which is characterised by behaviours seeking to gain and maintain proximity to the other. This tie and its associated behaviours bind the two individuals together in space and endures over time with the proximity-seeking behaviours being particularly prevalent during times of distress \cite{Ainsworth1970,Bowlby1988}.
-The historical development of this understanding and the empirical frameworks originating from and supporting it are covered first, before a review of relevant literature is presented.
+From this theoretical perspective, an attachment may be understood as an affectional tie formed between an individual and some other and which is characterised by behaviours seeking to gain and maintain proximity to the other.
+This tie and its associated behaviours bind the two individuals together in space and endures over time with the proximity-seeking behaviours being particularly prevalent during times of distress and varying in what is referred to as attachment patterns or styles \cite{Ainsworth1970,Bowlby1988}.
+In the following, the historical development of this understanding and the empirical frameworks originating from and supporting it are covered first, before a review of relevant literature is presented.
 
 \section{Theoretical Development}
-The theory of attachment is a fundamentally ethological approach, which at the time of its development sought to explain behaviours that were poorly accounted for in existing theories. The initial development of the theory is often credited to John Bowlby, who originally formulated it from a psychoanalytic, Freudian perspective. However, the framework would soon develop through a more empirically informed approach, not least thanks to the groundbreaking work on infant attachment done by Mary Ainsworth and her colleagues \cite{Ainsworth1970}.
+The theory of attachment is a fundamentally ethological approach, which at the time of its development sought to explain behaviours that were poorly accounted for in existing theories.
+The initial development of the theory is often credited to John Bowlby \cite{Bowlby1969attachment,Bowlby1973separation,Bowlby1980loss}, who originally formulated it from a psychoanalytic, Freudian perspective.
+However, the framework would soon develop through a more empirically informed approach, not least thanks to the groundbreaking work on infant attachment done by Mary Ainsworth and her colleagues \cite{Ainsworth1970}.
 
 Bowlby's arrival at the tenets of attachment theory was influenced by the psychoanalytic exploration of object relations - a particular area of Freudian thought concerned with ego development and the relation of the psyche to external objects and persons.
 Bowlby, however, viewed the apparent attachment behaviours as being mostly adaptive to external needs and stimuli rather than as responses to internal fantasies. In line with the tradition that inspired him, Bowlby based his initial theories on case studies, particularly of delinquent children (e.g. \cite{bowlby1946thieves}). From these cases, Bowlby and his colleagues found that children displaying criminal or otherwise problematic behaviours or mental or emotional distress typically struggled to form meaningful relationships and many had been repeatedly institutionalised or moved between foster homes \cite{bowlby1951WHO}.
@@ -68,7 +72,7 @@ At the time, this proposition was controversial as it broke with traditional vie
 Bowlby's view contrasted with this by emphasising the relational and emotional needs of children. As such, Bowlby found himself opposing the psychoanalytic views that originally inspired him and that attributed the infant's bond with their mother to internalized needs and unconscious sexual desires.
 At the time, psychoanalysts were mainly opposed in their views on development by behaviourist perspectives that viewed the same bond as a result of learned feeding behaviours.
 
-However, neither psychology nor medicine offered any coherent well-\-developed theoretical explanations for the mechanisms leading from maternal care to mental health \cite{Bowlby1988, who1962deprivation} and Bowlby did not provide thorough theoretical explanations for the infant-mother bond in this publication.
+However, neither psychology nor medicine offered any well-developed coherent theoretical explanations for the mechanisms leading from maternal care to mental health \cite{Bowlby1988, who1962deprivation} and Bowlby did not provide thorough theoretical explanations for the infant-mother bond in this publication.
 Nevertheless, the publication successfully brought attention to the importance of maternal care for developing children.
 
 Following the critique of his 1951 monograph, the search for theoretical mechanisms and answers to the yet unexplained observations published in his monograph led Bowlby to ethology. Here, in the study of animal behaviour, he found the concepts that would, in combination with cybernetics and psychoanalysis, eventually form the building blocks of his own theory, namely the concepts of critical periods or imprinting, instincts, and behaviour control systems \cite{Bowlby1988,bowlby1953critical}.
@@ -99,13 +103,12 @@ The attachment system is activated when a threat is perceived and attachment beh
 The individual's attachment style is developed ontogenetically through the interplay of innate tendencies -- or instincts -- and interactions with caregivers. In other words, infants develop expectations of the responsiveness of their caregivers based on experience.
 These expectations tend to stay with them into adolescence and adulthood, forming rather stable mental models, a concept borrowed from cognitive psychology, of close and intimate relationships which influence expectations, behaviours, and self-regulation throughout the life-span.
 
-\subsection{The Move to Empirical Science}
+\subsection{Assessing Attachment}
 A large part of the move towards empirical methods and readily applicable theory constructs is attributable to the work of Mary Ainsworth whose contributions greatly nuanced the understanding of attachment and maternal deprivation.
 She introduced the classification of attachment patterns by observing the proximity-seeking behaviours of children as they were reunited with their mothers in a strange situation  \cite{Ainsworth1979, Ainsworth1970}.
 Ainsworth originally proposed three different patterns of behaviour based on her observations of infants.
-
-In a study of infants aged 49-51 weeks, Mary Ainsworth and Silvia Bell studied attachment and exploration behaviours during an experiment called \textit{The Strange Situation} in which infants are introduced to an unfamiliar environment with their mothers and briefly left alone with a stranger.
-Ainsworth and Bell found that behaviours upon reunion with their mothers, infants' behaviours could be categorised into three broad classes.
+In a 1970 study of infants aged 49-51 weeks, Ainsworth and Bell studied attachment and exploration behaviours during a procedure called \textit{The Strange Situation} in which infants are introduced to an unfamiliar environment with their mothers and briefly left alone with a stranger.
+Ainsworth and Bell found that upon reunion with their mothers, infants' behaviours could be categorised into three broad classes.
 
 The first group of infants, classified as secure, felt increasingly safe to explore the experimental room with their mother present, treating her as a secure base for exploration to which they could return to have their attachment needs met.
 During separation episodes, these infants showed less exploration and increased attachment behaviours such as crying and looking around for the mother. Upon reunion, infants later classified as secure increased proximity-seeking and contact-maintaining behaviours.
@@ -113,17 +116,19 @@ During separation episodes, these infants showed less exploration and increased 
 However, for a subset of infants, both contact-maintaining \textit{and} contact-resisting behaviours were heightened in the reunion episodes.
 This suggests that these infants have great need for proximity but may feel anger towards the mother following the separation episode, which is generally interpreted as ambivalence, thus naming the ambivalent childhood attachment classification.
 
-Finally, some infants appeared almost indifferent to the separation and displayed proximity-avoiding behaviours during reunion episodes. These infants would be classified as avoidant.
+Finally, some infants appeared almost indifferent to the separation and displayed proximity-avoiding behaviours during reunion episodes.
+These infants would be classified as avoidant.
 
+\subsubsection{Adult Assessment Tools}
 The theory was expanded into a clinically applicable framework for adults when the Adult Attachment Interview (AAI; \cite{AAITest}) was developed to assess the adult equivalents of the childhood patterns of attachment behaviours.
 The AAI is a semi-structured interview that asks respondents about autobiographical memories from early childhood related to attachment.
 The interview is coded according to the ways in which these childhood experiences are described and the reflections offered by respondents.
 Thus, the coding process is less concerned with the valence or specific content of memories and more interested in the organisation of thoughts and memories.
 The AAI classifies individuals as secure if they provide coherent and mostly complete descriptions of their childhood experiences.
-The childhood classification of avoidant attachment is replaced in adults with the dismissing classification.
-Individuals with this classification, tend to provide overly succinct, somewhat superficial, and unemotional accounts of their childhood experiences.
-Likewise, the childhood classification for ambivalent attachment is replaced with the preoccupied pattern.
-Individuals with this classification provide incoherent, vague, or emotionally exaggerated narratives of their childhood experiences \cite{Hesse1999, AAITest}.
+The childhood classification for ambivalent attachment is replaced with the preoccupied pattern.
+Individuals with this classification provide incoherent, vague, or emotionally exaggerated narratives of their childhood experiences.
+Likewise, the childhood classification of avoidant attachment is replaced in adults with the dismissing classification.
+Individuals with this classification, tend to provide overly succinct, somewhat superficial, and unemotional accounts of their childhood experiences \cite{Hesse1999, AAITest}.
 
 Perhaps owing to the immense empirical support and validation for the AAI \cite{BakermansKranenburg1993, Ijzendoorn1995, Crowell1996Discriminant, Sagi1994}, it has become the de facto gold standard of attachment research \cite{AAITest, Talia2019, haltigan2014adult}.
 The administration of the AAI takes between 60 and 90 minutes while the required verbatim transcription may take four to ten hours and coding of the transcript is expected to take at least four hours by a coder requiring extensive training, prompting some researcher to search for simpler or less resource-intensive methods of measurement \cite{Haas1994}.
@@ -136,8 +141,9 @@ Longer self-report measures appear to be more reliable \cite{Sibley2005,Wongpaka
 Nevertheless, I would argue that the most paradigm-shifting developments in methods of measurement have only come within the last decade.
 This development consists of indirect measures in which transcripts are taken of psychotherapy sessions and discursive or narrative patterns are analysed for indicators of attachment characteristics.
 In this area, Slade \cite{Slade2016} highlights the Patient Attachment Coding System (PACS) as a groundbreaking method for assessing in-session attachment dynamics and inferring more stable patient characteristics.
-Across modalities, experienced clinicians can attend to attachment dynamics in their psychotherapy sessions. As such, the analysis of in-session behaviour to infer attachment organisation may not be new, but the formalisation offered by Talia, Miller-Bottome, and Daniel \cite{Talia2017, Talia2014} provides a testable, valid measurement. Further, in this thesis, the approach provides the basis for the automation of attachment assessments from in-session behaviour in terms of both theory and data.
-The PACS analyses the speech of patients in psychotherapy and studies how the patient manage emotional proximity with the therapist by eliciting, maintaining, or avoiding emotional attunement from the therapist.
+Across modalities, experienced clinicians can attend to attachment dynamics in their psychotherapy sessions.
+As such, the analysis of in-session behaviour to infer attachment organisation may not be new, but the formalisation offered by Talia, Miller-Bottome, and Daniel \cite{Talia2017, Talia2014} provides a testable, valid measurement. Further, in this thesis, the approach provides the basis for the automation of attachment assessments from in-session behaviour in terms of both theory and data.
+The PACS analyses the speech of patients in psychotherapy and studies how the patient manages emotional proximity with the therapist by eliciting, maintaining, or avoiding emotional attunement from the therapist.
 The PACS takes notice of these behaviours by coding 59 related discursive markers making up 12 subscales, which in turn make up five main scales.
 The five main scales assessed are Proximity Seeking, Contact Maintaining, Exploring, Avoidance, and Resistance.
 The scores on these five scales can be used to infer the patient's classification on the AAI through a simple algorithm.
@@ -170,7 +176,7 @@ According to the attachment-based model of therapeutic change, it is exactly the
 
 \subsubsection*{Scales and Classifications}
 Attachment is measured with a variety of methods with varying degrees of granularity. Despite the methodological differences, these methods converge on a common understanding of the underlying structure of attachment based on the continuous orthogonal dimensions of anxiety and avoidance, allowing the classification into distinct styles \cite{Brennan1998,Mikulincer2013}.
-This structure reflects the main tenets of attachment theory as it is understood and applied today.
+This structure reflects the main tenets of attachment theory as it is understood and applied today and a person's location on these two dimensions corresponds to their overall attachment security, reflecting the way in which they will interpret and react to stressors \cite{Mikulincer2007}.
 
 The anxiety scale corresponds to some degree to one's perception or mental model of oneself. Attachment anxiety is ultimately the self-doubt and worry related to a lack of confidence that attachment figures will meet one's attachment needs.
 When relationship ruptures occur or insecurity appears, individuals with high attachment anxiety will tend to overcompensate with exaggerated attachment behaviours.
@@ -179,8 +185,6 @@ This understanding of attachment as existing in two orthogonal dimensions is the
 Nevertheless, the classifications remain widely used in both scientific studies and clinical applications \cite{Mikulincer2013}.
 
 \subsubsection*{Attachment Styles}
-Attachment is broadly considered to vary along the two continuous orthogonal dimensions of anxiety and avoidance.
-A person's location on these two dimensions corresponds to their overall attachment security, reflecting the way in which they will interpret and react to stressors \cite{Mikulincer2007}.
 An attachment style or pattern is a pattern in behaviour, thought, mental models, and emotional reactions relating to close and intimate relationships, roughly defined by where an individual lies in the two-dimensional space formed by avoidance and anxiety.
 
 Secure attachment, corresponding to low scores on both dimensions, is associated with the belief that one is worthy of love and close relationships and that others are capable of providing for one's attachment needs and are generally reliable and trustworthy.
@@ -200,7 +204,7 @@ Individuals with fearful attachment, characterised by high levels of anxiety and
 The experience of attachment insecurity and interpersonal problems is not unique to those with insecure attachment.
 However, it is commonly suggested that attachment insecurity manifests through two primary strategies to deal with insecurity, uncertainty, and ruptures in relationships: hyper-activation or deactivation of the attachment system \cite{Mikulincer2003, Mikulincer2013,Tyrrell1999, Slade2016}.
 This conceptualisation attempts to more broadly explain the emotions and behaviours associated with attachment-related events or perceptions that such events have or are occurring, by highlighting the coping strategies employed by people according to their attachment classification.
-Namely, People who score high on attachment anxiety tend to reach for hyper-activating strategies.
+Namely, people who score high on attachment anxiety tend to reach for hyper-activating strategies.
 These consist of bursts of intense attachment behaviours, the aim of which is to achieve support and love in spite of the individual's lack of confidence that these things will be provided.
 Conversely, deactivating strategies are employed mainly by individuals who score high on the avoidance scale.
 These strategies aim to down-regulate the attachment system by dismissing the importance of attachments and denying vulnerability and the need for closeness, thus minimising the potential distress experienced in case of rejection from or unavailability of attachment figures \cite{Mikulincer2003}.
@@ -220,7 +224,7 @@ Test-rest reliability in this sample was between .40 and .49 between the first a
 For comparison, Zhang and Labouvie-Vief cite studies demonstrating that test-retest reliability of big five personality traits over a similar six-year period tend to be around .60 - .80 after age 30 \cite{Costa1988,Roberts2000}.
 
 The changes observed are themselves relevant to our understanding of the development, stability, and significance of attachment. Namely, Zhang and Labouvie-Vief found that change towards greater attachment insecurity was associated with defensive coping strategies characterised by rigid, immature and maladaptive ways of interacting with the world. Depressive symptoms was also a significant predictor of change towards greater insecurity. In contrast, change towards greater security was predicted by flexible and reality-oriented coping strategies and better perceived well-being.
-Finally, Zhang and Labouvie-Vief found an effect of age effect on the direction of the observed changes. Specifically, it appears that over time, adults may become more secure and more dismissive but less preoccupied  \cite{Zhang2004}.
+Finally, Zhang and Labouvie-Vief found an effect of age on the direction of the observed changes. Specifically, it appears that over time, adults may become more secure and more dismissive but less preoccupied  \cite{Zhang2004}.
 
 Lending further support to the notion of increased attachment stability with age, Consedine and Magai assessed attachment in 415 older adults at age 72 and again at age 78. In this sample, more than 80 \% of participants remained stable in their classification.
 
@@ -229,13 +233,17 @@ Based on a study of mid- and late-adolescents recruited from a high school and a
 This and other studies (e.g. \cite{Fraley1997,Doherty2004}) paint the picture of adolescents expanding their circle of close attachments to include their peers, but that this expansion does not come at the expense of the strength of attachment to parents or primary caregivers.
 As adolescents become adults, they tend to show a decline in how highly they rate their parents as attachment figures and how much they rely on them for attachment-related needs. In their place, there is strong support for the notion that adults tend to rely more on friends and romantic partners as they age and in particular as their peer- and romantic relationships go longer \cite{Tancredy2006,Doherty2004,Fraley1997}.
 
-It is generally accepted that changes to attachment style are common following major life events such as loss, change in relationship status, or becoming a parent. However, the specific causes of changes to attachment style are empirically not well understood. While Kirkpatrick and Hazan \cite{Kirkpatrick1994} found relationship initiation or break-up to be a mediator of attachment change, many studies are unable to attribute any observed changes directly to life events.
-One such study is an 8-month examination of 144 young adults by Scharfe and Bartholomew \cite{Scharfe1994}. They used several forms of assessment and overall found moderate stability. The observed stability was noticeably higher for expert ratings than self-report measures, but, independent of measurement method, Scharfe and Bartholomew found no consistent relationship between changes in attachment security and life events between the two measurement occasions.
+Attachment theory would lead one to believe that changes to attachment style are common following major life events such as loss, change in relationship status, or becoming a parent.
+However, the specific causes of changes to attachment style are empirically not well understood.
+While Kirkpatrick and Hazan \cite{Kirkpatrick1994} found relationship initiation or break-up to be a mediator of attachment change, many studies are unable to attribute any observed changes directly to life events.
+One such study is an 8-month examination of 144 young adults by Scharfe and Bartholomew \cite{Scharfe1994}.
+They used several forms of assessment and overall found moderate stability. The observed stability was noticeably higher for expert ratings than self-report measures, but, independent of measurement method, Scharfe and Bartholomew found no consistent relationship between changes in attachment security and life events between the two measurement occasions.
 Similarly, Cozzarelli et al. \cite{Cozzarelli2003} did not find strong associations between a long list of life events and attachment changes over a two-year period in a sample of 442 women who underwent an abortion.
 
 The best evidence on how attachment changes has come more recently. In a 2021 study, Fraley, Gillath, and Deboeck followed a sample of over 4,000 people assessed in multiple waves for between six and 40 months. They found that changes in attachment security occurred following life-events related to relationships, career, family, and more. However, most changes were transient and the majority of people would revert to their original attachment style given enough time after most life events.
-Nevertheless, some events did tend to lead to enduring changes, suggesting that some experiences are likely to affect change in attachment style.
-The greatest enduring effects on increasing general attachment anxiety occurred following such events as entering retirement, receiving a work-related promotion, starting school or university, or moving to a new location. A shared characteristic of these events is a great change in social network. Following such life-changing events, individuals likely enter new communities, perhaps leaving others, and an increased anxiety around relationships may follow from spending more time with new, less close, relationships which inherently feel less secure. Simultaneously, spending less time in one's existing close relationships may weaken these relations or one's certainty of them,, effectively making them less secure.
+Nevertheless, some events did tend to lead to enduring changes, suggesting that some experiences are likely to cause lasting changes to attachment style.
+The greatest enduring effects on increasing general attachment anxiety occurred following such events as entering retirement, receiving a work-related promotion, starting school or university, or moving to a new location. A shared characteristic of these events is a great change in social network. Following such life-changing events, individuals likely enter new communities, perhaps leaving others, and an increased anxiety around relationships may follow from spending more time with new, less close, relationships which inherently feel less secure.
+Simultaneously, spending less time in one's existing close relationships may weaken these relations or one's certainty of them, effectively making them less secure.
 Notably, Fraley et al. only found one event which had a significant lasting effect on \textit{decreasing} general attachment anxiety. This event was finding out that oneself or one's partner was pregnant, which had the second-largest enduring effect on general attachment anxiety, only exceeded in magnitude by the opposite effect of retiring from work.
 Compared to the anxiety measure, avoidance was more stable in this sample. In fact, Fraley et al. only found two events to be associated with significant enduring changes in general attachment avoidance. These were getting married, which was associated with increased avoidance, and oneself or one's partner giving birth, which was associated with decreased avoidance.
 Importantly, there were significant individual differences in the extent to which people changed. In line with previous research (e.g. \cite{Zhang2004}), positive or negative appraisals of the given experience were related to the extent of attachment changes on the individual level.
@@ -252,14 +260,15 @@ Based on the available evidence, one must conclude that attachment styles are so
 With the relative stability and some understanding of the changing of attachment styles established, I will now turn to the importance of attachment security in a wider context. As such, the next sections cover the predictive value of the theory and its constructs in regards to relationships, daily life, health, psychopathology, and mental health. This is not meant to be an exhaustive review but rather I aim to elucidate the remarkable extent to which attachment permeates pivotal facets of human experience. Consequently it will serve to illustrate the value of the construct as pliable, accessible, and informative variable for patients and clinicians alike.
 
 \subsection{Relationships and Daily Life}
-Mental health goes beyond the absence of psychiatric illness or mental distress and great deal of influence on relationships and daily life is associated with attachment classifications. Some of this influence is briefly covered here.
+Mental health goes beyond the absence of psychiatric illness or mental distress. A great deal of influence on relationships and daily life is associated with attachment classifications. Some of this influence is briefly covered here.
+
 Concerning romantic relationships, attachment insecurity is associated with lower levels of relationship evaluations even when controlling for important factors such as gender roles, romantic beliefs, and self-esteem \cite{Rodriguez2021, Jones1996}.
-Further, in promoting relationship satisfaction and security for anxious and avoidant individuals in romantic relationships, different strategies employed by their partners have different effects depending on attachment style \cite{Overall2015}. The insights gained from research into regulation of attachment insecurity in romantic relationships has also been suggested as a on guide how clinicians should approach patients with different attachment patterns to help them distinguish the best strategies for treatment and building a strong therapeutic alliance, as is covered in section \ref{sec:Differentiable approaches}.
+Further, in promoting relationship satisfaction and security for anxious and avoidant individuals in romantic relationships, different strategies employed by their partners have different effects depending on attachment style \cite{Overall2015}. The insights gained from research into regulation of attachment insecurity in romantic relationships has also been suggested as a guide on how clinicians should approach patients with different attachment patterns to help them distinguish the best strategies for treatment and building a strong therapeutic alliance, as is covered in section \ref{sec:Differentiable approaches}.
 
 It is also clear that attachment styles influence how individuals process events and attachment cues in their relationships. This may lead to biased expectations and perceptions of their relationships and partners and eventually interfere with well-functioning relationship processes \cite{Collins2007, Collins2004, Hazan1994, Mikulincer2003, Rodriguez2019}.
 For instance, insecurely attached partners in romantic relationships tend to react in a counterproductive manner when faced with interdependence dilemmas in their romantic relations \cite{Simpson2012}.
 
-Lastly, concerning everyday distress and social functioning, Sheinbaum et al. \cite{Sheinbaum2015} followed 206 you adults using an experience-sampling methodology.
+Lastly, concerning everyday distress and social functioning, Sheinbaum et al. \cite{Sheinbaum2015} followed 206 young adults using an experience-sampling methodology.
 They found that cognitive appraisals, social functioning, and moment-to-moment affective states were predicted by attachment style.
 Namely, individuals with anxious attachment experienced higher negative affect, stress and perceived more social rejection in their day-to-day experience and interactions. Individuals with avoidant attachment, however, seemed to experience greater degree of deactivation such as decreased positive states and lowered desire for social interaction when alone.
 Additionally, individuals with anxious attachment experienced social situations with low levels of rated "closeness" significantly more negatively than those with secure attachment \cite{Sheinbaum2015}.
