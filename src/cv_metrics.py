@@ -20,7 +20,7 @@ mode = args.mode # Mode (val or test)
 
 # Define output path
 output_folder = f"Outputs/trained_models/k-folds/{model_name}"
-os.makedirs(output_folder, exist_ok=True)
+assert os.path.exists(output_folder), f"Folder {output_folder} does not exist. Exiting..."
 
 # Define the classes
 classes = ["Dismissing", "Secure", "Preoccupied"]
