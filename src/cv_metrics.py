@@ -83,8 +83,8 @@ average_accuracy = np.mean(model_accuracies)
 std_accuracy = np.std(model_accuracies)
 
 best_model = np.argmax(model_accuracies) + 1
-best_metrics = f"{output_folder}/split{best_model}_{mode}_metrics.txt"
-with open(best_metrics, "r") as f:
+best_metrics_txt = f"{output_folder}/split{best_model}_{mode}_metrics.txt"
+with open(best_metrics_txt, "r") as f:
     best_metrics = f.read()
 
 # Save average accuracy to file
