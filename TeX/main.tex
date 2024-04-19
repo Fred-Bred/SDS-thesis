@@ -407,14 +407,75 @@ Namely, Slade concludes, in all cases, therapists should aim to build a strong a
 Conversely, the aim for therapists of preoccupied patients is to help them regulate their intense emotions, gain autonomy, and learn to find comfort in the closeness they seek.
 
 \chapter{Present Study}
+\section{On Automatic Classification}
+This thesis attempts to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
+A demonstration that language models can learn to classify attachment styles based on patient speech would, in my view, constitute an indication that the approach is feasible.
+As such, and especially given the low amount data available in this project, a clinically applicable tool, ready for deployment and accurate to a clinically satisfactory level, is not the goal.
+Rather, performance above the random baseline would indicate that there are generalisable patterns relevant to each of the three main attachment classifications and that these patterns can be picked up as signal by sufficiently complicated language models.
+On the contrary, if statistical models of more than 100M parameters are unable to detect this signal at all, it is unlikely, at least at this stage of development in language modelling, that more data will improve performance.
+This would indicate that the approach is, with the currently available technology, not worth pursuing over other potentially promising avenues of research.
+
+Continuous - rather than categorical - measures of attachment may be considered both more theoretically congruent and empirically more appropriate and thus be preferred.
+Future work should attend to this fact and work towards integrating it in the continued development of these types of methods.
+This may be done by e.g. tagging individual PACS discursive markers in transcripts or developing models to directly score the subscales given measures from the PACS or AAI.
+
+Because continuous measurements were not available at the development of this project, it aims instead to provide a proof of concept for the automatic classification of attachment using the categorical convention.
+Nevertheless, the study of in-session behaviour remains so highly relevant that its primary counterarguments arguably lie in the feasibility and scalability.
+The benefits to clinical practice, as outlined in section \ref{sec:Applying attachment in therapy}, are numerous. Of equal importance is the interest in and methods enabling investigation of in-session behaviour and its relevance to clinical outcomes which may enable further research that will transform the practice of psychotherapy and therapist training programmes.
+Talia et al. \cite{Talia2017} point out that studies using the PACS can move beyond exploring the link between attachment and treatment outcomes and investigate associations between \textit{changes} in attachment and treatment outcomes.
+Additionally, the notion of tracking in-session behaviour over time and associating it with therapist behaviours and interventions offers a promising and potentially impactful branch of research \cite{Slade2016, Talia2017}.
+This thesis begins the work of addressing the feasibility challenge by automating the classification task. In the future, this will enable scalable pipelines for research and clinical practice in which automatic speech recognition (a fast developing area in automated data processing) can feed into models such as the one presented here for classification or continuous assessment.
+
+In the pursuit of automation and machine-driven decision-making, it is essential to consider the aspects of interpretability and fairness.
+This is particularly crucial in the context of complex discursive behaviours, such as those studied in this project, where the interpretation of patient-therapist interactions often extends beyond the literal meaning of the words exchanged.
+While traditional methods may struggle to capture the intricacies of these interactions, this thesis employs state-of-the-art natural language processing (NLP) techniques, acknowledging that they may not be fully interpretable.
+Given the ultimate goal of developing a practical tool, the primary focus is on achieving optimal performance, even if it means sacrificing some degree of interpretability.
+I argue that the end-users of such a tool, namely therapists and patients, would ultimately benefit more from a high-performing model than one that is easily interpretable.
+
+The field of NLP was forever changed when the transformer architecture was made public in 2017 \cite{Vaswani2017}.
+Since then, variants of the transformer architecture have represented the state-of-the-art in NLP.
+While applications in the realm of clinical psychology have so far been limited, I posit that we now have the understanding, infrastructure, and data to begin leveraging the immense power inherent in this technology for improved treatment outcomes.
+This seems to be in line with trends in the application of various NLP methods in fields related to clinical psychology.
+For instance, in a 2023 review, Malgaroli et al. \cite{Malgaroli2023} report a rising trend in the publication of peer-reviewed literature applying NLP to mental health interventions research.
+While not exclusively so, a large portion of the increase in publications is carried by an increase in applications of deep learning and word embedding techniques. More recently, Malgaroli et al. found that transformer models were the most applied NLP tool in the domain of mental health interventions, likely owing to their ability to extract semantically meaningful features, attention mechanisms, and relatively large context windows \cite{Malgaroli2023}.
+Malgaroli et al. further report that transformer-based models outperform other input features on tasks such as identifying emotional valence and accurately rating symptoms.
+
+A key feature which is particularly important for the study of abstract verbal behaviours and the management of attunement is the contextually influenced embeddings of words that is among the distinguishing features of the transformer model.
+Namely, the attention mechanism allows the model to dynamically update its representation of words given their context.
+This ability distinguishes the transformer model from more traditional methods in which words are necessarily assumed to have static meaning across contexts \cite{Demszky2023}.
+Demzsky et al. \cite{Demszky2023} highlight the astonishing performance of modern language models and point to their efficiency and speed as major factors in scaling the analysis of psychologically relevant text data to a previously unthinkable degree.
+I believe that this project is an example of this.
+
+\subsubsection*{Machine or Clinical Judgement}
+Clinical judgement is a complicated and subjective task and tends to produce far from perfect inter-rater agreement. For instance, Wagner et al. \cite{Wagner2013} found 76-80 \% inter-rater overlap for evaluations of mental health status when different experts rated the same samples in their dataset of psychotherapy text.
+While this is generally considered good inter-rater agreement, Wagner et al. also point out its highlighting of the subjective nature of psychological evaluations.
+
+Inter-rater agreement on psychiatric diagnosis tends to be quite high when patients are assessed through structured interviews. Ruskin et al. \cite{Ruskin1998} reported a mean $\kappa$ of .83 for major depression, bipolar disorder, panic disorder, and alcohol dependence when assessed using a structured clinical interview.
+Psychotic disorders, however, tend to have substantially lower agreement between raters. For instance, Maj et al. \cite{Maj2000} found only $\kappa = .22$ for schizoaffective disorder, while manic and major depressive episodes produced $\kappa$ of .71 and .82, respectively.
+
+In a study of 217 psychiatric consultations, Al-Huthail \cite{Al-Huthail2008} found that the accuracy of initial psychiatric impression by primary medical providers when compared with final psychiatric diagnosis was just 60 \% for cognitive disorders, 50 \% for depression and 46 \% for anxiety disorders.
+
+Considering more directly the reliability of the gold standard attachment measure, the adult attachment interview (AAI) has produced remarkably high inter-rater agreement and test-retest reliability scores.
+For instance, Sagi et al. \cite{Sagi1994} found 90-100 \% agreement between their raters on three-way classification (secure, anxious, avoidant) of their AAI transcripts ($\kappa = .82 - 1.0$ for comparisons between three raters). Their test-retest agreement across raters was 90 \% ($\kappa = .79$).
+Similarly, Bakermans-Kranenburg and van IJzendoorn \cite{BakermansKranenburg1993} found test-retest reliability for three-way classification of the AAI of 78 \% ($\kappa = .63$).
+More recently, Talia et al. \cite{Talia2020} found an inter-rater agreement of .88 on their test of a small sample of interviews.
+
+The high reliability of structured psychiatric interviews as well as both the PACS and the AAI and the comparatively low reliability of unstructured clinical judgement suggests that conducting clinically relevant judgement of psychological phenomena in one's patients is an exceedingly difficult task.
+These issues are not unrecognised by psychiatrists, and in fact Matuszak and Piasecki \cite{Matuszak2012} suggest that more structured approaches be applied to both the anamnesis and diagnosis processes.
+Exacerbating the issue, it seems likely that in the somewhat unstructured psychotherapy dialogue in which the therapist's emotional and cognitive ressources are likely to be focused elsewhere, the task of accurately assessing a patient's psychological characteristics becomes increasingly difficult.
+As such, rather than relying entirely on the intuitive judgement of therapists who may need to direct their focus elsewhere, I suggest that qualified decision support is warranted.
+The union of machine and clinical judgement does not have to be a dichotomy.
+In the ideal case, an automatic decision-support system for the assessment of attachment orientation can free up therapists' resources and allow them to be more present in their counselling sessions while providing more accurate and reliable repeated measurements to inform treatment and intervention design.
+
 \section{Methods}
+
 \subsection{Transformer Models}
 The models applied in this project are all variants of the RoBERTa model first made available by Liu et al. in 2019 \cite{roberta}.
 The RoBERTa name is derived from its claim of being a robustly optimised BERT approach.
 As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor.
 
 At their core, the BERT and RoBERTa architectures are transformer-based models.
-The transformer is a unique type of artificial neural network originally demonstrated by Vaswani et al. in 2017 \cite{Vaswani2017} for natural language processing purposes.
+The transformer is a unique type of artificial neural network originally demonstrated by Vaswani et al. in 2017 \cite{Vaswani2017} for NLP purposes.
 The transformer embeds an input sequence by transforming it from a sequence of $n$ symbolic representations $(x_1, \ldots, x_n)$ to a sequence of continuous representation, $z = (z_1, \ldots, z_n)$, which may then be decoded to make decisions about a down-stream task such as classifying the input.
 This is achieved by first tokenising the input sequence into recognised sub-words.
 Each unique token is associated with a vocabulary ID, allowing the model to look it up in its vocabulary.
