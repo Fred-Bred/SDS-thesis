@@ -66,7 +66,7 @@ Likewise, individuals who score high on the avoidance scale and relatively low o
 While it is not the focus of this thesis, the few times that disorganised or fearful orientations are covered, I will prefer the term fearful to indicate high scores on both insecurity scales.
 Likewise, individuals who are unresolved with regard to loss or trauma are outside the scope of this thesis.
 Finally, the notion of attachment security and insecurity will be used throughout to refer to scores on the anxiety and avoidance scales such that individuals who score high on one or both scales are considered insecure while individuals with low scores on both scales are considered to be secure even if these individuals may be referred to as autonomous in some referenced literature.
-Likewise, attachment style, orientation, and classification all refer to the same construct.
+Likewise, attachment style, orientation, pattern, and classification all refer to the same construct.
 
 \chapter{Attachment: Background and Theory}
 This section outlines the most central elements of attachment theory from its development to the clinical relevance of different patterns of attachment and how the theory more broadly explains or mediates the effects of psychotherapy.
@@ -172,6 +172,7 @@ Comparing the PACS and AAI classifications for the same patients, the authors fo
 In summary, the PACS provides a novel method for assessing attachment on the basis of in-session behaviour, showing what is according to convention \cite{Cicchetti1994} both excellent reliability and excellent concurrent validity with the Adult Attachment Interview.
 
 \section{Current View of Attachment and Its Significance for Health and Daily Life}
+\label{sec:theory and review}
 Whereas most early theory statements and empirical analyses focused on the mother-child relationship, there is now a vast literature extending the theory to other caregivers and relationships more broadly including fathers, extended family members, educators, friends, and romantic relationships. For adults, attachment style is generally considered relevant to almost all relations, ranging from close family and romantic partners to friends and professional relationships and Bowlby's original conception of an attachment hierarchy \cite{Bowlby1969attachment} has been expanded to include almost any relation imaginable (see e.g. \cite{Rosenthal2010, Karantzas2011ArthritisAS, Rowe2005, Tancredy2006} for examples of research using rankings or comparisons of attachment figures).
 
 After a summary of the current view of central constructs, the following sections offer a non-exhaustive review of relevant links between theory, practice, and observable outcomes, relying on the understanding of attachment styles measured using different approaches as essentially analogous or interchangeable even if they are presented with different names, as is custom in meta-analyses combining data from different measures (e.g., \cite{McConnell2011,Pinquart2013}).
@@ -571,12 +572,49 @@ This data was originally collected for other research projects.
 All transcripts are in English and were conducted in New York, treating patients with either Brief Relational Therapy \cite{Safran2000} or Cognitive Behavioural Therapy \cite{Beck2011}.
 Transcription was conducted verbatim, following standards of the AAI, with the addition of laughing and crying \cite{Talia2017, Talia2014}.
 
+The task data consists of 78 documents each representing a therapy session lasting approximately one hour.
+Each document has been labelled with one of three classes, avoidant, secure, or anxious, according to its scores on the PACS scales.
+These classes are represented in the dataset according to the below distribution.
+\begin{itemize}
+    \item {Avoidant: 25.6 \% of transcripts}
+    \item {Secure: 30.8 \% of transcripts}
+    \item {Anxious: 43.6 \% of transcripts}
+\end{itemize}
+The majority class in this dataset is preoccupied.
+As noted, it was shown by Feeney and Ryan \cite{Feeney1994} that those with preoccupied attachment styles were more prone to seeking medical attention and more likely to report having had therapy.
+However, considering the review of 'the first 10,000 adult attachment interviews' by Bakermans-Kranenburg and IJzendoorn \cite{Bakermanskranenburg2009} which found that in clinical populations, 23 \% were avoidant, 21 \% secure, and 13 \% anxious, and 43 \% were unresolved, this is somewhat surprising.
+As Talia et al. \cite{Talia2017} speculate, this difference in class distribution could be due to the unique criteria which excluded patients with mania, biplar disorders, thought disorders, substance abuse, and any history of self-harm or records of interactions with the legal system from this study.
+This sample may be different from the average clnical sample in its high prevalence of psychiatric diagnoses. Talia et al. \cite{Talia2014} report that in the 2014 study, 77 \% of the patients received an Axis I diagnosis and 31 \% of the patients received an Axis II diagnosis; 27 \% of the patients received both Axis I and Axis II diagnoses.
+
+In the current state and understanding of attachment theory, the classifications unresolved, disorganised, and fearful are the least theoretically coherent patterns.
+Due to the original studies' focus on the three main organised attachment patterns, patients with these classifications are labelled according to their secondary (organised) classification were one is available and otherwise excluded from the study.
+Patients who could not be classified are not included.
+
+Working with three classes in this analysis correspond to "flattening" the two orthogonal dimensions of anxiety and avoidance, projecting them onto a single continuum.
+In this continuum, a person can move away from feelings of security in either direction: Toward avoidance, becoming dismissive of attachments, or toward anxiety, becoming preoccupied with attachments.
+Additionally, working with three labels is a more cautious approach that provides a useful balance between reliability and granularity.
+The classification objective that forms the core of this thesis is a complicated task - particularly considering the low data availability - and generally three-way classification earns very good reliability between measurement tools, while e.g. seven-way classification earns moderate to good reliability between assessment types \cite{Talia2020, Talia2014}.
+As reviewed in section \ref{sec:theory and review}, a large part of variation in outcomes is explained by the binary classification of secure and insecure attachment alone, and the central insight likely lies in differentiating anxious and avoidant patients to inform the alliance building and treatment process.
+
+To limit the influence of therapist factors and to remain theoretically congruent with the PACS, only patient speech is considered.
+Thus, patient speech turns were extracted for analysis and each patient utterance was labelled according to the attachment classification of its source document.
+This resulted in 7,255 total speech turns which are individually considered as samples to predict the label of.
+Because not all patients have the same amount of utterances, this approach changes the class distribution somewhat.
+Class balance following the extraction of speech turns is as below.
+\begin{itemize}
+    \item {Avoidant: 26.7 \% of speech turns}
+    \item {Secure: 36.6 \% of speech turns}
+    \item {Anxious: 36.7 \% of speech turns}
+\end{itemize}
 
 \subsubsection*{Domain Data}
 
 
 \subsection{Approach}
-Lorem ipsum
+To begin development on the classification model, the data is split into 85 \% training and 15 \% test data.
+This split was chosen to allow the model as much data as possible for training, given the low amount of available data overall.
+The small amount of samples in the test set is somewhat made up for by applying cross-validation and reporting a mean accuracy for all models of the best performing configuration.
+
 
 \section{Results}
 
