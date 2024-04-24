@@ -23,7 +23,7 @@ output_folder = f"Outputs/trained_models/k-folds/{model_name}"
 assert os.path.exists(output_folder), f"Folder {output_folder} does not exist. Exiting..."
 
 # Define the classes
-classes = ["Dismissing", "Secure", "Preoccupied"]
+classes = ["Avoidant", "Secure", "Anxious"]
 
 # Iniitialize list to store metrics
 model_accuracies = []
