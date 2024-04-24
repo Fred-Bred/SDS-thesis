@@ -486,7 +486,7 @@ More recently, Talia et al. \cite{Talia2020} found an inter-rater agreement of .
 
 The high reliability of structured psychiatric interviews as well as both the PACS and the AAI and the comparatively low reliability of unstructured clinical judgement suggests that conducting clinically relevant judgement of psychological phenomena in one's patients is an exceedingly difficult task.
 These issues are not unrecognised by psychiatrists, and in fact Matuszak and Piasecki \cite{Matuszak2012} suggest that more structured approaches be applied to both the anamnesis and diagnosis processes.
-Exacerbating the issue, it seems likely that in the somewhat unstructured psychotherapy dialogue in which the therapist's emotional and cognitive ressources are likely to be focused elsewhere, the task of accurately assessing a patient's psychological characteristics becomes increasingly difficult.
+Exacerbating the issue, it seems likely that in the somewhat unstructured psychotherapy dialogue in which the therapist's emotional and cognitive resources are likely to be focused elsewhere, the task of accurately assessing a patient's psychological characteristics becomes increasingly difficult.
 As such, rather than relying entirely on the intuitive judgement of therapists who may need to direct their focus elsewhere, I suggest that qualified decision support is warranted.
 The union of machine and clinical judgement does not have to be a dichotomy.
 In the ideal case, an automatic decision-support system for the assessment of attachment orientation can free up therapists' resources and allow them to be more present in their counselling sessions while providing more accurate and reliable repeated measurements to inform treatment and intervention design.
@@ -524,12 +524,12 @@ In transformers, attention is computed by taking the vector representation of th
 The $W^q$, $W^k$, and $W^v$ weight matrices have dimension $d_e \times d_k$ where $d_e$ is the size of the input and $d_k$ is the dimension of the space the input is projected to.
 In BERT-style models, including RoBERTa, $d_k = d_{model}/h$ where $d_{model}$ is the dimension of the hidden layers in the model, which is the same as the dimension of the original embeddings, 768 for base models and 1024 for the large variant of RoBERTa.
 For all sizes of BERT and RoBERTa models this results in a sub-dimensional space of size 64.
-Each token in any given sequence of length $n$ tokens is thus projected to three representations of size $d_k$ and the sequence is represented as three different matrices of shape $n \times d_k$.
+Each token in any given sequence of length $n$ tokens is thus projected to three representations of size $d_k$ and the entire sequence is represented as three different matrices of shape $n \times d_k$.
 Taking the dot-product of the query and key matrices and applying a softmax function to the result produces an attention mask which, when applied to the value matrix, weights all parts of the input according to how they should 'attend to' one another.
 Conventionally, the dot-product of the query and key vectors is scaled by some magnitude, typically the square root of the dimension of the key vector, to avoid vanishing or exploding numbers.
 Thus, the attention-mechanism in transformer models can be succinctly expressed as
 
-$$Attention(Q,K,V) = softmax(\frac{QK^\intercal}{\sqrt{d_k}})V$$
+$$Attention(Q,K,V) = softmax\left(\frac{QK^\intercal}{\sqrt{d_k}}\right)V$$
 where $Q$, $K$, and $V$ are the matrices of stacked query ($q$), key ($k$), and value ($v$) vectors, respectively.
 
 In most transformer models, this process occurs multiple times in parallel with different learned transformations ($W_1^q, \ldots, W_h^q, W_1^k, \ldots, W_h^k, W_1^v, \ldots, W_h^v$) corresponding to $h$ attention heads, the outputs of which are eventually concatenated into a single output and passed to a simple linear layer.
@@ -552,7 +552,7 @@ According to Devlin et al., this setup forces the model to learn meaningful embe
 The original BERT was trained on two datasets: BookCorpus, containing 800M words, and English Wikipedia, which was 2,500M words at the time, with a total weight of 13 or 16 GB depending on preprocessing \cite{BERT, roberta}.
 
 \subsubsection*{RoBERTa}
-The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \cite{BERT} and trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160GB of raw text.
+The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \cite{BERT} and trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160 GB of raw text.
 Liu et al. \cite{roberta} replicate most of the BERT methodology, but choose to train RoBERTa only on the masked token prediction task. They also make other changes such as increasing the size of batches during training, applying byte-level text encoding to create a larger and more flexible vocabulary, and including longer sequences than the original BERT had been exposed to.
 The main difference in training methodology, however, is found in the data and its augmentation.
 Namely, the Liu et al. showed that BERT was significantly under-trained by collecting a significantly larger corpus of text and by making each sentence in this corpus available to the model on several occasions.
@@ -586,7 +586,7 @@ These classes are represented in the dataset according to the below distribution
 The majority class in this dataset is avoidant.
 As noted, it was shown by Feeney and Ryan \cite{Feeney1994} that those with avoidant attachment styles were more prone to seeking medical attention and more likely to report having had therapy.
 However, considering the review of 'the first 10,000 adult attachment interviews' by Bakermans-Kranenburg and IJzendoorn \cite{Bakermanskranenburg2009} which found that in clinical populations, 23 \% were avoidant, 21 \% secure, and 13 \% anxious, and 43 \% were unresolved, this is somewhat surprising.
-As Talia et al. \cite{Talia2017} speculate, this difference in class distribution could be due to the unique criteria which excluded patients with mania, biplar disorders, thought disorders, substance abuse, and any history of self-harm or records of interactions with the legal system from this study.
+As Talia et al. \cite{Talia2017} speculate, this difference in class distribution could be due to the unique criteria which excluded patients with mania, bipolar disorders, thought disorders, substance abuse, and any history of self-harm or records of interactions with the legal system from this study.
 
 In the current state and understanding of attachment theory, the classifications unresolved, disorganised, and fearful are the least theoretically coherent patterns.
 Due to the original studies' focus on the three main organised attachment patterns, patients with these classifications are labelled according to their secondary (organised) classification were one is available and otherwise excluded from the study.
@@ -615,11 +615,43 @@ Class balance following the extraction of speech turns is as below.
 \subsection{Approach}
 To begin development on the classification model, the data is split into 85 \% training and 15 \% test data.
 This split was chosen to allow the model as much data as possible for training, given the low amount of available data overall.
-The small amount of samples in the test set is somewhat made up for by applying cross-validation and reporting a mean accuracy for all models of the best performing configuration.
+The relatively small amount of samples in the test set is somewhat made up for by applying cross-validation and reporting a mean accuracy for all models of the best performing configuration.
+
+\subsubsection*{Hyperparameters}
+Hyperparameter values were chosen based on what had been previously demonstrated to work well for similar applications and on the basis of both theory and experiments.
+Experiments for hyperparameter tuning were run by training on 85 \% of the training data and tracking the training progress by tracking metrics on the remaining 15 \%.
+All models were implemented using the Massive Choice, Ample Tasks (MaChAmp) framework for transfer- and multi-task learning developed by van der Goot et al. \cite{MaChAmp}.
+
+\paragraph*{Inputs and Batching}
+All models were initialised with their maximum input length of 512 tokens.
+Due to the low amount of data available, increasing maximum input length did not meaningfully impact computation requirements.
+Additionally, the task data contains sequences of varying length, some of which reach or even exceed this limit.
+
+Following several unstable runs with batches of 16 samples, batch size was increased to 32 for all models, which appears to provide a good balance of frequent gradient updates and stability in training.
+During training, batches are shuffled between epochs, such that each epoch presents new combinations of samples to the model.
+
+\paragraph*{Loss}
+Both classification training and masked language modelling are done using a cross-entropy loss.
+Cross-entropy loss is calculated as
+
+$$L(y, z) = -\sum\left[y \cdot \log(softmax(z))\right]$$
+where $y$ is a vector one-hot encoding the true label and $z$ is the vector of logits output by the classification head.
+
+\paragraph*{Learning Rate Schedule}
+Following experiments, a starting learning rate of 1e-5 was selected.
+While a learning rate of 5e-5 was found by Sun et al. \cite{Sun2020} to work well for text classification tasks with similar types of pre-trained models, experiments with this higher starting learning rates produced unstable training while lower learning rates generally produced poorer metrics, likely as models would be unable to escape local minima.
+A slanted triangular learning rate schedule is implemented according to the formulation by Howard and Ruder \cite{Howard2018}.
+This schedule implements a linear warm-up for a specified fraction of the training steps, here, 0.3, before linearly decreasing the learning rate.
+* Multiple annealing cycles
+* Ratio??
+
+\paragraph*{Optimisation and Regularisation}
+Optimisation is performed using the AdamW introduced by Loshchilov and Hutter \cite{AdamW}.
 
 
 \section{Results}
-
+\subsection*{Metrics}
+\subsection*{Model Performance}
 \section{Discussion}
 
 \subsection{Implications}
