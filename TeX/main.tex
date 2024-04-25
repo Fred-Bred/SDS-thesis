@@ -44,7 +44,7 @@ The objective of this thesis is to develop on existing methods, specifically the
 While the available data is limited at this stage of the field, I believe that future work can build on the approach developed here to produce statistical models for autocoding the AAI as well as a clinically relevant tool that can assist clinicians and researchers alike by making the assessment of attachment in adults more easily available and significantly more scalable.
 As such, the present thesis will investigate the following research question:
 \begin{quote}
-    Can automatic natural language processing be applied to assess patients' attachment characteristics in ways meaningful for research and clinical applications in psychotherapy?
+    To what extent can automatic natural language processing be applied to assess patients' attachment characteristics in ways meaningful for research and clinical applications in psychotherapy?
 \end{quote}
 To do this, I will investigate the feasibility and utility of automatically assessing psychotherapy patients' attachment characteristics.
 The clinical utility of the approach is assessed first, through a review of the link between theory and empirical data, including the implications of attachment style on health, happiness, and well-being.
@@ -617,18 +617,61 @@ Class balance following the extraction of speech turns is as below.
     \item {Anxious: 36.7 \% of speech turns}
 \end{itemize}
 
-\subsubsection*{Domain Data}
-
-
 \subsection{Approach}
 To begin development on the classification model, the data is split into 85 \% training and 15 \% test data.
 This split was chosen to allow the model as much data as possible for training, given the low amount of available data overall.
+The split was performed with stratification according to class balance, a measure necessitated by the low amount of documents.
+Nevertheless, it is important to split at the document level to avoid data leakage and ensure that the model is not learning to recognise individuals but rather generalisable speech patterns according to PACS classification.
 The relatively small amount of samples in the test set is somewhat made up for by applying cross-validation and reporting a mean accuracy for all models of the best performing configuration.
+All models were implemented using the Massive Choice, Ample Tasks (MaChAmp) framework for transfer- and multi-task learning developed by van der Goot et al. \citeyear{MaChAmp}.
 
-\subsubsection*{Hyperparameters}
+\subsubsection{Domain-Adaptive Pre-Training}
+To investigate whether models could learn more task-appropriate representations from being exposed to more unlabelled data from the task domain, I conducted domain-adaptive pre-training with both a RoBERTa base model \cite{roberta} and the pre-trained MentalRoBERTa model presented by Ji et al. \citeyear{MentalBERT}.
+
+In domain-adaptive pre-training, the base language model undergoes continued training on domain-relevant unlabelled data.
+Text is considered domain-relevant if it concerns topics relevant to the task, is of a relevant genre, or originates from forum discussing the topic.
+Training is done on masked language modelling objective (i.e., cross-entropy loss on predicting randomly masked tokens).
+This type of training has been found to consistently improve performance of RoBERTa on classification tasks in low-resource settings \cite{Gururangan2020}.
+
+\paragraph*{Domain Data}
+The domain data used for pre-training came from three different datasets.
+
+First, the AnnoMI dataset \cite{Wu2022}, which consists of professionally transcribed and annotated dialogues of both high- and low-quality motivational interviewing.
+Motivational interviewing is an effective form of counselling for habit- and behaviour change \cite{Apodaca2014, Gillam2019}.
+A 2005 review also found it to be beneficial in various behaviour change contexts and found clinically relevant benefits for both physiological and psychological diseases \cite{Rubak2005}.
+From this dataset 4,817 client utterances were extracted for use in pre-training.
+
+Second, the DAIC-WoZ dataset \cite{Gratch2014}, consisting of 275 transcripts of clinical interviews, between seven and 33 minutes in duration, conducted by an animated virtual interviewer controlled by a human interviewer in a different room.
+Because the annotation of this dataset can at times be ambiguous with regard to who is speaking, all utterances were included in the pre-training data.
+This resulted in a total of 26,083 utterances.
+
+Finally, the HOPE dataset \cite{Malhotra2022} is made up of 212 counselling transcripts collected from various publicly available sources from which 6,382 patient speech turns were extracted for pre-training.
+
+While other data sources are available, these tend to be either significantly lower quality or of limited relevance.
+For instance, a number of large datasets have been constructed from text that is supposedly relevant to models in the mental health domain, such as tweets labelled with emotional valence (e.g., tweeteval; \citeNP{tweeteval}, used by \citeNP{Wagner2023}), Reddit posts related to mental health topics \cite{Kim2020, MentalBERT}, or chat forums on psychological counselling \cite{counselchat}.
+These, and similar entirely text-based datasets, were deemed too far removed from the language and nuance of spoken in-person therapy.
+Nevertheless, one encoder pre-trained on Reddit data (MentalRoBERTa; \citeNP{MentalBERT}) was included in the experiments to test this assumption.
+
+\paragraph*{Pre-Training Approach}
+For each of the pre-training datasets, 20 \% of the utterances were kept from the model during training as a development set.
+All the remaining data from all three datasets where combined in a single raw text file to train on.
+I applied an approach similar to the RoBERTa training methodology.
+This includes dynamic masking, where each token is masked with probability 0.15 and the model is exposed to each sequence on several occasions during training.
+Despite this not being implemented in MaChAmp \cite{MaChAmp}, I deemed it to be necessary due to the relatively low amount of data for masked language modelling.
+Additionally, as prescribed by Gururangan et al. \citeyear{Gururangan2020}, only the masked language modelling objective was used.
+Following recommendations from MaChAmp documentation, I duplicated the training data four times, leaving me with a training dataset five times the original size.
+Each model trained on this data for 20 epochs, seeing each sample once, and evaluating perplexity on the development set after each epoch.
+With five copies of the training data, this corresponds to training five epochs with a more frequent evaluation strategy.
+
+Nevertheless, the best model, as determined by the validation set performance on the MLM task, was consistently the first of 20.
+This is curious as the model at this point has yet to see all the unique samples.
+This might suggest that not enough pre-training data was made available for the approach to have the expected results or that this domain is particularly difficult to adapt to.
+
+\subsubsection{Target Task Fine-Tuning}
 Hyperparameter values were chosen based on what had been previously demonstrated to work well for similar applications and on the basis of both theory and experiments.
 Experiments for hyperparameter tuning were run by training on 85 \% of the training data and tracking the training progress by tracking metrics on the remaining 15 \%.
-All models were implemented using the Massive Choice, Ample Tasks (MaChAmp) framework for transfer- and multi-task learning developed by van der Goot et al. \citeyear{MaChAmp}.
+
+Once hyperparameters were fixed, experiments centred around preprocessing methods and comparing different encoders.
 
 \paragraph*{Inputs and Batching}
 All models were initialised with their maximum input length of 512 tokens.
