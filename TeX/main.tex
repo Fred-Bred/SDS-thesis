@@ -443,18 +443,6 @@ As such, performance above the random baseline would indicate that there are gen
 On the contrary, if statistical models of more than 100M parameters are unable to detect this signal at all, it is unlikely, at least at this stage of development in language modelling, that more data will improve performance.
 This would indicate that the approach is, with the currently available technology, not worth pursuing over other potentially promising avenues of research.
 
-Continuous - rather than categorical - measures of attachment may be considered both more theoretically congruent and empirically more appropriate and thus be preferred.
-Future work should attend to this fact and work towards integrating it in the continued development of these types of methods.
-This may be done by e.g. tagging individual PACS discursive markers in transcripts or developing models to directly score the subscales given measures from the PACS or AAI.
-
-Because continuous measurements were not available at the development of this project, it aims instead to provide a proof of concept for the automatic classification of attachment using the categorical convention.
-Nevertheless, the study of in-session behaviour remains so highly relevant that its primary counterarguments arguably lie in the feasibility and scalability.
-The benefits to clinical practice, as outlined in section \ref{sec:Applying attachment in therapy}, are numerous. Of equal importance is the interest in and methods enabling investigation of in-session behaviour and its relevance to clinical outcomes which may enable further research that will transform the practice of psychotherapy and therapist training programmes.
-Talia et al. \citeyear{Talia2017} point out that studies using the PACS can move beyond exploring the link between attachment and treatment outcomes and investigate associations between \textit{changes} in attachment and treatment outcomes.
-Additionally, the notion of tracking in-session behaviour over time and associating it with therapist behaviours and interventions offers a promising and potentially impactful branch of research \cite{Slade2016, Talia2017}.
-This thesis begins the work of addressing the feasibility challenge by automating the classification task.
-In the future, this will enable scalable pipelines for research and clinical practice in which automatic speech recognition (a fast developing area in automated data processing) can feed into models such as the one presented here for classification or continuous assessment.
-
 \subsection*{Machine and Clinical Judgement}
 In the pursuit of automation and machine-driven decision-making, it is essential to consider the aspects of interpretability and fairness.
 This is particularly crucial in the context of complex discursive behaviours, such as those studied in this project, where the interpretation of patient-therapist interactions often extends beyond the literal meaning of the words exchanged.
@@ -475,29 +463,6 @@ Namely, the attention mechanism allows the model to dynamically update its repre
 This ability distinguishes the transformer model from more traditional methods in which words are necessarily assumed to have static meaning across contexts \cite{Demszky2023}.
 Demszky et al. \citeyear{Demszky2023} highlight the astonishing performance of modern language models and point to their efficiency and speed as major factors in scaling the analysis of psychologically relevant text data to a previously unthinkable degree.
 I believe that this project is an example of this.
-
-Clinical judgement is a complicated and subjective task and tends to produce far from perfect inter-rater agreement.
-For instance, Wagner et al. \citeyear{Wagner2023} found 76-80 \% inter-rater overlap for evaluations of mental health status when different experts rated the same samples in their dataset of psychotherapy text.
-While this is generally considered good inter-rater agreement, Wagner et al. also point out how it highlights the subjective nature of psychological evaluations.
-
-Inter-rater agreement on psychiatric diagnosis tends to be quite high when patients are assessed through structured interviews.
-Ruskin et al. \citeyear{Ruskin1998} reported a mean $\kappa$ of .83 for major depression, bipolar disorder, panic disorder, and alcohol dependence when assessed using a structured clinical interview.
-Psychotic disorders, however, tend to have substantially lower agreement between raters.
-For instance, Maj et al. \citeyear{Maj2000} found only $\kappa = .22$ for schizoaffective disorder, while the affective disorders manic and major depressive episodes produced $\kappa$ of .71 and .82, respectively.
-
-In a study of 217 psychiatric consultations, Al-Huthail \citeyear{Al-Huthail2008} found that the accuracy of initial psychiatric impression by primary medical providers when compared with final psychiatric diagnosis was just 60 \% for cognitive disorders, 50 \% for depression and 46 \% for anxiety disorders.
-
-Considering more directly the reliability of the gold standard attachment measure, the adult attachment interview (AAI) has produced remarkably high inter-rater agreement and test-retest reliability scores.
-For instance, Sagi et al. \citeyear{Sagi1994} found 90-100 \% agreement between their raters on three-way classification (secure, anxious, avoidant) of their AAI transcripts ($\kappa = .82 - 1.0$ for comparisons between three raters). Their test-retest agreement across raters was 90 \% ($\kappa = .79$).
-Similarly, Bakermans-Kranenburg and van IJzendoorn \citeyear{BakermansKranenburg1993} found test-retest reliability for three-way classification of the AAI of 78 \% ($\kappa = .63$).
-More recently, Talia et al. \citeyear{Talia2020} found an inter-rater agreement of .88 on their test of a small sample of interviews coded according to the AAI manual.
-
-The high reliability of structured psychiatric interviews as well as both the PACS and the AAI and the comparatively low reliability of unstructured clinical judgement suggests that conducting clinically relevant judgement of psychological phenomena in one's patients is an exceedingly difficult task.
-These issues are not unrecognised by psychiatrists, and in fact Matuszak and Piasecki \citeyear{Matuszak2012} suggest that more structured approaches be applied to both the anamnesis and diagnosis processes.
-Exacerbating the issue, it seems likely that in the somewhat unstructured psychotherapy dialogue in which the therapist's emotional and cognitive resources are likely to be focused elsewhere, the task of accurately assessing a patient's psychological characteristics becomes increasingly difficult.
-As such, rather than relying entirely on the intuitive judgement of therapists who may need to direct their focus elsewhere, I suggest that qualified decision support is warranted.
-The union of machine and clinical judgement does not have to be a dichotomy.
-In the ideal case, an automatic decision-support system for the assessment of attachment orientation can free up therapists' resources and allow them to be more present in their counselling sessions while providing more accurate and reliable repeated measurements to inform treatment and intervention design.
 
 \section{Methods}
 
@@ -704,6 +669,30 @@ Optimisation is performed using the AdamW introduced by Loshchilov and Hutter \c
 \subsection*{Metrics}
 \subsection*{Model Performance}
 \section{Discussion}
+\subsection{Implications}
+Clinical judgement is a complicated and subjective task and tends to produce far from perfect inter-rater agreement.
+The results of this thesis must be viewed not only in light of the low amounts of data available but also with the broader difficulties involved in clinical judgement in mind.
+For instance, Wagner et al. \citeyear{Wagner2023} found 76-80 \% inter-rater overlap for evaluations of mental health status when different experts rated the same samples in their dataset of psychotherapy text.
+While this is generally considered good inter-rater agreement, Wagner et al. also point out how it highlights the subjective nature of psychological evaluations.
+
+Inter-rater agreement on psychiatric diagnosis tends to be quite high when patients are assessed through structured interviews.
+Ruskin et al. \citeyear{Ruskin1998} reported a mean $\kappa$ of .83 for major depression, bipolar disorder, panic disorder, and alcohol dependence when assessed using a structured clinical interview.
+Psychotic disorders, however, tend to have substantially lower agreement between raters.
+For instance, Maj et al. \citeyear{Maj2000} found only $\kappa = .22$ for schizoaffective disorder, while the affective disorders manic and major depressive episodes produced $\kappa$ of .71 and .82, respectively.
+
+In a study of 217 psychiatric consultations, Al-Huthail \citeyear{Al-Huthail2008} found that the accuracy of initial psychiatric impression by primary medical providers when compared with final psychiatric diagnosis was just 60 \% for cognitive disorders, 50 \% for depression and 46 \% for anxiety disorders.
+
+Considering more directly the reliability of the gold standard attachment measure, the adult attachment interview (AAI) has produced remarkably high inter-rater agreement and test-retest reliability scores.
+For instance, Sagi et al. \citeyear{Sagi1994} found 90-100 \% agreement between their raters on three-way classification (secure, anxious, avoidant) of their AAI transcripts ($\kappa = .82 - 1.0$ for comparisons between three raters). Their test-retest agreement across raters was 90 \% ($\kappa = .79$).
+Similarly, Bakermans-Kranenburg and van IJzendoorn \citeyear{BakermansKranenburg1993} found test-retest reliability for three-way classification of the AAI of 78 \% ($\kappa = .63$).
+More recently, Talia et al. \citeyear{Talia2020} found an inter-rater agreement of .88 on their test of a small sample of interviews coded according to the AAI manual.
+
+The high reliability of structured psychiatric interviews as well as both the PACS and the AAI and the comparatively low reliability of unstructured clinical judgement suggests that conducting clinically relevant judgement of psychological phenomena in one's patients is an exceedingly difficult task.
+These issues are not unrecognised by psychiatrists, and in fact Matuszak and Piasecki \citeyear{Matuszak2012} suggest that more structured approaches be applied to both the anamnesis and diagnosis processes.
+Exacerbating the issue, it seems likely that in the somewhat unstructured psychotherapy dialogue in which the therapist's emotional and cognitive resources are likely to be focused elsewhere, the task of accurately assessing a patient's psychological characteristics becomes increasingly difficult.
+As such, rather than relying entirely on the intuitive judgement of therapists who may need to direct their focus elsewhere, I suggest that qualified decision support is warranted.
+The dichotomy of machine and clinical judgement does not have to be. In fact, a union is not only legitimate but justified, given adequate performance.
+In the ideal case, an automatic decision-support system for the assessment of attachment orientation can free up therapists' resources and allow them to be more present in their counselling sessions while providing more accurate and reliable repeated measurements to inform treatment and intervention design.
 
 \subsection{The Ethics of Automated Analysis}
 When applying any automated process, the potential for bias is always a serious concern.
@@ -727,9 +716,18 @@ The issue of interpretability and transparency in decision-making remains an imp
 In all cases where outputs directly influence decisions related to the classification or treatment of individuals, interpretability is a priority.
 With the current state of explainability research in NLP, this remains irreconcilable with useful degrees of predictive reliability (see e.g., \citeNP{Danilevsky2020, BarredoArrieta2020}), thus highlighting the importance of leaving decision competence with well-trained therapists supported by reliable tools providing useful insights rather than outsourcing it entirely to algorithms.
 
-\subsection{Limitations}
+\subsection{Limitations and Future Direction}
+Continuous - rather than categorical - measures of attachment may be considered both more theoretically congruent and empirically more appropriate and thus be preferred.
+Future work should attend to this fact and work towards integrating it in the continued development of these types of methods.
+This may be done by e.g. tagging individual PACS discursive markers in transcripts or developing models to directly score the subscales given measures from the PACS or AAI.
 
-\subsection{Implications and Future Direction}
+Because continuous measurements were not available at the development of this project, it aims instead to provide a proof of concept for the automatic classification of attachment using the categorical convention.
+Nevertheless, the study of in-session behaviour remains so highly relevant that its primary counterarguments arguably lie in the feasibility and scalability.
+The benefits to clinical practice, as outlined in section \ref{sec:Applying attachment in therapy}, are numerous. Of equal importance is the interest in and methods enabling investigation of in-session behaviour and its relevance to clinical outcomes which may enable further research that will transform the practice of psychotherapy and therapist training programmes.
+Talia et al. \citeyear{Talia2017} point out that studies using the PACS can move beyond exploring the link between attachment and treatment outcomes and investigate associations between \textit{changes} in attachment and treatment outcomes.
+Additionally, the notion of tracking in-session behaviour over time and associating it with therapist behaviours and interventions offers a promising and potentially impactful branch of research \cite{Slade2016, Talia2017}.
+This thesis begins the work of addressing the feasibility challenge by automating the classification task.
+In the future, this will enable scalable pipelines for research and clinical practice in which automatic speech recognition (a fast developing area in automated data processing) can feed into models such as the one presented here for classification or continuous assessment.
 
 \section{Conclusion}
 
