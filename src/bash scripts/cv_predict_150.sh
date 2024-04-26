@@ -18,7 +18,7 @@ for parent_dir in "${parent_dirs[@]}"; do
             # Check if the file name contains the search string
             if [[ $file == *"$search_string"* ]]; then
                 # Define the output directory
-                output_dir="../Outputs/trained_models/k-folds/pretrained_roberta_150"
+                output_dir="../Outputs/trained_models/k-folds/pretrained_MentalRoBERTa_150"
                 
                 # Create the output directory if it doesn't exist
                 mkdir -p "$output_dir"
