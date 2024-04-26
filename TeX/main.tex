@@ -664,6 +664,30 @@ This schedule implements a linear warm-up for a specified fraction of the traini
 \paragraph*{Optimisation and Regularisation}
 Optimisation is performed using the AdamW introduced by Loshchilov and Hutter \citeyear{AdamW}.
 
+\subsubsection*{Experiments}
+\paragraph*{Turn Length}
+I hypothesised that the very short sequences of e.g. less than five words, would be less informative for the model.
+To test this hypothesis, I first tracked performance over different input sequence lengths during the early experimentation.
+For the majority of test, this did not confirm my initial hypothesis, and, in fact, many models exhibited their best performance on the very short sequences.
+See Figure \ref{fig: acc over turn len} in Appendix \ref{App: Figures} for an example of a plot of one such experiment.
+I suspected that this was because the classes were less balanced in this portion of the dataset.
+Findings by Daniel \citeyear{Daniel2011} and Miller-Bottome et al. \citeyear{MillerBottome2018}, as reported in section \ref{sec:Differentiable approaches}, would suggest that avoidant patients should be overrepresented here, if they primarily use short speech turns.
+However, if they generally take fewer speech turns, they may be underrepresented in all counts.
+Figure \ref{fig: class balance turn len} in Appendix \ref{App: Figures} reveals that, in fact, the class balance in the short speech turns varies substantially from the distribution in the full dataset.
+In the very short speech turns, secure patients are overrepresented compared with their share of total transcripts but, somewhat surprisingly, the two other classes are represented roughly as expected from their overall contribution to the dataset.
+
+It is not clear how the shifting class balance over turn lengths influences the models' ability to differentiate classes or to learn generalisable patterns.
+To investigate whether models would benefit from seeing only longer sequence of patient speech I conducted preprocessing experiments in which I would define a minimum speech turn length, measured in word count, and combine speech turns within documents until the minimum count had been reached.
+I ran these experiments with minimum turn lengths of 50, 100, 150, and 250 words.
+In these experiments, each client speech turn is included in the dataset as-is if it is at or above the defined minimum.
+If it is below the threshold, it is combined with the following speech turn in the same document and then checked again, where the same rule is applied.
+The final speech turn in each document is included only if it meets the threshold alone or if it has already been combined with (a) previous turn(s).
+
+\paragraph*{Encoders}
+
+\paragraph*{Grid Search}
+Following early experiments, validation results were observed to be rather unstable during training.
+In order to obtain more reliable results and to better determine the best configuration of encoder and minimum input length, I performed a grid search with five-fold cross-validation through each combination of the selected encoders and minimum input length.
 
 \section{Results}
 \subsection*{Metrics}
@@ -735,5 +759,26 @@ In the future, this will enable scalable pipelines for research and clinical pra
 \bibliography{references}
 
 \appendix
+\chapter{Figures}
+\label{App: Figures}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{full_turn_length_distribution.png}
+    \caption{Length of patient speech turns in the PACS transcripts}
+    \label{fig: PACS turn length}
+\end{figure}
+
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{metrics_by_length_2024.03.13_11.54.44_model 7 2.png}
+    \caption{Example of accuracy over turn length for one model experiment}
+    \label{fig: acc over turn len}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{turn_length_distribution_by_class.png}
+    \caption{Distribution of patient speech turn length per class}
+    \label{fig: class balance turn len}
+\end{figure}
 
 \end{document}
