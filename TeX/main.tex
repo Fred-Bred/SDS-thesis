@@ -685,7 +685,7 @@ The final speech turn in each document is included only if it meets the threshol
 
 \paragraph*{Encoders}
 
-\paragraph*{Grid Search}
+\paragraph*{Grid Search and Cross-Validation}
 Following early experiments, validation results were observed to be rather unstable during training.
 In order to obtain more reliable results and to better determine the best configuration of encoder and minimum input length, I performed a grid search with five-fold cross-validation through each combination of the selected encoders and minimum input length.
 
@@ -763,20 +763,20 @@ In the future, this will enable scalable pipelines for research and clinical pra
 \label{App: Figures}
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{full_turn_length_distribution.png}
+    \includegraphics[width=\textwidth]{figures/full_turn_length_distribution.png}
     \caption{Length of patient speech turns in the PACS transcripts}
     \label{fig: PACS turn length}
 \end{figure}
 
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{metrics_by_length_2024.03.13_11.54.44_model 7 2.png}
+    \includegraphics[width=\textwidth]{figures/metrics_by_length_2024.03.13_11.54.44_model 7 2.png}
     \caption{Example of accuracy over turn length for one model experiment}
     \label{fig: acc over turn len}
 \end{figure}
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{turn_length_distribution_by_class.png}
+    \includegraphics[width=\textwidth]{figures/turn_length_distribution_by_class.png}
     \caption{Distribution of patient speech turn length per class}
     \label{fig: class balance turn len}
 \end{figure}
