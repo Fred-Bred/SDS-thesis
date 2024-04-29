@@ -663,6 +663,11 @@ This schedule implements a linear warm-up for a specified fraction of the traini
 
 \paragraph*{Optimisation and Regularisation}
 Optimisation is performed using the AdamW introduced by Loshchilov and Hutter \citeyear{AdamW}.
+While both the first and second moments are calculated as in the original adam implementation, AdamW implements weight decay in the parameter update step.
+
+Upon updating the model's parameters, weight decay applies a decay factor to the parameters at the previous step.
+This ensures that all weights are gradually decreased unless explicitly updated, effectively regularising the model.
+The 
 
 \subsubsection*{Experiments}
 \paragraph*{Turn Length}
