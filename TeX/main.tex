@@ -472,7 +472,7 @@ The RoBERTa name is derived from its claim of being a robustly optimised BERT ap
 As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor.
 
 At their core, the BERT and RoBERTa architectures are transformer-based models.
-The transformer is a unique type of artificial neural network originally demonstrated by Vaswani et al. \citeyear{Vaswani2017} for NLP purposes.
+The transformer is a unique deep learning method originally demonstrated by Vaswani et al. \citeyear{Vaswani2017} for NLP purposes.
 The transformer embeds an input sequence by transforming it from a sequence of $n$ symbolic representations $(x_1, \ldots, x_n)$ to a sequence of continuous representation, $z = (z_1, \ldots, z_n)$, which may then be decoded to make decisions about a down-stream task such as classifying the input.
 This is achieved by first tokenising the input sequence into recognised sub-words.
 Each unique token is associated with a vocabulary ID, allowing the model to look it up in its vocabulary.
@@ -684,10 +684,24 @@ If it is below the threshold, it is combined with the following speech turn in t
 The final speech turn in each document is included only if it meets the threshold alone or if it has already been combined with (a) previous turn(s).
 
 \paragraph*{Encoders}
+The pre-trained model which encodes the input sequence before passing it on to the classification head can massively impact the performance of the model.
+This encoder represents almost the entirety of the model and the parameters to be adjusted during training.
+To optimise for the best suited encoder in the RoBERTa species, I tested five different encoders.
+The first two are the base and large versions of the RoBERTa model originally trained by Liu et at. \citeyear{roberta}.
+The three remaining models are all domain-adapted to some degree.
+First, the base size MentalRoBERTa model trained by Ji et al. \citeyear{MentalBERT}.
+This model is an instance of the base RoBERTa model which has been further trained on Reddit posts related to mental health on the masked language modelling objective.
+In theory, this might make the model and its embeddings more attuned to patterns related to mental health and themes related to psychotherapy.
+Finally, as described above, I conducted my own pre-training of a base RoBERTa model as well as continued domain-adaptive training of the MentalRoBERTa model.
 
 \paragraph*{Grid Search and Cross-Validation}
 Following early experiments, validation results were observed to be rather unstable during training.
 In order to obtain more reliable results and to better determine the best configuration of encoder and minimum input length, I performed a grid search with five-fold cross-validation through each combination of the selected encoders and minimum input length.
+Five-fold cross-validation is a method of obtaining more reliable results in which the training data is split into training and validation data five different times, producing five different splits.
+Different models are trained and validated on each split, and the final result is the mean of the validation performance across folds.
+This result is used to determine the best configuration (i.e., combination of encoder and minimum input length) which can then be applied to the test set in a similar fashion.
+With five encoders and five minimum lengths to search over, five-fold cross-validation resulted in 125 models to train.
+As the available computational resources were somewhat limited, I opted to not test any larger models, nor to include grid-search over other hyperparameters.
 
 \section{Results}
 \subsection*{Metrics}
