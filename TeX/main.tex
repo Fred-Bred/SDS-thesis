@@ -655,7 +655,8 @@ where $y$ is a vector one-hot encoding the true label and $z$ is the vector of l
 
 \paragraph*{Learning Rate Schedule}
 Following experiments, a base learning rate of 1e-5 was selected.
-While a learning rate of 5e-5 was found by Sun et al. \citeyear{Sun2020} to work well for text classification tasks with similar types of pre-trained models, experiments with this higher base learning rates produced unstable training while lower learning rates generally produced poorer metrics, likely as models would be unable to escape local minima.
+While a learning rate of 5e-5 was found by Sun et al. \citeyear{Sun2020} to work well for text classification tasks with similar types of pre-trained models, experiments with this and higher base learning rates produced unstable training, while lower learning rates generally produced poorer metrics, likely as models would be unable to escape local minima.
+
 A slanted triangular learning rate schedule is implemented according to the formulation by Howard and Ruder \citeyear{Howard2018}.
 This schedule implements a linear warm-up for a specified fraction of the training steps, here, 0.3, before linearly decreasing the learning rate over the remaining steps, referred to as annealing.
 This method is implemented with a ratio of 32 as the difference between the smallest and base learning rates.
@@ -664,7 +665,7 @@ Gradual unfreezing refers to a method in which training begins by adjusting only
 Once the first epoch has been completed, the second-to-last layer in the model is unfrozen and adjusted during the second epoch.
 This process continues until all layers are unfrozen and actively being adjusted.
 During the unfreezing process, the learning rate is cyclically increased and annealed according to the slanted triangular schedule within each epoch.
-Once all layers have been unfrozen, the learning rate is increased and annealed over the remaining training iterations.
+Once all layers have been unfrozen, the learning rate is increased and annealed over all remaining training iterations.
 Discriminative fine-tuning slightly adjusts this process such that when a layer is first unfrozen, it is trained with a lower learning rate than the rest of the model.
 Discriminative fine-tuning is implemented here with a decay factor of 0.38, by which the learning rate of newly unfrozen layers is decreased.
 
@@ -681,7 +682,7 @@ Discriminative fine-tuning is implemented here with a decay factor of 0.38, by w
 
 \paragraph*{Optimisation and Regularisation}
 Optimisation is performed using the AdamW introduced by Loshchilov and Hutter \citeyear{AdamW}.
-While both the first and second moments are calculated as in the original Adam implementation, AdamW implements weight decay in the parameter update step.
+% Consider describing this using HuggingChat chat titled Learning rate.
 
 Upon updating the model's parameters, weight decay applies a decay factor to the parameters at the previous step.
 This ensures that all weights are gradually decreased unless explicitly updated, effectively regularising the model.
