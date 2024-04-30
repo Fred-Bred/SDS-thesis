@@ -6,8 +6,8 @@
 # # Clean mental-roberta
 # python3 train.py --dataset_configs configs/split4/split4_50.json
 
-# parent_dir="logs/split4_50"
-# search_string="model_"
+parent_dir="logs/split4_50"
+search_string="model_"
 
 # # Get the latest subdirectory of the parent directory
 #     dir=$(ls -td "$parent_dir"/* | head -n1)
