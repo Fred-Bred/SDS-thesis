@@ -658,8 +658,16 @@ Following experiments, a starting learning rate of 1e-5 was selected.
 While a learning rate of 5e-5 was found by Sun et al. \citeyear{Sun2020} to work well for text classification tasks with similar types of pre-trained models, experiments with this higher starting learning rates produced unstable training while lower learning rates generally produced poorer metrics, likely as models would be unable to escape local minima.
 A slanted triangular learning rate schedule is implemented according to the formulation by Howard and Ruder \citeyear{Howard2018}.
 This schedule implements a linear warm-up for a specified fraction of the training steps, here, 0.3, before linearly decreasing the learning rate.
-* Multiple annealing cycles
-* Ratio??
+% * Gradual unfreezing
+% * ratio : `float`, optional (default = `32`).
+%         The ratio of the smallest to the (largest) base learning rate.
+% * Multiple annealing cycles
+% discriminative_fine_tuning : `bool`, optional (default = `False`).
+%         Whether discriminative fine-tuning (different learning rates per layer)
+%         are used.
+%     decay_factor : `float`, optional (default = `0.38`).
+%         The decay factor by which the learning rate is reduced with
+%         discriminative fine-tuning when going a layer deeper.
 
 \paragraph*{Optimisation and Regularisation}
 Optimisation is performed using the AdamW introduced by Loshchilov and Hutter \citeyear{AdamW}.
