@@ -588,7 +588,7 @@ This split was chosen to allow the model as much data as possible for training, 
 The split was performed with stratification according to class balance, a measure necessitated by the low amount of documents.
 Nevertheless, it is important to split at the document level to avoid data leakage and ensure that the model is not learning to recognise individuals but rather generalisable speech patterns according to PACS classification.
 The relatively small amount of samples in the test set is somewhat made up for by applying cross-validation and reporting a mean accuracy for all models of the best performing configuration.
-All models were implemented using the Massive Choice, Ample Tasks (MaChAmp) framework for transfer- and multi-task learning developed by van der Goot et al. \citeyear{MaChAmp}.
+All models were implemented using the Massive Choice, Ample Tasks (MaChAmp) framework for transfer- and multi-task learning developed by van der Goot et al. \citeyear{MaChAmp}, which itself relies on the HuggingFace Transformers library \cite{HuggingFace} and PyTorch \cite{PyTorch}.
 
 \subsubsection{Domain-Adaptive Pre-Training}
 To investigate whether models could learn more task-appropriate representations from being exposed to more unlabelled data from the task domain, I conducted domain-adaptive pre-training with both a RoBERTa base model \cite{roberta} and the pre-trained MentalRoBERTa model presented by Ji et al. \citeyear{MentalBERT}.
@@ -662,16 +662,17 @@ This schedule implements a linear warm-up for a specified fraction of the traini
 % * ratio : `float`, optional (default = `32`).
 %         The ratio of the smallest to the (largest) base learning rate.
 % * Multiple annealing cycles
-% discriminative_fine_tuning : `bool`, optional (default = `False`).
+% * discriminative_fine_tuning : `bool`, optional (default = `False`).
 %         Whether discriminative fine-tuning (different learning rates per layer)
 %         are used.
-%     decay_factor : `float`, optional (default = `0.38`).
+% * decay_factor : `float`, optional (default = `0.38`).
 %         The decay factor by which the learning rate is reduced with
 %         discriminative fine-tuning when going a layer deeper.
+% * Dropout
 
 \paragraph*{Optimisation and Regularisation}
 Optimisation is performed using the AdamW introduced by Loshchilov and Hutter \citeyear{AdamW}.
-While both the first and second moments are calculated as in the original adam implementation, AdamW implements weight decay in the parameter update step.
+While both the first and second moments are calculated as in the original Adam implementation, AdamW implements weight decay in the parameter update step.
 
 Upon updating the model's parameters, weight decay applies a decay factor to the parameters at the previous step.
 This ensures that all weights are gradually decreased unless explicitly updated, effectively regularising the model.
