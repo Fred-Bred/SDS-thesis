@@ -472,20 +472,20 @@ The RoBERTa name is derived from its claim of being a robustly optimised BERT ap
 As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor.
 
 At their core, the BERT and RoBERTa architectures are transformer-based models.
-The transformer is a unique deep learning method originally demonstrated by Vaswani et al. \citeyear{Vaswani2017} for NLP purposes.
+The transformer is a unique deep learning architecture originally demonstrated by Vaswani et al. \citeyear{Vaswani2017} for NLP purposes.
 The transformer embeds an input sequence by transforming it from a sequence of $n$ symbolic representations $(x_1, \ldots, x_n)$ to a sequence of continuous representation, $z = (z_1, \ldots, z_n)$, which may then be decoded to make decisions about a down-stream task such as classifying the input.
-This is achieved by first tokenising the input sequence into recognised sub-words.
+This is achieved by first splitting the input sequence into recognised sub-words, known as tokens.
 Each unique token is associated with a vocabulary ID, allowing the model to look it up in its vocabulary.
 The vocabulary consists of learned vector representations of all tokens known to the model.
 The vocabulary size for RoBERTa models is approximately 50,000 tokens \cite{roberta}.
 Each vector represents a given token by its location in a specified dimension-space known as the embedding size.
-The values of each vocabulary vector is learned during training, so that any given embedding theoretically encodes the semantic meaning of a token in relation to other tokens.
+The element values of each vocabulary vector are learned during training, so that any given embedding theoretically encodes the semantic meaning of a token in relation to other tokens.
 Larger embeddings enable richer representation but comes at the cost of greater memory and computational requirements.
 The embedding dimension for all BERT models, including the base RoBERTa is 768 while the large version of RoBERTa uses richer representations with dimension size 1024 \cite{BERT,roberta}.
 
 Once the input sequence begins passing through the model, most computation is parallelised, rather than completed sequentially as was the case with previous architectures.
 This is what makes training transformer models efficient and allows state-of-the-art models to process large corpora of text in their training.
-To maintain the important information carried by word order, the embeddings are infused with positional information through positional encoding.
+To maintain the important information carried by word order despite parallel processing, the embeddings are infused with positional information through positional encoding.
 This means that, following embedding and positional encoding, the model can process each token, keeping a semantic understanding of it based on its usage in the training corpus as well as knowledge of where in the sequence the token is \cite{Vaswani2017}.
 
 What makes transformer models so powerful, however, is not only the rich embedding of positional and semantic information, but also its attention to context.
@@ -494,7 +494,7 @@ This is what allows transformer models to differentiate the financial institutio
 More importantly, it allows the model to gain an abstract understanding of language beyond a static dictionary meaning of each word \cite{Vaswani2017}.
 
 In transformers, attention is computed by taking the vector representation of the input sequence through three separate learned linear transformations ($W^q, W^k, W^v$), producing what are referred to as query ($q$), key ($k$), and value ($v$) reduced-dimension projections of the original embedding vectors.
-The $W^q$, $W^k$, and $W^v$ weight matrices have dimension $d_e \times d_k$ where $d_e$ is the size of the input and $d_k$ is the dimension of the space the input is projected to.
+The $W^q$, $W^k$, and $W^v$ weight matrices have dimension $d_{model} \times d_k$ where $d_{model}$ is the size of the input and $d_k$ is the dimension of the space the input is projected to.
 In BERT-style models, including RoBERTa, $d_k = d_{model}/h$ where $d_{model}$ is the dimension of the hidden layers in the model, which is the same as the dimension of the original embeddings, 768 for base models and 1024 for the large variant of RoBERTa.
 For all sizes of BERT and RoBERTa models this results in a sub-dimensional space of size 64.
 Each token in any given sequence of length $n$ tokens is thus projected to three representations of size $d_k$ and the entire sequence is represented as three different matrices of shape $n \times d_k$.
@@ -528,8 +528,8 @@ The original BERT was trained on two datasets: BookCorpus, containing 800M words
 The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \citeyear{BERT} and trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160 GB of raw text.
 Liu et al. \citeyear{roberta} replicate most of the BERT methodology, but choose to train RoBERTa only on the masked token prediction task. They also make other changes such as increasing the size of batches during training, applying byte-level text encoding to create a larger and more flexible vocabulary, and including longer sequences than the original BERT had been exposed to.
 The main difference in training methodology, however, is found in the data and its augmentation.
-Namely, the Liu et al. showed that BERT was significantly under-trained by collecting a significantly larger corpus of text and by making each sentence in this corpus available to the model on several occasions.
-To avoid the model overfitting to specific instances that it had previously encountered, the RoBERTa methodology applies dynamic masking such that each token is masked with probability .15 each time the model encounters a sequence.
+Namely, Liu et al. showed that BERT was significantly under-trained by collecting a significantly larger corpus of text and by making each sentence in this corpus available to the model on several occasions.
+To avoid the model overfitting to specific instances that it had previously encountered, the RoBERTa methodology applies dynamic masking such that each token is masked with probability 0.15 each time the model encounters a sequence.
 This essentially means that any given sequence can be presented to the model as a new task on several occasions while limiting its opportunity to overfit.
 According to Liu et al., the combination of training on more data with longer inputs and larger batches, using dynamic masking, and omitting the next-sequence prediction task produces a more robust model with more resilient and generalisable embeddings.
 They demonstrate this through RoBERTa outperforming not only the original BERT but also all models published in the interim on all applied benchmarks \cite{roberta}.
@@ -657,7 +657,7 @@ where $y$ is a vector one-hot encoding the true label and $z$ is the vector of l
 Following experiments, a base learning rate of 1e-5 was selected.
 While a learning rate of 5e-5 was found by Sun et al. \citeyear{Sun2020} to work well for text classification tasks with similar types of pre-trained models, experiments with this and higher base learning rates produced unstable training, while lower learning rates generally produced poorer metrics, likely as models would be unable to escape local minima.
 
-A slanted triangular learning rate schedule is implemented according to the formulation by Howard and Ruder \citeyear{Howard2018}.
+A slanted triangular learning rate schedule is implemented similar to the formulation by Howard and Ruder \citeyear{Howard2018}, albeit with slightly different values.
 This schedule implements a linear warm-up for a specified fraction of the training steps, here, 0.3, before linearly decreasing the learning rate over the remaining steps, referred to as annealing.
 This method is implemented with a ratio of 32 as the difference between the smallest and base learning rates.
 Additionally, gradual unfreezing and discriminative fine-tuning are implemented.
@@ -681,13 +681,12 @@ Discriminative fine-tuning is implemented here with a decay factor of 0.38, by w
 %         discriminative fine-tuning when going a layer deeper.
 
 \paragraph*{Optimisation and Regularisation}
-Optimisation is performed using the AdamW introduced by Loshchilov and Hutter \citeyear{AdamW}.
-% Consider describing this using HuggingChat chat titled Learning rate.
+Optimisation is performed using the AdamW algorithm introduced by Loshchilov and Hutter \citeyear{AdamW}.
+This algorithm applies the classic Adam optimiser \cite{Adam} with weight decay.
 
-Upon updating the model's parameters, weight decay applies a decay factor to the parameters at the previous step.
-This ensures that all weights are gradually decreased unless explicitly updated, effectively regularising the model.
-The 
-% * Dropout
+Additionally, dropout is applied with probability 0.2.
+During training, dropout randomly sets a proportion of activations within the network to zero at each forward pass.
+This technique encourages the model to learn robust features, preventing overfitting by reducing reliance on specific weights for decision-making.
 
 \subsubsection*{Experiments}
 \paragraph*{Turn Length}
@@ -732,6 +731,12 @@ As the available computational resources were somewhat limited, I opted to not t
 \subsection*{Metric}
 While all models trained using a cross-entropy loss, they are evaluated on an accuracy metric.
 Accuracy represents the proportion of classifications that are correct and can be computed as the number of true predictions divided by the total number of predictions.
+
+Demszky et al. \citeyear{Demszky2023} suggest two high-level approaches to evaluating language models in psychological applications.
+The first, and most applicable here, is expert evaluation.
+This consists of having domain experts familiar with the relevant constructs score the same texts as the applied model and then computing agreement between them.
+This is essentially analogous to the accuracy score reported here as the 'ground truth' labels to which the models' predictions are compared are generated by experts trained in the PACS.
+
 Given the confusion matrix below, accuracy is computed by dividing the sum of the diagonal elements in the confusion matrix with the sum of all elements of the confusion matrix.
 $$
 \begin{bmatrix} TC_1 & MC_{1,2} & MC_{1,3} \\ MC_{2,1} & TC_2 & MC_{2,3} \\ MC_{3,1} & MC_{3,2} & TC_3 \end{bmatrix}
