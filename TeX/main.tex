@@ -748,6 +748,10 @@ $$\text{Accuracy} = \frac{\sum \text{diagonal elements}}{\sum \text{all elements
 \subsection*{Model Performance}
 
 \section{Discussion}
+In this thesis, I set out to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
+I believe that the theory and review sections should make abundantly clear the clinical and research potential of this approach, given its performance to an adequate level.
+% Discuss results.
+% How far are we from something that's good enough?
 \subsection{Implications}
 Clinical judgement is a complicated and subjective task and tends to produce far from perfect inter-rater agreement.
 The results of this thesis must be viewed not only in light of the low amounts of data available but also with the broader difficulties involved in clinical judgement in mind.
@@ -799,6 +803,12 @@ With the current state of explainability research in NLP, this remains irreconci
 The primary challenge to the investigation of the utility and feasibility of automatic classification in this domain is the low amount of data available.
 Due to the sensitive nature of therapy transcripts, collecting large corpora of transcripts is difficult.
 This project was severely limited by only working with 78 transcripts in total, and I believe that future work, should it succeed in gathering larger and more diverse corpora of relevant texts, would likely produce more impressive classification accuracy that what has been demonstrated here.
+
+This project has tested language models of moderate size (i.e. roughly 125M parameters).
+Considering the increasing proficiency and availability of Large Language Models (LLMs), there may be other feasible approaches for this type of classification.
+Larger models theoretically have more potential for learning complex dependencies and recognising abstract patterns of behaviour.
+However, this increased capacity tends to also express itself as an increased capacity for overfitting.
+This becomes a particularly damning concern when one considers the comparatively minuscule datasets that tend to be available in this field as was the case in this project.
 
 Continuous - rather than categorical - measures of attachment may be considered both more theoretically congruent and empirically more appropriate and thus be preferred.
 Future work should attend to this fact and work towards integrating it in the continued development of these types of methods.
