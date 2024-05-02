@@ -23,7 +23,7 @@ for parent_dir in "${parent_dirs[@]}"; do
                 # Create the output directory if it doesn't exist
                 mkdir -p "$output_dir"
                 
-                python3 predict.py "$file" "../Data/k-folds/split${split_num}/val_full.csv" "$output_dir/split${split_num}_val_preds.csv"
+                python3 predict.py "$file" "../Data/test_PACS.csv" "$output_dir/split${split_num}_test_preds.csv"
                 break
             fi
         done
