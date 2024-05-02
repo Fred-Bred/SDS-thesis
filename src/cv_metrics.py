@@ -53,10 +53,10 @@ for i in range(1, 6):
     pred_labels = predictions.iloc[:, 1].tolist()
 
     # Compute metrics
-    accuracy = round(accuracy_score(true_labels, pred_labels) *100, 4)
-    precision = round(precision_score(true_labels, pred_labels, average="macro") * 100, 4)
-    recall = round(recall_score(true_labels, pred_labels, average="macro") * 100, 4)
-    f1 = round(f1_score(true_labels, pred_labels, average="macro") * 100, 4)
+    accuracy = round(accuracy_score(true_labels, pred_labels) *100, 2)
+    precision = round(precision_score(true_labels, pred_labels, average="macro") * 100, 2)
+    recall = round(recall_score(true_labels, pred_labels, average="macro") * 100, 2)
+    f1 = round(f1_score(true_labels, pred_labels, average="macro") * 100, 2)
 
     # Compute confusion matrix
     cm = confusion_matrix(true_labels, pred_labels)
@@ -79,8 +79,8 @@ for i in range(1, 6):
         f.write(f"{cm_norm_df}\n")
 
 # Compute average accuracy
-average_accuracy = round(np.mean(model_accuracies), 4)
-std_accuracy = round(np.std(model_accuracies), 4)
+average_accuracy = round(np.mean(model_accuracies), 2)
+std_accuracy = round(np.std(model_accuracies), 2)
 
 best_model = np.argmax(model_accuracies) + 1
 best_metrics_txt = f"{output_folder}/split{best_model}_{mode}_metrics.txt"
