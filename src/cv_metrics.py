@@ -49,14 +49,14 @@ for i in range(1, 6):
 
     # Load predictions
     predictions_path = f"{output_folder}/split{i}_{mode}_preds.csv"
-    predictions = pd.read_csv(predictions_path)
+    predictions = pd.read_csv(predictions_path, sep="\t")
     pred_labels = predictions.iloc[:, 1].tolist()
 
     # Compute metrics
-    accuracy = accuracy_score(true_labels, pred_labels)
-    precision = precision_score(true_labels, pred_labels, average="macro")
-    recall = recall_score(true_labels, pred_labels, average="macro")
-    f1 = f1_score(true_labels, pred_labels, average="macro")
+    accuracy = round(accuracy_score(true_labels, pred_labels) *100, 4)
+    precision = round(precision_score(true_labels, pred_labels, average="macro") * 100, 4)
+    recall = round(recall_score(true_labels, pred_labels, average="macro") * 100, 4)
+    f1 = round(f1_score(true_labels, pred_labels, average="macro") * 100, 4)
 
     # Compute confusion matrix
     cm = confusion_matrix(true_labels, pred_labels)
@@ -72,15 +72,15 @@ for i in range(1, 6):
         f.write(f"Accuracy: {accuracy}\n")
         f.write(f"Precision: {precision}\n")
         f.write(f"Recall: {recall}\n")
-        f.write(f"F1: {f1}\n")
+        f.write(f"F1: {f1}\n\n")
         f.write(f"Confusion matrix:\n")
-        f.write(f"{cm_df}\n")
+        f.write(f"{cm_df}\n\n")
         f.write(f"Normalized confusion matrix:\n")
         f.write(f"{cm_norm_df}\n")
 
 # Compute average accuracy
-average_accuracy = np.mean(model_accuracies)
-std_accuracy = np.std(model_accuracies)
+average_accuracy = round(np.mean(model_accuracies), 4)
+std_accuracy = round(np.std(model_accuracies), 4)
 
 best_model = np.argmax(model_accuracies) + 1
 best_metrics_txt = f"{output_folder}/split{best_model}_{mode}_metrics.txt"
