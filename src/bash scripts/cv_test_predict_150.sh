@@ -1,4 +1,4 @@
-parent_dirs=("logs/split1_full" "logs/split2_full" "logs/split3_full" "logs/split4_full" "logs/split5_full")
+parent_dirs=("logs/split1_150" "logs/split2_150" "logs/split3_150" "logs/split4_150" "logs/split5_150")
 
 # Specific string to search for in file names
 search_string="model_"
