@@ -1,0 +1,6 @@
+python3 predict.py "logs/split1_100/2024.04.14_11.40.17/model_2.pt" "../Data/PACS_varying_lengths/test_combined_100.csv" "../Outputs/trained_models/k-folds/roberta-large_100/split1_original_test_preds.csv"
+python3 predict.py "logs/split2_100/2024.04.14_15.42.42/model_5.pt" "../Data/PACS_varying_lengths/test_combined_100.csv" "../Outputs/trained_models/k-folds/roberta-large_100/split2_original_test_preds.csv"
+python3 predict.py "logs/split3_100/2024.04.14_19.22.06/model_13.pt" "../Data/PACS_varying_lengths/test_combined_100.csv" "../Outputs/trained_models/k-folds/roberta-large_100/split3_original_test_preds.csv"
+python3 predict.py "logs/split4_100/2024.04.14_23.14.46/model_3.pt" "../Data/PACS_varying_lengths/test_combined_100.csv" "../Outputs/trained_models/k-folds/roberta-large_100/split4_original_test_preds.csv"
+python3 predict.py "logs/split5_100/2024.04.15_03.00.34/model_5.pt" "../Data/PACS_varying_lengths/test_combined_100.csv" "../Outputs/trained_models/k-folds/roberta-large_100/split5_original_test_preds.csv"
+python3 ../cv_metrics.py --model_name roberta-large_100 --mode test
