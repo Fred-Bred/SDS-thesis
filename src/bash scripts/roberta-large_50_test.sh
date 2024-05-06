@@ -1,0 +1,5 @@
+python3 predict.py "logs/split1_50/2024.04.15_06.52.47/model_2.pt" "../Data/PACS_varying_lengths/test_combined_50.csv" "../Outputs/trained_models/k-folds/roberta-large_50/split1_original_test_preds.csv"
+python3 predict.py "logs/split2_50/2024.04.15_12.14.45/model_11.pt" "../Data/PACS_varying_lengths/test_combined_50.csv" "../Outputs/trained_models/k-folds/roberta-large_50/split2_original_test_preds.csv"
+python3 predict.py "logs/split3_50/2024.04.15_17.41.55/model_17.pt" "../Data/PACS_varying_lengths/test_combined_50.csv" "../Outputs/trained_models/k-folds/roberta-large_50/split3_original_test_preds.csv"
+python3 predict.py "logs/split4_50/2024.05.01_07.50.03/model_12.pt" "../Data/PACS_varying_lengths/test_combined_50.csv" "../Outputs/trained_models/k-folds/roberta-large_50/split4_original_test_preds.csv"
+python3 predict.py "logs/split5_50/2024.04.16_03.55.22/model_5.pt" "../Data/PACS_varying_lengths/test_combined_50.csv" "../Outputs/trained_models/k-folds/roberta-large_50/split5_original_test_preds.csv"
