@@ -214,7 +214,8 @@ The administration of the AAI takes between 60 and 90 minutes while the required
 
 Most commonly, researchers have attempted to develop less demanding measures for use in academic research.
 This has resulted mostly in questionnaire-based measures (e.g., the Experiences in Close Relationships Scale, \citeNP{Brennan1998}; the Relationships Questionnaire, \citeNP{Bartholomew1991}; Attachment Style Questionnaire, \citeNP{Feeney1994ASQ}; Reciprocal Attachment Questionnaire, \citeNP{West1992}) but also interviews (e.g., Current Relationship Interview, \citeNP{Crowell1996}) and a picture-coding system \cite{George2012}.
-While these alternatives offer more scalable application for large-scale research and efficient measurement for clinical practice, they do so at the cost of at least some reliability and validity. Namely, Compared to the AAI, self-report measures tend to show lower retest reliability \cite{Scharfe1994}.
+While these alternatives offer more scalable application for large-scale research and efficient measurement for clinical practice, they do so at the cost of at least some reliability and validity.
+Namely, compared to the AAI, self-report measures tend to show lower retest reliability \cite{Scharfe1994}.
 Longer self-report measures appear to be more reliable \cite{Sibley2005,Wongpakaran2021}, but the efforts to validate most measures has been rather limited.
 
 Nevertheless, I would argue that the most paradigm-shifting developments in methods of measurement have only come within the last decade.
@@ -705,11 +706,17 @@ Accuracy, then is
 $$\text{Accuracy} = \frac{\sum \text{diagonal elements}}{\sum \text{all elements}}$$
 
 \subsection*{Model Performance}
+% - Validation results
+% - Point out best model (roberta-large_150?)
+% - roberta-large test set results plot
 
 \section{Discussion}
 In this thesis, I set out to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
 I believe that the theory and review sections should make abundantly clear the clinical and research potential of this approach, given its performance to an adequate level.
 % Discuss results.
+% - Stability/reliability of results given low amount of data in both val and test sets
+% - Impact of increasing minimum input length on accuracy and stability
+
 % How far are we from something that's good enough?
 % Looks like pre-training is not helpful for this task or with this pre-training data
 % The larger model appears to produce the best overall results when performance and stability are both considered.
@@ -785,6 +792,10 @@ Larger models theoretically have more potential for learning complex dependencie
 In this project, the largest model tested produced the most convincing validation results, indicating that more capacity is warranted for this task.
 However, this increased capacity tends to also express itself as an increased capacity for overfitting.
 This becomes a particularly damning concern when one considers the comparatively minuscule datasets that tend to be available in this field as was the case in this project.
+
+Newer models have substantially larger context windows and in the near future, some models may be able to process entire transcripts at once, considering all speech turns and interactions.
+Doing so may allow models to consider context in the form of therapists' contributions to the conversations which may provide valuable information given the capacity to incorporate it.
+Beyond the simple addition of more high-quality labelled data, this may prove to be the necessary intervention in closing the gap between machine and human judgement on abstract psychological constructs such as attachment.
 
 Continuous - rather than categorical - measures of attachment may be considered both more theoretically congruent and empirically more appropriate and thus be preferred.
 Future work should attend to this fact and work towards integrating it in the continued development of these types of methods.
