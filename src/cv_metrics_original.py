@@ -16,6 +16,8 @@ args = parser.parse_args()
 # Define arguments
 model_name = args.model_name # Model name (e.g. roberta-base_50)
 min_length = model_name.split("_")[-1] # Minimum length of the instances
+if min_length == "full":
+    min_length = "0"
 mode = args.mode # Mode (val or test)
 
 # Define output path
@@ -48,7 +50,7 @@ for i in range(1, 6):
     true_labels = targets.iloc[:, 1].tolist()
 
     # Load predictions
-    predictions_path = f"{output_folder}/split{i}_{mode}_preds.csv"
+    predictions_path = f"{output_folder}/split{i}_original_{mode}_preds.csv"
     predictions = pd.read_csv(predictions_path, sep="\t")
     pred_labels = predictions.iloc[:, 1].tolist()
 
@@ -68,7 +70,7 @@ for i in range(1, 6):
     model_accuracies.append(accuracy)
 
     # Save metrics to file
-    with open(f"{output_folder}/split{i}_{mode}_metrics.txt", "w") as f:
+    with open(f"{output_folder}/split{i}_original_{mode}_metrics.txt", "w") as f:
         f.write(f"Accuracy: {accuracy}\n")
         f.write(f"Precision: {precision}\n")
         f.write(f"Recall: {recall}\n")
@@ -83,12 +85,12 @@ average_accuracy = round(np.mean(model_accuracies), 2)
 std_accuracy = round(np.std(model_accuracies), 2)
 
 best_model = np.argmax(model_accuracies) + 1
-best_metrics_txt = f"{output_folder}/split{best_model}_{mode}_metrics.txt"
+best_metrics_txt = f"{output_folder}/split{best_model}_original_{mode}_metrics.txt"
 with open(best_metrics_txt, "r") as f:
     best_metrics = f.read()
 
 # Save average accuracy to file
-with open(f"{output_folder}/{mode}_average_accuracy.txt", "w") as f:
+with open(f"{output_folder}/{mode}_original_average_accuracy.txt", "w") as f:
     f.write(f"Average accuracy: {average_accuracy}\n")
     f.write(f"Standard deviation: {std_accuracy}\n")
     f.write(f"Accuracies: {model_accuracies}\n")
