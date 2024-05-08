@@ -716,6 +716,24 @@ $$\text{Accuracy} = \frac{\sum \text{diagonal elements}}{\sum \text{all elements
     \label{fig: roberta-large results}
 \end{figure}
 
+Taking a majority vote between the five models to determine one prediction per sample in the test set produces the following confusion matrix.
+% $$
+% \begin{bmatrix} 3 & 0 & 19 \\ 0 & 4 & 8 \\ 2 & 0 & 53 \end{bmatrix}
+% $$
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/roberta-large_150_combined_confusion_matrix.png}
+    \label{fig: combined confusion matrix}
+\end{figure}
+
+It is clear that the models heavily weight the anxious class, a preference somewhat justified by the skewed distribution in both training and test sets using this preprocessing method.
+The test set class distribution when speech turns are concatenated to reach a length of at least 150 words is as follows:
+\begin{itemize}
+    \item Avoidant: 24.72 \%
+    \item Secure: 13.48 \%
+    \item Anxious: 61.80 \%
+\end{itemize}
+
+Confusion matrices for the five individual models are included in Appendix \ref{App: confusion matrices}.
 
 \section{Discussion}
 In this thesis, I set out to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
@@ -823,35 +841,6 @@ In the future, this will enable scalable pipelines for research and clinical pra
 \bibliography{references}
 
 \appendix
-\chapter{Figures}
-\label{App: Figures}
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/full_turn_length_distribution.png}
-    \caption{Length of patient speech turns in the PACS transcripts}
-    \label{fig: PACS turn length}
-\end{figure}
-
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.13_11.54.44_model_7_val.png}
-    \caption{Example A of accuracy over turn length for one model experiment}
-    \label{fig: acc over turn len 7}
-\end{figure}
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.14_09.59.35_model_11_val.png}
-    \caption{Example B of accuracy over turn length for one model experiment}
-    \label{fig: acc over turn len 11}
-\end{figure}
-
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/turn_length_distribution_by_class.png}
-    \caption{Distribution of patient speech turn length per class}
-    \label{fig: class balance turn len}
-\end{figure}
-
 \chapter{Transformer Models}
 \label{App: transformers}
 At their core, the BERT and RoBERTa architectures are transformer-based models.
@@ -896,5 +885,67 @@ and $W^O$ is the matrix of weights in the linear layer.
 
 The output of any given multi-head transformer block (encoder) may be passed as input to another transformer block or to e.g. a classification head to determine the label of the original input sequence.
 The base RoBERTa architecture consists of 12 encoders each with 12 attention heads while the large RoBERTa architecture employs 24 encoders each with 16 attention heads.
+
+\chapter{Figures}
+\label{App: Figures}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/full_turn_length_distribution.png}
+    \caption{Length of patient speech turns in the PACS transcripts.}
+    \label{fig: PACS turn length}
+\end{figure}
+
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.13_11.54.44_model_7_val.png}
+    \caption{Example A of accuracy over turn length for one model experiment.}
+    \label{fig: acc over turn len 7}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.14_09.59.35_model_11_val.png}
+    \caption{Example B of accuracy over turn length for one model experiment.}
+    \label{fig: acc over turn len 11}
+\end{figure}
+
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/turn_length_distribution_by_class.png}
+    \caption{Distribution of patient speech turn length per class.}
+    \label{fig: class balance turn len}
+\end{figure}
+
+\chapter{Confusion Matrices}
+\label{App: confusion matrices}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/roberta-large_150_split1_confusion_matrix.png}
+    \caption{Confusion matrix for roberta-large model trained with minimum input length of 150 words on split 1 of the cross-validation splits.}
+    \label{fig: cm split1}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/roberta-large_150_split2_confusion_matrix.png}
+    \caption{Confusion matrix for roberta-large model trained with minimum input length of 150 words on split 2 of the cross-validation splits.}
+    \label{fig: cm split2}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/roberta-large_150_split3_confusion_matrix.png}
+    \caption{Confusion matrix for roberta-large model trained with minimum input length of 150 words on split 3 of the cross-validation splits.}
+    \label{fig: cm split3}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/roberta-large_150_split4_confusion_matrix.png}
+    \caption{Confusion matrix for roberta-large model trained with minimum input length of 150 words on split 4 of the cross-validation splits.}
+    \label{fig: cm split4}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/roberta-large_150_split5_confusion_matrix.png}
+    \caption{Confusion matrix for roberta-large model trained with minimum input length of 150 words on split 5 of the cross-validation splits.}
+    \label{fig: cm split5}
+\end{figure}
 
 \end{document}
