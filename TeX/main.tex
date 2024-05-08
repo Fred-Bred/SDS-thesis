@@ -897,6 +897,41 @@ In the future, this will enable scalable pipelines for research and clinical pra
 \bibliography{references}
 
 \appendix
+\chapter{Figures}
+\label{App: Figures}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/attachment_scales.png}
+    \caption{The two orthogonal scales of anxiety and avoidance visualised.}
+    \label{fig: attachment scales}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/full_turn_length_distribution.png}
+    \caption{Length of patient speech turns in the PACS transcripts.}
+    \label{fig: PACS turn length}
+\end{figure}
+
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.13_11.54.44_model_7_val.png}
+    \caption{Example A of accuracy over turn length for one model experiment.}
+    \label{fig: acc over turn len 7}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.14_09.59.35_model_11_val.png}
+    \caption{Example B of accuracy over turn length for one model experiment.}
+    \label{fig: acc over turn len 11}
+\end{figure}
+
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/turn_length_distribution_by_class.png}
+    \caption{Distribution of patient speech turn length per class.}
+    \label{fig: class balance turn len}
+\end{figure}
+
 \chapter{Transformer Models}
 \label{App: transformers}
 At their core, the BERT and RoBERTa architectures are transformer-based models.
@@ -941,41 +976,6 @@ and $W^O$ is the matrix of weights in the linear layer.
 
 The output of any given multi-head transformer block (encoder) may be passed as input to another transformer block or to e.g. a classification head to determine the label of the original input sequence.
 The base RoBERTa architecture consists of 12 encoders each with 12 attention heads while the large RoBERTa architecture employs 24 encoders each with 16 attention heads.
-
-\chapter{Figures}
-\label{App: Figures}
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/attachment_scales.png}
-    \caption{The two orthogonal scales of anxiety and avoidance visualised.}
-    \label{fig: attachment scales}
-\end{figure}
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/full_turn_length_distribution.png}
-    \caption{Length of patient speech turns in the PACS transcripts.}
-    \label{fig: PACS turn length}
-\end{figure}
-
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.13_11.54.44_model_7_val.png}
-    \caption{Example A of accuracy over turn length for one model experiment.}
-    \label{fig: acc over turn len 7}
-\end{figure}
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.14_09.59.35_model_11_val.png}
-    \caption{Example B of accuracy over turn length for one model experiment.}
-    \label{fig: acc over turn len 11}
-\end{figure}
-
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/turn_length_distribution_by_class.png}
-    \caption{Distribution of patient speech turn length per class.}
-    \label{fig: class balance turn len}
-\end{figure}
 
 \chapter{Confusion Matrices}
 \label{App: confusion matrices}
