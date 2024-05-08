@@ -710,6 +710,13 @@ $$\text{Accuracy} = \frac{\sum \text{diagonal elements}}{\sum \text{all elements
 % - Point out best model (roberta-large_150?)
 % - roberta-large test set results plot
 
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/roberta-large_acc_for_min_len.png}
+    \caption{Mean and standard deviation accuracies in test set for all models resulting from five-fold cross-validation over varying minimum input lengths}
+    \label{fig: roberta-large results}
+\end{figure}
+
+
 \section{Discussion}
 In this thesis, I set out to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
 I believe that the theory and review sections should make abundantly clear the clinical and research potential of this approach, given its performance to an adequate level.
@@ -827,10 +834,17 @@ In the future, this will enable scalable pipelines for research and clinical pra
 
 
 \begin{figure}
-    \includegraphics[width=\textwidth]{figures/metrics_by_length_2024.03.13_11.54.44_model 7 2.png}
-    \caption{Example of accuracy over turn length for one model experiment}
-    \label{fig: acc over turn len}
+    \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.13_11.54.44_model_7_val.png}
+    \caption{Example A of accuracy over turn length for one model experiment}
+    \label{fig: acc over turn len 7}
 \end{figure}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.14_09.59.35_model_11_val.png}
+    \caption{Example B of accuracy over turn length for one model experiment}
+    \label{fig: acc over turn len 11}
+\end{figure}
+
 
 \begin{figure}
     \includegraphics[width=\textwidth]{figures/turn_length_distribution_by_class.png}
