@@ -1,0 +1,5 @@
+python3 predict.py logs/split1_100/2024.04.24_17.54.53/model_2.pt "../Data/k-folds/split1/val_100.csv" "../Outputs/trained_models/k-folds/pretrained_roberta_100/split1_val_preds.csv"
+python3 predict.py logs/split2_100/2024.04.24_19.33.24/model_5.pt "../Data/k-folds/split2/val_100.csv" "../Outputs/trained_models/k-folds/pretrained_roberta_100/split2_val_preds.csv"
+python3 predict.py logs/split3_100/2024.04.24_21.10.33/model_8.pt "../Data/k-folds/split3/val_100.csv" "../Outputs/trained_models/k-folds/pretrained_roberta_100/split3_val_preds.csv"
+python3 predict.py logs/split4_100/2024.04.24_22.59.55/model_5.pt "../Data/k-folds/split4/val_100.csv" "../Outputs/trained_models/k-folds/pretrained_roberta_100/split4_val_preds.csv"
+python3 predict.py logs/split5_100/2024.04.25_00.45.44/model_5.pt "../Data/k-folds/split5/val_100.csv" "../Outputs/trained_models/k-folds/pretrained_roberta_100/split5_val_preds.csv"
