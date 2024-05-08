@@ -98,7 +98,9 @@ Crucially, the sense of security offered by the attachment figure allows individ
 According to the attachment-based model of therapeutic change, it is exactly the fulfilment of these three provisions that enables therapeutic progress not only in changing attachment styles but in all matters \cite{Bowlby1969attachment, Mikulincer2013}.
 
 \subsection*{Scales and Classifications}
-Attachment is measured with a variety of methods with varying degrees of granularity. Despite the methodological differences, these methods converge on a common understanding of the underlying structure of attachment based on the continuous orthogonal dimensions of anxiety and avoidance, allowing the classification into distinct styles \cite{Brennan1998,Mikulincer2013}.
+Attachment is measured with a variety of methods with varying degrees of granularity.
+Despite the methodological differences, these methods converge on a common understanding of the underlying structure of attachment based on the continuous orthogonal dimensions of anxiety and avoidance, allowing the classification into distinct styles \cite{Brennan1998,Mikulincer2013}.
+This is visualised in Figure \ref{fig: attachment scales} in Appendix \ref{App: Figures}.
 This structure reflects the main tenets of attachment theory as it is understood and applied today and a person's location on these two dimensions corresponds to their overall attachment security, reflecting the way in which they will interpret and react to stressors \cite{Mikulincer2007}.
 
 The anxiety scale corresponds to some degree to one's perception or mental model of oneself. Attachment anxiety is ultimately the self-doubt and worry related to a lack of confidence that attachment figures will meet one's attachment needs.
@@ -655,7 +657,7 @@ This technique encourages the model to learn robust features, preventing overfit
 I hypothesised that the very short sequences of e.g. less than five words, would be less informative for the model.
 To test this hypothesis, I first tracked performance over different input sequence lengths during the early experimentation.
 For the majority of test, this did not confirm my initial hypothesis, and, in fact, many models exhibited their best performance on the very short sequences.
-See Figure \ref{fig: acc over turn len} in Appendix \ref{App: Figures} for an example of a plot of one such experiment.
+See Figures \ref{fig: acc over turn len 7} and \ref{fig: acc over turn len 11} in Appendix \ref{App: Figures} for an example of a plot of one such experiment.
 I suspected that this was because the classes were less balanced in this portion of the dataset.
 Findings by Daniel \citeyear{Daniel2011} and Miller-Bottome et al. \citeyear{MillerBottome2018}, as reported in section \ref{sec:Differentiable approaches}, would suggest that avoidant patients should be overrepresented here, if they primarily use short speech turns.
 However, if they generally take fewer speech turns, they may be underrepresented in all counts.
@@ -712,8 +714,12 @@ $$\text{Accuracy} = \frac{\sum \text{diagonal elements}}{\sum \text{all elements
 % - Point out best model (roberta-large_150?)
 % - roberta-large test set results plot
 Validation results in the form of mean and standard deviation accuracy for each encoder and minimum input length combination are displayed in Table \ref{tab: val results}.
-It is immediately clear that the efforts to produce domain-adapted models were not fruitful.
+These results clearly that the efforts to produce domain-adapted models were not helpful for this task.
 This is the case for both my own pre-training and when using a domain-specific model (MentalRoBERTa; \citeNP{MentalBERT}) as well as for my further pre-training of the domain-specific model.
+
+Additionally, providing the model with more context per sample by increasing the minimum input length seems to improve performance in most cases.
+However, albeit less consistently, it also tends to increase instability.
+This is undoubtedly due to the lower number of instances available in the validation set when more sample must be combined to reach a longer minimum length.
 \begin{table}
 \begin{adjustbox}{width=1\textwidth}
     \input{figures/val_results.tex}
@@ -764,7 +770,7 @@ This is the case for both my own pre-training and when using a domain-specific m
     \label{fig: roberta-large results}
 \end{figure}
 
-Taking a majority vote between the five models to determine one prediction per sample in the test set produces the following confusion matrix.
+Taking a majority vote between the five models to determine one prediction per sample in the test set produced the confusion matrix in Figure \ref{fig: combined confusion matrix}.
 % $$
 % \begin{bmatrix} 3 & 0 & 19 \\ 0 & 4 & 8 \\ 2 & 0 & 53 \end{bmatrix}
 % $$
@@ -793,6 +799,7 @@ I believe that the theory and review sections should make abundantly clear the c
 % How far are we from something that's good enough?
 % Looks like pre-training is not helpful for this task or with this pre-training data
 % The larger model appears to produce the best overall results when performance and stability are both considered.
+
 \subsection{Implications}
 Clinical judgement is a complicated and subjective task and tends to produce far from perfect inter-rater agreement.
 The results of this thesis must be viewed not only in light of the low amounts of data available but also with the broader difficulties involved in clinical judgement in mind.
@@ -869,6 +876,7 @@ This becomes a particularly damning concern when one considers the comparatively
 Newer models have substantially larger context windows and in the near future, some models may be able to process entire transcripts at once, considering all speech turns and interactions.
 Doing so may allow models to consider context in the form of therapists' contributions to the conversations which may provide valuable information given the capacity to incorporate it.
 Beyond the simple addition of more high-quality labelled data, this may prove to be the necessary intervention in closing the gap between machine and human judgement on abstract psychological constructs such as attachment.
+Additionally, the fact that the larger models tended to produce the best results when both performance and stability are considered opens an obvious avenue of research into applying models with greater capacity in the future.
 
 Continuous - rather than categorical - measures of attachment may be considered both more theoretically congruent and empirically more appropriate and thus be preferred.
 Future work should attend to this fact and work towards integrating it in the continued development of these types of methods.
@@ -936,6 +944,12 @@ The base RoBERTa architecture consists of 12 encoders each with 12 attention hea
 
 \chapter{Figures}
 \label{App: Figures}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/attachment_scales.png}
+    \caption{The two orthogonal scales of anxiety and avoidance visualised.}
+    \label{fig: attachment scales}
+\end{figure}
 
 \begin{figure}
     \includegraphics[width=\textwidth]{figures/full_turn_length_distribution.png}
