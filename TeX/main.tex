@@ -7,8 +7,10 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{multirow}
 \usepackage{hyperref}
 \usepackage{setspace}
+\usepackage{adjustbox}
 
 %KUstyle
 % \usepackage{KUstyle}
@@ -709,6 +711,50 @@ $$\text{Accuracy} = \frac{\sum \text{diagonal elements}}{\sum \text{all elements
 % - Validation results
 % - Point out best model (roberta-large_150?)
 % - roberta-large test set results plot
+
+\begin{table}
+\begin{adjustbox}{width=1\textwidth}
+    \input{figures/val_results.tex}
+\end{adjustbox}
+\label{tab: val results}
+\caption{Validation results}
+\end{table}
+
+% \begin{tabular}{lrrr}
+%     \toprule
+%     Encoder & Minimum turn length & Average validation set accuracy & Standard deviation \\
+%     \midrule
+%     \multirow{5}{*}{RoBERTa baseline} & 0 & 45.28 & 7.21 \\
+%     & 50 & 47.37 & 5.47 \\
+%     & 100 & 51.99 & 7.42 \\
+%     & 150 & 51.78 & 4.27 \\
+%     & 250 & 59.86 & 9.67 \\
+%     \midrule
+%     \multirow{5}{*}{RoBERTa-Large} & 0 & 49.27 & 3.40 \\
+%     & 50 & 48.84 & 5.40 \\
+%     & 100 & 54.88 & 6.94 \\
+%     & 150 & 56.15 & 5.21 \\
+%     & 250 & 58.67 & 11.64 \\
+%     \midrule
+%     \multirow{5}{*}{MentalRoBERTa} & 0 & 46.79 & 7.82 \\
+%     & 50 & 50.65 & 6.49 \\
+%     & 100 & 54.90 & 5.51 \\
+%     & 150 & 53.69 & 5.31 \\
+%     & 250 & 58.89 & 6.01 \\
+%     \midrule
+%     \multirow{5}{*}{Pre-trained RoBERTa} & 0 & 45.17 & 6.70 \\
+%     & 50 & 48.84 & 4.97 \\
+%     & 100 & 49.16 & 8.66 \\
+%     & 150 & 51.75 & 5.38 \\
+%     & 250 & 59.40 & 7.68 \\
+%     \midrule
+%     \multirow{5}{*}{Pre-trained MentalRoBERTa} & 0 & 47.30 & 5.00 \\
+%     & 50 & 50.44 & 7.20 \\
+%     & 100 & 54.57 & 9.59 \\
+%     & 150 & 51.93 & 6.54 \\
+%     & 250 & 57.22 & 9.47 \\
+%     \bottomrule
+% \end{tabular}
 
 \begin{figure}
     \includegraphics[width=\textwidth]{figures/roberta-large_acc_for_min_len.png}
