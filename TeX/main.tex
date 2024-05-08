@@ -764,12 +764,6 @@ This is undoubtedly due to the lower number of instances available in the valida
 %     \bottomrule
 % \end{tabular}
 
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/roberta-large_acc_for_min_len.png}
-    \caption{Mean and standard deviation accuracies in test set for all models resulting from five-fold cross-validation over varying minimum input lengths}
-    \label{fig: roberta-large results}
-\end{figure}
-
 Taking a majority vote between the five models to determine one prediction per sample in the test set produced the confusion matrix in Figure \ref{fig: combined confusion matrix}.
 % $$
 % \begin{bmatrix} 3 & 0 & 19 \\ 0 & 4 & 8 \\ 2 & 0 & 53 \end{bmatrix}
@@ -777,7 +771,9 @@ Taking a majority vote between the five models to determine one prediction per s
 \begin{figure}
     \includegraphics[width=\textwidth]{figures/roberta-large_150_combined_confusion_matrix.png}
     \label{fig: combined confusion matrix}
+    \caption{Confusion matrix according to majority vote classification of samples with votes from all five instances of the RoBERTa-large model trained on a minimum input length of 150 words.}
 \end{figure}
+Confusion matrices for each of the five individual models are included in Appendix \ref{App: confusion matrices}.
 
 It is clear that the models heavily weight the anxious class, a preference somewhat justified by the skewed distribution in both training and test sets using this preprocessing method.
 The test set class distribution when speech turns are concatenated to reach a length of at least 150 words is as follows:
@@ -787,7 +783,11 @@ The test set class distribution when speech turns are concatenated to reach a le
     \item Anxious: 61.80 \%
 \end{itemize}
 
-Confusion matrices for each of the five individual models are included in Appendix \ref{App: confusion matrices}.
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/roberta-large_acc_for_min_len.png}
+    \caption{Mean and standard deviation accuracies in test set for all models resulting from five-fold cross-validation over varying minimum input lengths}
+    \label{fig: roberta-large results}
+\end{figure}
 
 \section{Discussion}
 In this thesis, I set out to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
