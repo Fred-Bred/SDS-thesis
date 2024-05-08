@@ -37,7 +37,7 @@ pred_labels = preds.iloc[:, 1].tolist()
 
 # Load true labels
 if split == "old":
-    targets = pd.read_csv('Data/PACS_val.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/PACS_varying_lengths/val_length_{min_length}.csv', sep='\t')
+    targets = pd.read_csv('Data/old_PACS/PACS_val.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/PACS_varying_lengths/val_length_{min_length}.csv', sep='\t')
 elif split == "new":
     if mode == "test":
         targets = pd.read_csv('Data/test_PACS.csv', sep='\t') if min_length == 0 else pd.read_csv(f'Data/PACS_varying_lengths/test_combined_{min_length}.csv', sep='\t')
@@ -213,9 +213,9 @@ ax1.set_ylabel('Number of Samples', color='gray')
 ax2.set_ylabel('Accuracy', color='b')
 
 if min_length == 0:
-    plt.title(f'Accuracy by Turn Length | {model_name} | Single PT Turns | Mode: {mode}')
+    plt.title(f'Accuracy by Turn Length | Single PT Turns | Mode: {mode}')
 else:
-    plt.title(f'Accuracy by Turn Length | {model_name} | Min Input Length: {min_length} Words')
+    plt.title(f'Accuracy by Turn Length | Min Input Length: {min_length} Words')
 
 # Set legend
 fig.legend(loc="upper right")
