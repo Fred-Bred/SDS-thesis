@@ -711,7 +711,9 @@ $$\text{Accuracy} = \frac{\sum \text{diagonal elements}}{\sum \text{all elements
 % - Validation results
 % - Point out best model (roberta-large_150?)
 % - roberta-large test set results plot
-
+Validation results in the form of mean and standard deviation accuracy for each encoder and minimum input length combination are displayed in Table \ref{tab: val results}.
+It is immediately clear that the efforts to produce domain-adapted models were not fruitful.
+This is the case for both my own pre-training and when using a domain-specific model (MentalRoBERTa; \citeNP{MentalBERT}) as well as for my further pre-training of the domain-specific model.
 \begin{table}
 \begin{adjustbox}{width=1\textwidth}
     \input{figures/val_results.tex}
@@ -779,7 +781,7 @@ The test set class distribution when speech turns are concatenated to reach a le
     \item Anxious: 61.80 \%
 \end{itemize}
 
-Confusion matrices for the five individual models are included in Appendix \ref{App: confusion matrices}.
+Confusion matrices for each of the five individual models are included in Appendix \ref{App: confusion matrices}.
 
 \section{Discussion}
 In this thesis, I set out to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
