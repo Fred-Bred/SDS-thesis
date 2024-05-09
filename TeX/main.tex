@@ -457,16 +457,16 @@ This thesis attempts to assess the feasibility and utility of automatically clas
 A demonstration that language models can learn to classify attachment styles based on patient speech would constitute an indication that the approach is feasible.
 It is important to note that this thesis does not intend to develop a deployable tool for immediate use in therapy or research.
 Instead, it focuses on establishing whether automatic classification of attachment styles through language analysis is a tractable problem with promising potential for further development
-As such, performance above the random baseline would indicate that there are generalisable patterns relevant to each of the three main attachment classifications and that these patterns can be picked up as signal by sufficiently complicated language models.
-On the contrary, if statistical models of more than 100M parameters are unable to detect this signal at all, it is unlikely, at least at this stage of development in language modelling, that more data will improve performance.
+As such, performance above the random baseline would indicate that there are generalisable patterns relevant to each of the three main attachment classifications and that these patterns can be picked up as signal by using the right tools.
+On the contrary, if the statistical models applied here are unable to detect this signal at all, it is unlikely, at least at this stage of development in language modelling, that more data will deliver more performance.
 This would indicate that the approach is, with the currently available technology, not worth pursuing over other potentially promising avenues of research.
 
 \subsection*{Machine and Clinical Judgement}
 In the pursuit of automation and machine-driven decision-making, it is essential to consider the aspects of interpretability and fairness.
 This is particularly crucial in the context of complex discursive behaviours, such as those studied in this project, where the interpretation of patient-therapist interactions often extends beyond the literal meaning of the words exchanged.
-While traditional methods may struggle to capture the intricacies of these interactions, this thesis employs state-of-the-art natural language processing (NLP) techniques, acknowledging that they may not be fully interpretable.
+While traditional methods may struggle to capture the intricacies of these interactions, this thesis employs natural language processing (NLP) techniques representative of the state-of-the-art, acknowledging that they may not be fully interpretable.
 Given the over-arching goal of developing a practical tool, the primary focus is on achieving optimal performance, even if it means sacrificing some degree of interpretability.
-I argue that the end-users of such a tool, namely therapists and patients, would ultimately benefit more from a high-performing model than one that is easily interpretable.
+I argue that the end-users of such a tool, whether therapists and patients or researchers, would ultimately benefit more from a performant model than one that is easily interpretable.
 
 The field of NLP was forever changed when the transformer architecture was made public in 2017 \cite{Vaswani2017}, enabling drastic leaps in performance across NLP tasks.
 Since then, variants of the transformer architecture have represented the state-of-the-art in NLP.
@@ -491,7 +491,7 @@ As such it is fundamentally a BERT model and shares most of its architecture wit
 For the unitiated yet interested reader, a superficial overview of the transformer architecture is provided in Appendix \ref{App: transformers}.
 
 \subsubsection*{BERT}
-BERT, published by Devlin et al. in 2018 \cite{BERT}, is one of the first transformer-based language models and its key innovation consists in using the masked language modelling objective and to train on full sentences, rather than the previously employed left-to-right or right-to-left strategy of predicting the next token or sequence based only on "previous" context.
+BERT, published by Devlin et al. in 2018 \cite{BERT}, is one of the first transformer-based language models and its key innovation consists in using the masked language modelling objective to train on full sentences, rather than the previously employed left-to-right or right-to-left strategy of predicting the next token or sequence based only on "previous" context.
 It is from this novel approach that the model takes its name. The Bidirectional Encoder Representations from Transformers solves its objectives by encoding rich contextual embeddings using transformers.
 BERT is trained on two objectives and takes two sequences as input during its training.
 The first task is a masked language model objective where tokens are randomly masked, and the model is tasked with predicting its original vocabulary ID using context from both sides of the masked token. 
@@ -502,7 +502,8 @@ The original BERT was trained on two datasets: BookCorpus, containing 800M words
 
 \subsubsection*{RoBERTa}
 The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \citeyear{BERT} and trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160 GB of raw text.
-Liu et al. \citeyear{roberta} replicate most of the BERT methodology, but choose to train RoBERTa only on the masked token prediction task. They also make other changes such as increasing the size of batches during training, applying byte-level text encoding to create a larger and more flexible vocabulary, and including longer sequences than the original BERT had been exposed to.
+Liu et al. \citeyear{roberta} replicate most of the BERT methodology, but train RoBERTa only on the masked token prediction task.
+They also make other changes such as increasing the size of batches during training, changing the text encoding procedue to create a larger and more flexible vocabulary, and including longer sequences than the original BERT had been exposed to.
 The main difference in training methodology, however, is found in the data and its augmentation.
 Namely, Liu et al. showed that BERT was significantly under-trained by collecting a significantly larger corpus of text and by making each sentence in this corpus available to the model on several occasions.
 To avoid the model overfitting to specific instances that it had previously encountered, the RoBERTa methodology applies dynamic masking such that each token is masked with probability 0.15 each time the model encounters a sequence.
@@ -511,7 +512,7 @@ According to Liu et al., the combination of training on more data with longer in
 They demonstrate this through RoBERTa outperforming not only the original BERT but also all models published in the interim on all applied benchmarks \cite{roberta}.
 
 \subsubsection*{Fine-tuning}
-The generalised understanding of language gained from masked language modelling means that RoBERTa models are well suited for fine-tuning to more specific tasks.
+The generalised understanding of language gained from masked language modelling means that RoBERTa models are well suited for fine-tuning to more specific down-stream tasks.
 In this case, this is performed by adding a classification head to the model which takes as input the output of the final encoder layer and then training on data related to the new task.
 This classification head is a simple fully connected feed-forward neural network and can consist of any number of layers.
 During fine-tuning, the parameters of both the classification head and the encoder are updated to let the model gain specialised knowledge needed for the specific task.
@@ -524,6 +525,7 @@ All transcripts are in English and were conducted in New York, treating patients
 Transcription was conducted verbatim, following standards of the AAI, with the addition of laughing and crying \cite{Talia2017, Talia2014}.
 
 The task data consists of 78 documents each representing a therapy session lasting approximately one hour.
+Using the RoBERTa tokeniser from HuggingFace Transformers, which forms the entry point for the processing pipeline of all models in this project, these documents make up a total of 488,483 tokens.
 Each document has been labelled with one of three classes, avoidant, secure, or anxious, according to its scores on the PACS scales.
 These classes are represented in the dataset according to the below distribution.
 \begin{itemize}
@@ -533,7 +535,7 @@ These classes are represented in the dataset according to the below distribution
 \end{itemize}
 The majority class in this dataset is anxious.
 As noted, it was shown by Feeney and Ryan \citeyear{Feeney1994} that those with anxious attachment styles were more prone to seeking medical attention and more likely to report having had therapy.
-However, considering the review of 'the first 10,000 adult attachment interviews' by Bakermans-Kranenburg and IJzendoorn \citeyear{Bakermanskranenburg2009} which found that in clinical populations, 23 \% were avoidant, 21 \% secure, and 13 \% anxious, and 43 \% were unresolved, this is somewhat surprising.
+However, considering the review of 'the first 10,000 adult attachment interviews' by Bakermans-Kranenburg and IJzendoorn \citeyear{Bakermanskranenburg2009} which found that in clinical populations 23 \% were avoidant, 21 \% secure, 13 \% anxious, and 43 \% were unresolved, this is somewhat surprising.
 As Talia et al. \citeyear{Talia2017} speculate, this difference in class distribution could be due to the unique criteria which excluded patients with mania, bipolar disorders, thought disorders, substance abuse, and any history of self-harm or records of interactions with the legal system from this study.
 
 In the current state and understanding of attachment theory, the classifications unresolved, disorganised, and fearful are the least theoretically coherent patterns.
@@ -543,8 +545,8 @@ Patients who could not be classified are not included.
 Working with three classes in this analysis correspond to "flattening" the two orthogonal dimensions of anxiety and avoidance, projecting them onto a single continuum.
 In this continuum, a person can move away from feelings of security in either direction: Toward avoidance, becoming dismissive of attachments and relying on down-regulation of the attachment system to avoid feelings of attachment insecurity, or toward anxiety, becoming preoccupied with attachments and relying on hyper-activating the attachment system to resolve insecurities.
 Additionally, working with three labels is a more cautious approach that provides a useful balance between reliability and granularity.
-The classification objective that forms the core of this thesis is a complicated task - particularly considering the low data availability - and generally three-way classification earns very good reliability between measurement tools, while e.g. seven-way classification earns moderate to good reliability between assessment types \cite{Talia2020, Talia2014}.
-As reviewed in section \ref{sec:theory and review}, a large part of variation in outcomes is explained by the binary classification of secure and insecure attachment alone, and the central insight likely lies in differentiating anxious and avoidant patients to inform the alliance building and treatment process.
+The classification objective that forms the core of this thesis is a complicated task -- particularly considering the low data availability -- and generally three-way classification earns very good reliability between measurement tools, while e.g. seven-way classification earns moderate to good reliability between assessment types \cite{Talia2020, Talia2014}.
+As reviewed in section \ref{sec:theory and review}, a large part of variation in outcomes is explained by the binary classification of secure and insecure attachment alone, and the greatest marginal utility likely lies in differentiating anxious and avoidant patients to inform the alliance building and treatment process.
 
 To limit the influence of therapist factors and to remain theoretically congruent with the PACS, only patient speech is considered.
 Thus, patient speech turns were extracted for analysis and each patient utterance was labelled according to the attachment classification of its source document.
@@ -561,12 +563,12 @@ Class balance following the extraction of speech turns is as below.
 To begin development on the classification model, the data is split into 85 \% training and 15 \% test data.
 This split was chosen to allow the model as much data as possible for training, given the low amount of available data overall.
 The split was performed with stratification according to class balance, a measure necessitated by the low amount of documents.
-Nevertheless, it is important to split at the document level to avoid data leakage and ensure that the model is not learning to recognise individuals but rather generalisable speech patterns according to PACS classification.
+It is important to split at the document level to avoid data leakage and ensure that the model is not learning to recognise individuals but rather generalisable speech patterns according to PACS classification.
 The relatively small amount of samples in the test set is somewhat made up for by applying cross-validation and reporting a mean accuracy for all models of the best performing configuration.
 All models were implemented using the Massive Choice, Ample Tasks (MaChAmp) framework for transfer- and multi-task learning developed by van der Goot et al. \citeyear{MaChAmp}, which itself relies on the HuggingFace Transformers library \cite{HuggingFace} and PyTorch \cite{PyTorch}.
 
 \subsubsection{Domain-Adaptive Pre-Training}
-To investigate whether models could learn more task-appropriate representations from being exposed to more unlabelled data from the task domain, I conducted domain-adaptive pre-training with both a RoBERTa base model \cite{roberta} and the pre-trained MentalRoBERTa model presented by Ji et al. \citeyear{MentalBERT}.
+To investigate whether models could learn more task-appropriate representations from being exposed to more unlabelled data from the task domain, I conducted domain-adaptive pre-training with both a RoBERTa-base model \cite{roberta} and the pre-trained MentalRoBERTa model presented by Ji et al. \citeyear{MentalBERT}.
 
 In domain-adaptive pre-training, the base language model undergoes continued training on domain-relevant unlabelled data.
 Text is considered domain-relevant if it concerns topics relevant to the task, is of a relevant genre, or originates from forum discussing the topic.
@@ -580,12 +582,14 @@ First, the AnnoMI dataset \cite{Wu2022}, which consists of professionally transc
 Motivational interviewing is an effective form of counselling for habit- and behaviour change \cite{Apodaca2014, Gillam2019}.
 A 2005 review also found it to be beneficial in various behaviour change contexts and found clinically relevant benefits for both physiological and psychological diseases \cite{Rubak2005}.
 From this dataset 4,817 client utterances were extracted for use in pre-training.
+Setting aside 20 \% of instances to validate the model during training leaves 91,479 tokens for pre-training.
 
 Second, the DAIC-WoZ dataset \cite{Gratch2014}, consisting of 275 transcripts of clinical interviews, between seven and 33 minutes in duration, conducted by an animated virtual interviewer controlled by a human interviewer in a different room.
 Because the annotation of this dataset can at times be ambiguous with regard to who is speaking, all utterances were included in the pre-training data.
-This resulted in a total of 26,083 utterances.
+This resulted in a total of 26,083 utterances. As above, setting aside 20 \% of samples for validation leaves 371,089 tokens for pre-training.
 
 Finally, the HOPE dataset \cite{Malhotra2022} is made up of 212 counselling transcripts collected from various publicly available sources from which 6,382 patient speech turns were extracted for pre-training.
+148,109 tokens were kept for pre-training.
 
 While other data sources are available, these tend to be either significantly lower quality or of limited relevance.
 For instance, a number of large datasets have been constructed from text that is supposedly relevant to models in the mental health domain, such as tweets labelled with emotional valence (e.g., tweeteval; \citeNP{tweeteval}, used by \citeNP{Wagner2023}), Reddit posts related to mental health topics \cite{Kim2020, MentalBERT}, or chat forums on psychological counselling \cite{counselchat}.
@@ -600,7 +604,7 @@ This includes dynamic masking, where each token is masked with probability 0.15 
 Despite this not being implemented in MaChAmp \cite{MaChAmp}, I deemed it to be necessary due to the relatively low amount of data for masked language modelling.
 Additionally, as prescribed by Gururangan et al. \citeyear{Gururangan2020}, only the masked language modelling objective was used.
 Following recommendations from MaChAmp documentation, I duplicated the training data four times, leaving me with a training dataset five times the original size.
-Each model trained on this data for 20 epochs, seeing each sample once, and evaluating perplexity on the development set after each epoch.
+Each model trained on this data, consisting of a total of 3,053,385 tokens (610,677 before duplication), for 20 epochs, seeing each sample once, and evaluating perplexity on the development set after each epoch.
 With five copies of the training data, this corresponds to training five epochs with a more frequent evaluation strategy.
 
 Nevertheless, the best model, as determined by the validation set performance on the MLM task, was consistently the first of 20.
@@ -974,6 +978,7 @@ $$MultiHead(Q, K, V) = Concat(head_1, ..., head_h)W^O$$
 Where, $$head_i = Attention(Q W^Q_i, K W^K_i, V W^V_i)$$
 and $W^O$ is the matrix of weights in the linear layer.
 
+While typical implementations also employ additional measures such as layer normalisation and residual connections for stability and to allow individual parts of the model to focus on learning more specific representations, the above describes the basics of the original multi-head self-attention implementation by Vaswani et al. \citeyear{Vaswani2017}.
 The output of any given multi-head transformer block (encoder) may be passed as input to another transformer block or to e.g. a classification head to determine the label of the original input sequence.
 The base RoBERTa architecture consists of 12 encoders each with 12 attention heads while the large RoBERTa architecture employs 24 encoders each with 16 attention heads.
 
