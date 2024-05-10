@@ -488,7 +488,7 @@ I believe that this project is an example of this.
 The models applied in this project are all variants of the RoBERTa model first made available by Liu et al. \citeyear{roberta}.
 The RoBERTa name is derived from its claim of being a robustly optimised BERT approach.
 As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor.
-For the unitiated yet interested reader, a superficial overview of the transformer architecture is provided in Appendix \ref{App: transformers}.
+For the unfamiliar yet interested reader, a superficial overview of the transformer architecture is provided in Appendix \ref{App: transformers}.
 
 \subsubsection*{BERT}
 BERT, published by Devlin et al. in 2018 \cite{BERT}, is one of the first transformer-based language models and its key innovation consists in using the masked language modelling objective to train on full sentences, rather than the previously employed left-to-right or right-to-left strategy of predicting the next token or sequence based only on "previous" context.
@@ -503,7 +503,7 @@ The original BERT was trained on two datasets: BookCorpus, containing 800M words
 \subsubsection*{RoBERTa}
 The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \citeyear{BERT} and trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160 GB of raw text.
 Liu et al. \citeyear{roberta} replicate most of the BERT methodology, but train RoBERTa only on the masked token prediction task.
-They also make other changes such as increasing the size of batches during training, changing the text encoding procedue to create a larger and more flexible vocabulary, and including longer sequences than the original BERT had been exposed to.
+They also make other changes such as increasing the size of batches during training, changing the text encoding procedure to create a larger and more flexible vocabulary, and including longer sequences than the original BERT had been exposed to.
 The main difference in training methodology, however, is found in the data and its augmentation.
 Namely, Liu et al. showed that BERT was significantly under-trained by collecting a significantly larger corpus of text and by making each sentence in this corpus available to the model on several occasions.
 To avoid the model overfitting to specific instances that it had previously encountered, the RoBERTa methodology applies dynamic masking such that each token is masked with probability 0.15 each time the model encounters a sequence.
@@ -709,7 +709,7 @@ Given the confusion matrix below, accuracy is computed by dividing the sum of th
 $$
 \begin{bmatrix} TC_1 & MC_{1,2} & MC_{1,3} \\ MC_{2,1} & TC_2 & MC_{2,3} \\ MC_{3,1} & MC_{3,2} & TC_3 \end{bmatrix}
 $$
-where $TC_i$ are true classifications of class $i$ and $MC_{i,j}$ are missclassifications of class $i$ as $j$.
+where $TC_i$ are true classifications of class $i$ and $MC_{i,j}$ are misclassifications of class $i$ as $j$.
 Accuracy, then is
 $$\text{Accuracy} = \frac{\sum \text{diagonal elements}}{\sum \text{all elements}}$$
 
@@ -796,6 +796,8 @@ Full size confusion matrices for each of the five individual models are included
 In this thesis, I set out to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
 I believe that the theory and review sections should make abundantly clear the clinical and research potential of this approach, given its performance to an adequate level.
 % Discuss results.
+% - Do we beat the random baseline?
+% - Do we beat the majority baseline?
 % - Stability/reliability of results given low amount of data in both val and test sets
 % - Impact of increasing minimum input length on accuracy and stability
 
@@ -814,13 +816,13 @@ The training set class distribution when speech turns are concatenated to reach 
 It should be noted that while the ensemble confusion matrix presents heavily skewed towards an over-reliance on the majority class, the same degree of skewness is not present in all instances of the model.
 However, a closer look at the classification patterns of the models is warranted.
 In the therapy setting, the most trivial error would likely be to confuse a secure patient for being either type of insecure.
-As covered in section \ref{sec:Differentiable approaches}, secure patients may be better able to profit from treatment regardles of the specifics of its organisation.
+As covered in section \ref{sec:Differentiable approaches}, secure patients may be better able to profit from treatment regardless of the specifics of its organisation.
 Confusing either of the insecure orientations for being secure is likely to lead to worse outcomes as therapists may alter their strategies for building the therapeutic alliance and structuring the course of treatment in counterproductive ways.
 Most dire are the consequences of confusing the two insecure attachment patterns.
-If a therapist were to follow the prescription by Slade \citeyear{Slade2016} by structuring the course of their treatment and approaching the alliance building process according to the attachemnt characteristics of the patient, doing so on the basis of a missclassification could be detrimental.
-The approaches suggested to allign best with these two attachment patterns are almost exactly mirrored, risking serious adverse outcomes from the misguided structuring of treatment according to a missclassification.
+If a therapist were to follow the prescription by Slade \citeyear{Slade2016} by structuring the course of their treatment and approaching the alliance building process according to the attachment characteristics of the patient, doing so on the basis of a misclassification could be detrimental.
+The approaches suggested to align best with these two attachment patterns are almost exactly mirrored, risking serious adverse outcomes from the misguided structuring of treatment according to a misclassification.
 
-If the three-class problem corresponds to a flattening of the two-dimensional space described by the dimensions of anxiety and avoidance, one would expect any capable classification model to most easily distinguish the extremes of the scale, i.e., between anxious and avoidant patients.
+Given that the three-class problem corresponds to a flattening of the two-dimensional space described by the dimensions of anxiety and avoidance, one would expect any capable classifier to most easily distinguish the extremes of the scale, i.e., between anxious and avoidant patients.
 However, this does not appear to be the case, as these two classes are frequently confused across all five models.
 Namely, across the five models, the two insecure classes tend to be confused as often or more often than the secure class is confused with either of the insecure classes.
 
@@ -835,7 +837,7 @@ Namely, across the five models, the two insecure classes tend to be confused as 
 \subsection{Implications}
 Clinical judgement is a complicated and subjective task and tends to produce far from perfect inter-rater agreement.
 The results of this thesis must be viewed not only in light of the low amounts of data available but also with the broader difficulties involved in clinical judgement in mind.
-To provide a fitting frame of reference, I will briefly review some data on the reliability of expert and clinical judgment in psychology.
+To provide a fitting frame of reference, I will briefly review some data on the reliability of expert and clinical judgement in psychology, before considering the implications of this project.
 
 Very recently, Wagner et al. \citeyear{Wagner2023} found 76-80 \% inter-rater overlap for evaluations of mental health status when different experts rated the same samples in their dataset of psychotherapy text.
 While this is generally considered good inter-rater agreement, Wagner et al. also point out how it highlights the subjective nature of psychological evaluations.
@@ -852,19 +854,21 @@ For instance, Sagi et al. \citeyear{Sagi1994} found 90-100 \% agreement between 
 Similarly, Bakermans-Kranenburg and van IJzendoorn \citeyear{BakermansKranenburg1993} found test-retest reliability for three-way classification of the AAI of 78 \% ($\kappa = .63$).
 More recently, Talia et al. \citeyear{Talia2020} found an inter-rater agreement of .88 on their test of a small sample of interviews coded according to the AAI manual.
 
-Even if directly comparative measures are not available, it is clear that human expert raters generally fare better than the models presented here, albethey far from perfect.
-This edge in performance, however, must be considered in light of the additional information available to human raters.
+Even in the absence of directly comparable measures, it is clear that human expert raters generally fare better than the models presented here, albeit with their own limitations.
+However, this edge in performance must be considered in light of the additional information available to human raters.
 Depending on the task, these experts may have the option of asking their own questions, and they typically work with much greater context.
 For instance, when classifying an AAI, the rater has access to the entire transcript at once.
-This allows not only for the analysis of long-term patterns in speech and behaviour but also for inclusion of relevant context such as the therapist or interviewer speech turns.
+This allows not only for the analysis of long-term patterns in speech and behaviour but also for inclusion of relevant context such as the therapist or interviewer speech turns, which were not made available to models in this project.
+These affordances highlight that the target for an automated assessment system is not perfect reliability, but rather to reliably reach or exceed the human baseline for comparable tasks.
+In spite of the somewhat lacklustre results of the models presented here, I believe that the present results -- achieved with limited data and models of moderate size -- demonstrate that automated decision support of the kind that this thesis begins to develop may achieve this in the near future.
 
 The high reliability of structured psychiatric interviews as well as both the PACS and the AAI and the comparatively low reliability of unstructured clinical judgement suggests that conducting clinically relevant judgement of psychological phenomena in one's patients is an exceedingly difficult task.
-These issues are not unrecognised by psychiatrists, and in fact Matuszak and Piasecki \citeyear{Matuszak2012} suggest that more structured approaches be applied to both the anamnesis and diagnosis processes.
+These issues are not unrecognised by psychiatrists, and Matuszak and Piasecki \citeyear{Matuszak2012} suggest that more structured approaches be applied to both the anamnesis and diagnosis processes.
 Exacerbating the issue, it seems likely that in the somewhat unstructured psychotherapy dialogue in which the therapist's emotional and cognitive resources are likely to be focused elsewhere, the task of accurately assessing a patient's psychological characteristics becomes increasingly difficult.
 As such, rather than relying entirely on the intuitive judgement of therapists who may need to direct their focus elsewhere, I suggest that qualified decision support is warranted.
 Machine and clinical judgement does not have to be a dichotomy.
 In fact, a union is not only legitimate but justified, given adequate performance in the future.
-In the ideal case, an automatic decision-support system for the assessment of attachment orientation can free up therapists' resources and allow them to be more present in their counselling sessions while providing more accurate and reliable repeated measurements to inform treatment and intervention design.
+In the ideal case, an automatic decision-support system for the assessment of attachment orientation can free up therapists' resources and allow them to be more present in their counselling sessions while providing more accurate and reliable repeated measurements for research and to inform treatment and intervention design.
 
 \subsection{The Ethics of Automated Analysis}
 When applying any automated process, the potential for bias is always a serious concern.
@@ -890,9 +894,9 @@ The issue of interpretability and transparency in decision-making remains an imp
 In all cases where outputs directly influence decisions related to the classification or treatment of individuals, interpretability is a priority.
 With the current state of explainability research in NLP, this remains irreconcilable with useful degrees of predictive reliability (see e.g., \citeNP{Danilevsky2020, BarredoArrieta2020}), thus highlighting the importance of leaving decision competence with well-trained therapists supported by reliable tools providing useful insights rather than outsourcing it entirely to algorithms.
 
-I would argue that while the present results do not represent a tool ready for clinical deployment, they show the potential of these methods for broader application.
+While the present results do not represent a tool ready for clinical deployment, they show the potential of these methods for broader application.
 The most appropriate application at this stage of maturity is in research.
-Here, large-scale projects can leverage the efficiency of automating classification while alleviating the individual consequences of potential missclassifications.
+Here, large-scale projects can leverage the efficiency of automating classification while alleviating the individual consequences of potential misclassifications.
 This may enable research projects at all scales to develop knowledge on and strategies for managing attachment insecurity and how it affects the therapeutic process.
 
 \subsection{Limitations and Future Direction}
@@ -903,21 +907,20 @@ This project was severely limited by only working with 78 transcripts in total, 
 This project has tested language models of moderate size. All base RoBERTa models have roughly 125M parameters while the large variant has approximately 355M parameters.
 Considering the increasing proficiency and availability of Large Language Models (LLMs), there may be other feasible approaches for this type of classification.
 Larger models theoretically have more potential for learning complex dependencies and recognising abstract patterns of behaviour.
-In this project, the largest model tested produced the most convincing validation results, indicating that more capacity is warranted for this task.
+In this project, the largest model tested produced the most convincing validation results, indicating that more capacity may be appropriate for this task.
 However, this increased capacity tends to also express itself as an increased capacity for overfitting.
 This becomes a particularly damning concern when one considers the comparatively minuscule datasets that tend to be available in this field as was the case in this project.
 
 Newer models have substantially larger context windows and in the near future, some models may be able to process entire transcripts at once, considering all speech turns and interactions.
 Doing so may allow models to consider context in the form of therapists' contributions to the conversations which may provide valuable information given the capacity to incorporate it.
 Beyond the simple addition of more high-quality labelled data, this may prove to be the necessary intervention in closing the gap between machine and human judgement on abstract psychological constructs such as attachment.
-Additionally, the fact that the larger models tended to produce the best results when both performance and stability are considered opens an obvious avenue of research into applying models with greater capacity in the future.
+Moreover, the fact that the larger models tended to produce the best results when both performance and stability are considered opens an obvious avenue of research into applying models with greater capacity once larger datasets become available.
 
-Continuous - rather than categorical - measures of attachment may be considered both more theoretically congruent and empirically more appropriate and thus be preferred.
+Continuous -- rather than categorical -- measures of attachment may be considered both more theoretically congruent and empirically more appropriate and thus be preferred.
 Future work should attend to this fact and work towards integrating it in the continued development of these types of methods.
 This may be done by e.g. tagging individual PACS discursive markers in transcripts or developing models to directly score the subscales given measures from the PACS or AAI.
-
 Because continuous measurements were not available at the development of this project, it aims instead to provide a proof of concept for the automatic classification of attachment using the categorical convention.
-Nevertheless, the study of in-session behaviour remains so highly relevant that its primary counterarguments arguably lie in the feasibility and scalability.
+Nevertheless, the study of in-session behaviour remains so highly relevant that its primary counterarguments arguably lie in the feasibility and scalability domains.
 The benefits to clinical practice, as outlined in section \ref{sec:Applying attachment in therapy}, are numerous.
 Of equal importance is the interest in and methods enabling investigation of in-session behaviour and its relevance to clinical outcomes which may enable further research that will transform the practice of psychotherapy and therapist training programmes.
 Talia et al. \citeyear{Talia2017} point out that studies using the PACS can move beyond exploring the link between attachment and treatment outcomes and investigate associations between \textit{changes} in attachment and treatment outcomes.
