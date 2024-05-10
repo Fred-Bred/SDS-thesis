@@ -768,7 +768,7 @@ This is undoubtedly due to the lower number of instances available in the valida
 %     \bottomrule
 % \end{tabular}
 
-It is my assessment that the model configuration that provides the optimal balance between performance and stability is the RoBERTa-large variant with a minimum input length of 150 words.
+It is my assessment that the model configuration that provides the optimal balance between performance and stability is the RoBERTa-large variant with a minimum input length of 150 words, performing at an average accuracy of 56.15 \%.
 The RoBERTa-large model appears to hold the greatest promise out of the encoders tested, perhaps suggesting that larger models with greater capacity should have been included in the tests.
 The RoBERTa-large encoder will be the centre of the remaining analysis, focusing primarily on the 150 words minimum input length variant.
 
@@ -777,7 +777,7 @@ Taking a majority vote between the five models to determine one prediction per s
 % $$
 % \begin{bmatrix} 3 & 0 & 19 \\ 0 & 4 & 8 \\ 2 & 0 & 53 \end{bmatrix}
 % $$
-The full Figure \ref{fig: all confusion matrices} displays the confusion matrix for each instance of the model.
+Subplot B to F display the confusion matrix for each instance of the model.
 Full size confusion matrices for each of the five individual models are included in Appendix \ref{App: confusion matrices}.
 
 \begin{figure}
@@ -811,13 +811,11 @@ The training set class distribution when speech turns are concatenated to reach 
     \item Anxious: 47.67 \%
 \end{itemize}
 
-It should be noted that while the ensemble confusion matrix presents heavily skewed towards an over-reliance on the majority class, the same degree of skew is not present in all instances of the model.
+It should be noted that while the ensemble confusion matrix presents heavily skewed towards an over-reliance on the majority class, the same degree of skewness is not present in all instances of the model.
 However, a closer look at the classification patterns of the models is warranted.
-Not all errors are equally consequential, and particularly for use in therapy some errors carry substantially larger weight than others.
 In the therapy setting, the most trivial error would likely be to confuse a secure patient for being either type of insecure.
 As covered in section \ref{sec:Differentiable approaches}, secure patients may be better able to profit from treatment regardles of the specifics of its organisation.
 Confusing either of the insecure orientations for being secure is likely to lead to worse outcomes as therapists may alter their strategies for building the therapeutic alliance and structuring the course of treatment in counterproductive ways.
-
 Most dire are the consequences of confusing the two insecure attachment patterns.
 If a therapist were to follow the prescription by Slade \citeyear{Slade2016} by structuring the course of their treatment and approaching the alliance building process according to the attachemnt characteristics of the patient, doing so on the basis of a missclassification could be detrimental.
 The approaches suggested to allign best with these two attachment patterns are almost exactly mirrored, risking serious adverse outcomes from the misguided structuring of treatment according to a missclassification.
@@ -837,7 +835,9 @@ Namely, across the five models, the two insecure classes tend to be confused as 
 \subsection{Implications}
 Clinical judgement is a complicated and subjective task and tends to produce far from perfect inter-rater agreement.
 The results of this thesis must be viewed not only in light of the low amounts of data available but also with the broader difficulties involved in clinical judgement in mind.
-For instance, Wagner et al. \citeyear{Wagner2023} found 76-80 \% inter-rater overlap for evaluations of mental health status when different experts rated the same samples in their dataset of psychotherapy text.
+To provide a fitting frame of reference, I will briefly review some data on the reliability of expert and clinical judgment in psychology.
+
+Very recently, Wagner et al. \citeyear{Wagner2023} found 76-80 \% inter-rater overlap for evaluations of mental health status when different experts rated the same samples in their dataset of psychotherapy text.
 While this is generally considered good inter-rater agreement, Wagner et al. also point out how it highlights the subjective nature of psychological evaluations.
 
 Inter-rater agreement on psychiatric diagnosis tends to be quite high when patients are assessed through structured interviews.
@@ -852,7 +852,7 @@ For instance, Sagi et al. \citeyear{Sagi1994} found 90-100 \% agreement between 
 Similarly, Bakermans-Kranenburg and van IJzendoorn \citeyear{BakermansKranenburg1993} found test-retest reliability for three-way classification of the AAI of 78 \% ($\kappa = .63$).
 More recently, Talia et al. \citeyear{Talia2020} found an inter-rater agreement of .88 on their test of a small sample of interviews coded according to the AAI manual.
 
-Even if directly comparative measures are not available, it is clear that human expert raters are generally better than the results presented here, albeit far from perfect.
+Even if directly comparative measures are not available, it is clear that human expert raters generally fare better than the models presented here, albethey far from perfect.
 This edge in performance, however, must be considered in light of the additional information available to human raters.
 Depending on the task, these experts may have the option of asking their own questions, and they typically work with much greater context.
 For instance, when classifying an AAI, the rater has access to the entire transcript at once.
