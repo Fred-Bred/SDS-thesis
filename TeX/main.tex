@@ -373,7 +373,7 @@ While the therapeutic alliance is not a construct directly under attachment theo
 \subsubsection*{What is the therapeutic alliance and why does it matter?}
 Early conceptualisations of the working alliance, such as that by Edward Bordin \citeyear{Bordin1979}, emphasized an alignment between client and therapist regarding the goals and objectives of therapy. However, Bordin also recognized the importance of an emotional connection built on trust and mutual respect. He proposed that the working alliance is comprised of three key components: goal, task, and bond. The bond component refers to the attachment-like relationship that develops between therapist and client.
 
-The therapeutic alliance has emerged as stand-out measure in the vast literature on and concepts surrounding psychotherapy. Summers and Barber \citeyear{Summers2003} argued in 2003 that this is because it is shown to have robust effects on treatment outcomes across therapist traditions and patient conditions.
+The therapeutic alliance has emerged as stand-out measure in the vast literature on and concepts surrounding psychotherapy. Summers and Barber \citeyear{Summers2003} argued that this is because it is shown to have robust effects on treatment outcomes across therapist traditions and patient conditions.
 A more recent review corroborates this stance as a meta-analysis of four decades of research on the therapeutic alliance, covering 295 studies with a total \textit{N} of more than 30,000 patients by Flückinger et al. \citeyear{Fluckinger2018} concluded that the positive correlation between various measures of both the therapeutic alliance and patient outcomes is very robust.
 This was the case irrespective of treatment approach, patient characteristics and whether the therapy was conducted face-to-face or online.
 
@@ -718,7 +718,7 @@ $$\text{Accuracy} = \frac{\sum \text{diagonal elements}}{\sum \text{all elements
 % - Point out best model (roberta-large_150?)
 % - roberta-large test set results plot
 Validation results in the form of mean and standard deviation accuracy for each encoder and minimum input length combination are displayed in Table \ref{tab: val results}.
-These results clearly that the efforts to produce domain-adapted models were not helpful for this task.
+The efforts to produce domain-adapted models do not seem to have been helpful for this task.
 This is the case for both my own pre-training and when using a domain-specific model (MentalRoBERTa; \citeNP{MentalBERT}) as well as for my further pre-training of the domain-specific model.
 
 Additionally, providing the model with more context per sample by increasing the minimum input length seems to improve performance in most cases.
@@ -728,8 +728,8 @@ This is undoubtedly due to the lower number of instances available in the valida
 \begin{adjustbox}{width=1\textwidth}
     \input{figures/val_results.tex}
 \end{adjustbox}
-\label{tab: val results}
 \caption{Validation results}
+\label{tab: val results}
 \end{table}
 
 % \begin{tabular}{lrrr}
@@ -768,24 +768,23 @@ This is undoubtedly due to the lower number of instances available in the valida
 %     \bottomrule
 % \end{tabular}
 
-Taking a majority vote between the five models to determine one prediction per sample in the test set produced the confusion matrix in Figure \ref{fig: combined confusion matrix}.
+It is my assessment that the model configuration that provides the optimal balance between performance and stability is the RoBERTa-large variant with a minimum input length of 150 words.
+The RoBERTa-large model appears to hold the greatest promise out of the encoders tested, perhaps suggesting that larger models with greater capacity should have been included in the tests.
+The RoBERTa-large encoder will be the centre of the remaining analysis, focusing primarily on the 150 words minimum input length variant.
+
+Following cross-validation, five instances of the RoBERTa-large model were saved.
+Taking a majority vote between the five models to determine one prediction per sample in the test set produced the confusion matrix in subplot A of Figure \ref{fig: all confusion matrices}.
 % $$
 % \begin{bmatrix} 3 & 0 & 19 \\ 0 & 4 & 8 \\ 2 & 0 & 53 \end{bmatrix}
 % $$
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/roberta-large_150_combined_confusion_matrix.png}
-    \label{fig: combined confusion matrix}
-    \caption{Confusion matrix according to majority vote classification of samples with votes from all five instances of the RoBERTa-large model trained on a minimum input length of 150 words.}
-\end{figure}
-Confusion matrices for each of the five individual models are included in Appendix \ref{App: confusion matrices}.
+The full Figure \ref{fig: all confusion matrices} displays the confusion matrix for each instance of the model.
+Full size confusion matrices for each of the five individual models are included in Appendix \ref{App: confusion matrices}.
 
-It is clear that the models heavily weight the anxious class, a preference somewhat justified by the skewed distribution in both training and test sets using this preprocessing method.
-The test set class distribution when speech turns are concatenated to reach a length of at least 150 words is as follows:
-\begin{itemize}
-    \item Avoidant: 24.72 \%
-    \item Secure: 13.48 \%
-    \item Anxious: 61.80 \%
-\end{itemize}
+\begin{figure}
+    \includegraphics[width=0.95\textwidth]{figures/combined_confusion_matrix.png}
+    \caption{Confusion matrix for the majority vote predictions and each of five iterations of RoBERTa-large trained with minimum input length of 150 words.}
+    \label{fig: all confusion matrices}
+\end{figure}
 
 \begin{figure}
     \includegraphics[width=\textwidth]{figures/roberta-large_acc_for_min_len.png}
@@ -803,6 +802,37 @@ I believe that the theory and review sections should make abundantly clear the c
 % How far are we from something that's good enough?
 % Looks like pre-training is not helpful for this task or with this pre-training data
 % The larger model appears to produce the best overall results when performance and stability are both considered.
+
+It is clear that the models heavily weight the anxious class, a preference somewhat justified by the skewed distribution in both training and test sets using this preprocessing method.
+The training set class distribution when speech turns are concatenated to reach a length of at least 150 words is as follows:
+\begin{itemize}
+    \item Avoidant: 20.70 \%
+    \item Secure: 31.63 \%
+    \item Anxious: 47.67 \%
+\end{itemize}
+
+It should be noted that while the ensemble confusion matrix presents heavily skewed towards an over-reliance on the majority class, the same degree of skew is not present in all instances of the model.
+However, a closer look at the classification patterns of the models is warranted.
+Not all errors are equally consequential, and particularly for use in therapy some errors carry substantially larger weight than others.
+In the therapy setting, the most trivial error would likely be to confuse a secure patient for being either type of insecure.
+As covered in section \ref{sec:Differentiable approaches}, secure patients may be better able to profit from treatment regardles of the specifics of its organisation.
+Confusing either of the insecure orientations for being secure is likely to lead to worse outcomes as therapists may alter their strategies for building the therapeutic alliance and structuring the course of treatment in counterproductive ways.
+
+Most dire are the consequences of confusing the two insecure attachment patterns.
+If a therapist were to follow the prescription by Slade \citeyear{Slade2016} by structuring the course of their treatment and approaching the alliance building process according to the attachemnt characteristics of the patient, doing so on the basis of a missclassification could be detrimental.
+The approaches suggested to allign best with these two attachment patterns are almost exactly mirrored, risking serious adverse outcomes from the misguided structuring of treatment according to a missclassification.
+
+If the three-class problem corresponds to a flattening of the two-dimensional space described by the dimensions of anxiety and avoidance, one would expect any capable classification model to most easily distinguish the extremes of the scale, i.e., between anxious and avoidant patients.
+However, this does not appear to be the case, as these two classes are frequently confused across all five models.
+Namely, across the five models, the two insecure classes tend to be confused as often or more often than the secure class is confused with either of the insecure classes.
+
+% \begin{itemize}
+    % Test set
+%     \item Avoidant: 24.72 \%
+%     \item Secure: 13.48 \%
+%     \item Anxious: 61.80 \%
+% \end{itemize}
+
 
 \subsection{Implications}
 Clinical judgement is a complicated and subjective task and tends to produce far from perfect inter-rater agreement.
@@ -984,6 +1014,12 @@ The base RoBERTa architecture consists of 12 encoders each with 12 attention hea
 
 \chapter{Confusion Matrices}
 \label{App: confusion matrices}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/roberta-large_150_combined_confusion_matrix.png}
+    \caption{Confusion matrix according to majority vote classification of samples with votes from all five instances of the RoBERTa-large model trained on a minimum input length of 150 words.}
+    \label{fig: combined confusion matrix}
+\end{figure}
 
 \begin{figure}
     \includegraphics[width=\textwidth]{figures/roberta-large_150_split1_confusion_matrix.png}
