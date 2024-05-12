@@ -141,13 +141,6 @@ The purpose of this historical perspective is to make apparent how this framewor
 Arguably, the most important aspect of attachment theory is the view of attachment as a distinct psychological need, rather than a response to inherently sexual fantasies or a collection of reinforced behaviours related primarily to feeding.
 Though this notion may seem self-evident today, this section will reveal that this was not always so.
 
-The theory of attachment is a fundamentally ethological approach, which at the time of its development sought to explain behaviours that were poorly accounted for in existing theories.
-The initial development of the theory is often credited to John Bowlby \cite{Bowlby1969attachment,Bowlby1973separation,Bowlby1980loss}, who originally formulated it from a psychoanalytic, Freudian perspective.
-However, the framework would soon develop through a more empirically informed approach, not least thanks to the groundbreaking work on infant attachment done by Mary Ainsworth and her colleagues (e.g., \citeNP{Ainsworth1970}).
-
-Bowlby's arrival at the tenets of attachment theory was influenced by the psychoanalytic exploration of object relations - a particular area of Freudian thought concerned with ego development and the relation of the psyche to external objects and persons.
-Bowlby, however, viewed the apparent attachment behaviours as being mostly adaptive to external needs and stimuli rather than as responses to internal fantasies. In line with the tradition that inspired him, Bowlby based his initial theories on case studies, particularly of delinquent children (e.g. \citeNP{bowlby1946thieves}). From these cases, Bowlby and his colleagues found that children displaying criminal or otherwise problematic behaviours or mental or emotional distress typically struggled to form meaningful relationships and many had been repeatedly institutionalised or moved between foster homes \cite{bowlby1951WHO}.
-
 While the foundation for the theory and its conclusions had been laid long before, the first widely influential published piece on the effects of childhood care and attachment on mental health was Bowlby's 1951 monograph published by the World Health Organization under the title \textit{Maternal Care and Mental Health} \cite{bowlby1951WHO}.
 The central assertion of this work, which reviewed the limited existing empirical data, was that healthy infant development presumes a warm and continuous relationship with the mother.
 At the time, this proposition was controversial as it broke with traditional views on child-rearing and development. The dominant view at the time considered physical contact with infants to be harmful, leading nurseries and hospitals to be sterile and contact-less \cite{Karen1994}.
@@ -178,13 +171,6 @@ Finally, Harlow noticed that, compared to infants raised by cloth mothers, those
 
 Through the next two decades Bowlby would elaborate on the theory of attachment over several major publications, particularly the three-volume magnum opus \textit{Attachment and Loss} \cite{Bowlby1969attachment, Bowlby1973separation,Bowlby1980loss} released between 1969 and 1980.
 In 1988, almost four decades post its initial release, he claimed to have finally remedied the empirical and theoretical deficiencies of \textit{Maternal care and mental health} \cite{Bowlby1988}.
-
-Inspired by the traditions of ethology, cybernetics, and cognitive psychology, Bowlby considered the development of attachment and its related behaviours from both ontogenetic and phylogenetic perspectives.
-In the phylogenetic view, an attachment system developed through human, and generally mammalian, evolutionary history to encourage infants to maintain proximity to their caretakers, particularly so during conditions of threat.
-Bowlby theorised that this system, conceptualised as a fusion of ethology and cybernetics, evolved to encourage behaviours that regulate affect, fear, security, and exploration to achieve homeostasis.
-The attachment system is activated when a threat is perceived and attachment behaviours tend to follow. The nature of these behaviours depends on the attachment style of the individual which determine the strategies employed to regulate affect and cope with distress and the perceived threat.
-The individual's attachment style is developed ontogenetically through the interplay of innate tendencies -- or instincts -- and interactions with caregivers. In other words, infants develop expectations of the responsiveness of their caregivers based on experience.
-These expectations tend to stay with them into adolescence and adulthood, forming rather stable mental models, a concept borrowed from cognitive psychology, of close and intimate relationships which influence expectations, behaviours, and self-regulation throughout the life-span.
 
 \subsection{Assessing Attachment}
 A large part of the move towards empirical methods and readily applicable theory constructs is attributable to the work of Mary Ainsworth whose contributions greatly nuanced the understanding of attachment and maternal deprivation.
@@ -489,16 +475,6 @@ The RoBERTa name is derived from its claim of being a robustly optimised BERT ap
 As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor.
 For the unfamiliar yet interested reader, a superficial overview of the transformer architecture is provided in Appendix \ref{App: transformers}.
 
-\subsubsection*{BERT}
-BERT, published by Devlin et al. in 2018 \cite{BERT}, is one of the first transformer-based language models and its key innovation consists in using the masked language modelling objective to train on full sentences, rather than the previously employed left-to-right or right-to-left strategy of predicting the next token or sequence based only on "previous" context.
-It is from this novel approach that the model takes its name. The Bidirectional Encoder Representations from Transformers solves its objectives by encoding rich contextual embeddings using transformers.
-BERT is trained on two objectives and takes two sequences as input during its training.
-The first task is a masked language model objective where tokens are randomly masked, and the model is tasked with predicting its original vocabulary ID using context from both sides of the masked token. 
-The second objective used when training BERT is a next-sequence prediction task, in which the model predicts whether the second sequence follows the first in the source text.
-The model is trained to perform on both objectives using the same encoder weights.
-According to Devlin et al., this setup forces the model to learn meaningful embeddings and to consider both the meaning of masked tokens and how it is affected by context on either side of it.
-The original BERT was trained on two datasets: BookCorpus, containing 800M words, and English Wikipedia, which was 2,500M words at the time, with a total weight of 13 or 16 GB depending on preprocessing \cite{BERT, roberta}.
-
 \subsubsection*{RoBERTa}
 The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \citeyear{BERT} and trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160 GB of raw text.
 Liu et al. \citeyear{roberta} replicate most of the BERT methodology, but train RoBERTa only on the masked token prediction task.
@@ -703,6 +679,8 @@ Demszky et al. \citeyear{Demszky2023} suggest two high-level approaches to evalu
 The first, and most applicable here, is expert evaluation.
 This consists of having domain experts familiar with the relevant constructs score the same texts as the applied model and then computing agreement between them.
 This is essentially analogous to the accuracy score reported here as the 'ground truth' labels to which the models' predictions are compared are generated by experts trained in the PACS.
+The second approach is impact evaluation, which relates mostly to the impact of generated text, making it less applicable here.
+Nevertheless, the impact of the future application of an automatic assessment tool in research and practice should be continually evaluated.
 
 Given the confusion matrix below, accuracy is computed by dividing the sum of the diagonal elements with the sum of all elements.
 $$
