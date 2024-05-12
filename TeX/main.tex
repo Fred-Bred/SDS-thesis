@@ -454,26 +454,25 @@ Conversely, the aim for therapists of anxious patients is to help them regulate 
 \chapter{Present Study}
 \section{Scope of the Present Study}
 This thesis attempts to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
-A demonstration that language models can learn to classify attachment styles based on patient speech would constitute an indication that the approach is feasible.
-It is important to note that this thesis does not intend to develop a deployable tool for immediate use in therapy or research.
-Instead, it focuses on establishing whether automatic classification of attachment styles through language analysis is a tractable problem with promising potential for further development
+The main focus is on establishing whether automatic classification of attachment styles through language analysis is a tractable problem with promising potential for further development.
 As such, performance above the random baseline would indicate that there are generalisable patterns relevant to each of the three main attachment classifications and that these patterns can be picked up as signal by using the right tools.
-On the contrary, if the statistical models applied here are unable to detect this signal at all, it is unlikely, at least at this stage of development in language modelling, that more data will deliver more performance.
+On the contrary, if the statistical models applied here are unable to detect this signal at all, it is unlikely that more data will deliver more performance.
 This would indicate that the approach is, with the currently available technology, not worth pursuing over other potentially promising avenues of research.
 
 \subsection*{Machine and Clinical Judgement}
 In the pursuit of automation and machine-driven decision-making, it is essential to consider the aspects of interpretability and fairness.
 This is particularly crucial in the context of complex discursive behaviours, such as those studied in this project, where the interpretation of patient-therapist interactions often extends beyond the literal meaning of the words exchanged.
 While traditional methods may struggle to capture the intricacies of these interactions, this thesis employs natural language processing (NLP) techniques representative of the state-of-the-art, acknowledging that they may not be fully interpretable.
-Given the over-arching goal of developing a practical tool, the primary focus is on achieving optimal performance, even if it means sacrificing some degree of interpretability.
+Given the long-term goal of developing a practical tool, the primary focus is on achieving optimal performance, even if it means sacrificing some degree of interpretability.
 I argue that the end-users of such a tool, whether therapists and patients or researchers, would ultimately benefit more from a performant model than one that is easily interpretable.
 
 The field of NLP was forever changed when the transformer architecture was made public in 2017 \cite{Vaswani2017}, enabling drastic leaps in performance across NLP tasks.
 Since then, variants of the transformer architecture have represented the state-of-the-art in NLP.
-While applications in the realm of clinical psychology have so far been limited, I posit that we now have the understanding, infrastructure, and data to begin leveraging the immense power inherent in this technology for improved treatment outcomes.
+While applications in the realm of clinical psychology have so far been limited, I posit that we now have the understanding and data to begin leveraging this technology for improved treatment outcomes.
 This seems to be in line with trends in the application of various NLP methods in fields related to clinical psychology.
 For instance, in a 2023 review, Malgaroli et al. \citeyear{Malgaroli2023} report a rising trend in the publication of peer-reviewed literature applying NLP to mental health interventions research.
-While not exclusively so, a large portion of the increase in publications is carried by an increase in applications of deep learning and word embedding techniques. The authors report that most recently, transformer models were the most applied NLP tool in the domain of mental health interventions, likely owing to their ability to extract semantically meaningful features, attention mechanisms, and relatively large context windows \cite{Malgaroli2023}.
+While not exclusively so, a large portion of the increase in publications is carried by an increase in applications of deep learning and word embedding techniques.
+The authors report that most recently, transformer models were the most applied NLP tool in the domain of mental health interventions, likely owing to their ability to extract semantically meaningful features, attention mechanisms, and relatively large context windows \cite{Malgaroli2023}.
 Malgaroli et al. further report that transformer-based models outperform other input features on tasks such as identifying emotional valence and accurately rating symptoms.
 
 A key feature which is particularly important for the study of abstract verbal behaviours and the management of attunement is the contextually influenced embeddings of words that is among the distinguishing features of the transformer model.
