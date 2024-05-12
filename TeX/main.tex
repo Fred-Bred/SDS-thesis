@@ -633,8 +633,8 @@ $$L(y, z) = -\sum\left[y \cdot \log(softmax(z))\right]$$
 where $y$ is a vector one-hot encoding the true label and $z$ is the vector of logits output by the classification head.
 
 \paragraph*{Learning rate schedule}
-Following experiments, a base learning rate of 1e-5 was selected.
-While a learning rate of 5e-5 was found by Sun et al. \citeyear{Sun2020} to work well for text classification tasks with similar types of pre-trained models, experiments with this and higher base learning rates produced unstable training, while lower learning rates generally produced poorer metrics, likely as models would be unable to escape local minima.
+Following experiments, a base learning rate of $1 \times 10^{-5}$ was selected.
+While a learning rate of $5 \times 10^{-5}$ was found by Sun et al. \citeyear{Sun2020} to work well for text classification tasks with similar types of pre-trained models, experiments with this and higher base learning rates produced unstable training, while lower learning rates generally produced poorer metrics, likely as models would be unable to escape local minima.
 
 A slanted triangular learning rate schedule is implemented similar to the formulation by Howard and Ruder \citeyear{Howard2018}, albeit with slightly different values.
 This schedule implements a linear warm-up for a specified fraction of the training steps, here, 0.3, before linearly decreasing the learning rate over the remaining steps, referred to as annealing.
