@@ -303,6 +303,7 @@ Namely, individuals with anxious attachment experienced higher negative affect, 
 Additionally, individuals with anxious attachment experienced social situations with low levels of rated "closeness" significantly more negatively than those with secure attachment \cite{Sheinbaum2015}.
 
 \section{Health and Psychological Distress}
+\label{sec: Health}
 Attachment theory and its supporting evidence have serious implications for general healthcare with associations reaching from the symptoms experienced and reported to the tendency to visit health professionals.
 In a survey-based study of 287 university students assessed twice ten weeks apart by Feeney and Ryan \citeyear{Feeney1994}, anxious attachment was linked to higher symptom-reporting. This association remained robust even when controlling for general negative emotionality, suggesting that those with anxious attachment may be more prone to experience or report signs of distress.
 The same study also found that avoidant attachment was associated with fewer visits to health professionals, even when symptom reports were controlled for, suggesting that avoidant attachment is associated with delayed seeking of medical care.
@@ -754,8 +755,11 @@ Taking a majority vote between the five models to determine one prediction per s
 % $$
 % \begin{bmatrix} 3 & 0 & 19 \\ 0 & 4 & 8 \\ 2 & 0 & 53 \end{bmatrix}
 % $$
-Subplot B to F display the confusion matrix for each instance of the model.
+Subplot B to F display the confusion matrices for each instance of the model.
 Full size confusion matrices for each of the five individual models are included in Appendix \ref{App: confusion matrices}.
+The mean test set accuracy across these five models is 59.55 \% with a standard deviation of 5.82.
+Each accuracy score is reported in table \ref{tab:roberta-large_150 test acc} in Appendix \ref{App: confusion matrices}.
+It is noteworthy that the accuracy score of the ensemble voting classifier using all five instances of the RoBERTa-large model results in an accuracy of 67.42 \%.
 
 \begin{figure}
     \includegraphics[width=0.95\textwidth]{figures/combined_confusion_matrix.png}
@@ -763,15 +767,9 @@ Full size confusion matrices for each of the five individual models are included
     \label{fig: all confusion matrices}
 \end{figure}
 
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/roberta-large_acc_for_min_len.png}
-    \caption{Mean and standard deviation accuracies in test set for all models resulting from five-fold cross-validation over varying minimum input lengths}
-    \label{fig: roberta-large results}
-\end{figure}
-
 \section{Discussion}
 In this thesis, I set out to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
-I believe that the theory and review sections should make abundantly clear the clinical and research potential of this approach, given its performance to an adequate level.
+
 % Discuss results.
 % - Do we beat the random baseline?
 % - Do we beat the majority baseline?
@@ -795,6 +793,7 @@ However, a closer look at the classification patterns of the models is warranted
 In the therapy setting, the most trivial error would likely be to confuse a secure patient for being either type of insecure.
 As covered in section \ref{sec:Differentiable approaches}, secure patients may be better able to profit from treatment regardless of the specifics of its organisation.
 Confusing either of the insecure orientations for being secure is likely to lead to worse outcomes as therapists may alter their strategies for building the therapeutic alliance and structuring the course of treatment in counterproductive ways.
+However, this error may be less severe for avoidant patients, as the association between this orientation and therapy outcomes is weaker while this group of patients tend to hold more stable views of their therapists and working alliance (see sections \ref{sec: Health} and \ref{sec:Applying attachment in therapy}).
 Most dire are the consequences of confusing the two insecure attachment patterns.
 If a therapist were to follow the prescription by Slade \citeyear{Slade2016} by structuring the course of their treatment and approaching the alliance building process according to the attachment characteristics of the patient, doing so on the basis of a misclassification could be detrimental.
 The approaches suggested to align best with these two attachment patterns are almost exactly mirrored, risking serious adverse outcomes from the misguided structuring of treatment according to a misclassification.
@@ -802,14 +801,37 @@ The approaches suggested to align best with these two attachment patterns are al
 Given that the three-class problem corresponds to a flattening of the two-dimensional space described by the dimensions of anxiety and avoidance, one would expect any capable classifier to most easily distinguish the extremes of the scale, i.e., between anxious and avoidant patients.
 However, this does not appear to be the case, as these two classes are frequently confused across all five models.
 Namely, across the five models, the two insecure classes tend to be confused as often or more often than the secure class is confused with either of the insecure classes.
+Referencing the ensemble confusion matrix, the avoidant patients are recognised with the greatest difficulty.
+In fact, this ensemble model achieves only a recall of 13.64 \%, indicating that the vast majority of avoidant patients are misclassified.
+Due to the bias for anxious classification in most models, nn the ensemble classification, the mislabelled avoidant patients are instead classified as anxious.
 
-% \begin{itemize}
-    % Test set
-%     \item Avoidant: 24.72 \%
-%     \item Secure: 13.48 \%
-%     \item Anxious: 61.80 \%
-% \end{itemize}
+To further investigate the impact of affording the model more context, Figure \ref{fig: roberta-large results} displays the mean test set accuracy and standard deviation for RoBERTa-large models across minimum input lengths.
+As hypothesised, adding context to the very short speech turns tends to improve performance.
+However, it comes with a noticeable trade-off of stability as both training and testing sample sizes decrease and standard deviations in mean accuracy scores tend to increase.
+This seems to suggest that with a larger dataset, the model would have more opportunity to encode the relevant information required to predict attachment style by increasing the information and context available to it.
 
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/roberta-large_acc_for_min_len.png}
+    \caption{Mean and standard deviation accuracies in test set for all models resulting from five-fold cross-validation over varying minimum input lengths. Error bars represent one standard deviation.}
+    \label{fig: roberta-large results}
+\end{figure}
+
+This manner of concatenating speech turns to reach a minimum word count has an unintended side effect.
+Namely, the distribution between the three classes changes as more speech turns are concatenated.
+Unfortunately, the relatively small datasets mean that this effect is not uniform across training and test splits.
+Rather, in the test split, concatenating to at least 150 words results in an increased skew:
+\begin{itemize}
+    \item Avoidant: 24.72 \%
+    \item Secure: 13.48 \%
+    \item Anxious: 61.80 \%
+\end{itemize}
+
+This skewed distribution challenges the interpretation of the above results as demonstrating the begging of learning to distinguish classes.
+In fact, the majority of models do not perform above the majority baseline.
+In spite of this, I am optimistic that the models have generally learned to encode some relevant information for distinguishing the three classes.
+While several models do not improve in accuracy over the majority baseline, the ensemble model does.
+Additionally, based on the distribution in the larger training dataset, I believe that the majority baseline in the test set is, in a sense, artificially high.
+While a robust well-performing model would not necessarily struggle with this distribution, it does set a somewhat inflated baseline for comparison.
 
 \subsection{Implications}
 Clinical judgement is a complicated and subjective task and tends to produce far from perfect inter-rater agreement.
@@ -833,7 +855,7 @@ More recently, Talia et al. \citeyear{Talia2020} found an inter-rater agreement 
 
 Even in the absence of directly comparable measures, it is clear that human expert raters generally fare better than the models presented here, albeit with their own limitations.
 However, this edge in performance must be considered in light of the additional information available to human raters.
-Depending on the task, these experts may have the option of asking their own questions, and they typically work with much greater context.
+Depending on the task, these experts may have the option of asking follow-up questions, and they typically work with much greater context.
 For instance, when classifying an AAI, the rater has access to the entire transcript at once.
 This allows not only for the analysis of long-term patterns in speech and behaviour but also for inclusion of relevant context such as the therapist or interviewer speech turns, which were not made available to models in this project.
 These affordances highlight that the target for an automated assessment system is not perfect reliability, but rather to reliably reach or exceed the human baseline for comparable tasks.
@@ -878,15 +900,20 @@ This may enable research projects at all scales to develop knowledge on and stra
 
 \subsection{Limitations and Future Direction}
 The primary challenge to the investigation of the utility and feasibility of automatic classification in this domain is the low amount of data available.
-Due to the sensitive nature of therapy transcripts, collecting large corpora of transcripts is difficult.
-This project was severely limited by only working with 78 transcripts in total, and I believe that future work, should it succeed in gathering larger and more diverse corpora of relevant texts, would likely produce more impressive classification accuracy that what has been demonstrated here.
+Due to the sensitive nature of therapy transcripts, the collection and sharing of large corpora of transcripts is both ethically and logistically challenging.
+This project was severely limited by only working with 78 transcripts in total, and I believe that future work, should it succeed in gathering larger and more diverse corpora of relevant texts, would likely produce more impressive classification results that what has been demonstrated here.
+Furthermore, this project may have been hampered by its stratification strategy.
+As the split between training and test data was made at the document level to avoid data leakage, this is also the level at which stratification was considered.
+However, in spite of the initial stratification, this produced training and test sets with vastly different class distributions after the extraction and concatenation of speech turns.
+To combat this, future projects may experiment with more sophisticated stratification strategies for producing training and test splits.
+Once follow-up projects have more accurately determined the optimal balance between number of samples and context per sample, test and training splits can be made at the document level while stratifying for class distribution at the level of (concatenated) speech turns.
 
 This project has tested language models of moderate size. All base RoBERTa models have roughly 125M parameters while the large variant has approximately 355M parameters.
-Considering the increasing proficiency and availability of Large Language Models (LLMs), there may be other feasible approaches for this type of classification.
+Considering the increasing availability of Large Language Models (LLMs), there may be other feasible approaches for this type of classification.
 Larger models theoretically have more potential for learning complex dependencies and recognising abstract patterns of behaviour.
 In this project, the largest model tested produced the most convincing validation results, indicating that more capacity may be appropriate for this task.
 However, this increased capacity tends to also express itself as an increased capacity for overfitting.
-This becomes a particularly damning concern when one considers the comparatively minuscule datasets that tend to be available in this field as was the case in this project.
+This becomes a particularly serious concern when one considers the comparatively minuscule datasets that tend to be available in this field as was the case in this project.
 
 The models applied in this project were developed in 2018. Newer text processing models have substantially larger context windows and in the near future, some models may be able to process entire transcripts at once, considering all speech turns and interactions.
 Doing so may allow models to consider context in the form of therapists' contributions to the conversations which may provide valuable information given the capacity to incorporate it.
@@ -993,7 +1020,7 @@ While typical implementations also employ additional measures such as layer norm
 The output of any given multi-head transformer block (encoder) may be passed as input to another transformer block or to e.g. a classification head to determine the label of the original input sequence.
 The base RoBERTa architecture consists of 12 encoders each with 12 attention heads while the large RoBERTa architecture employs 24 encoders each with 16 attention heads.
 
-\chapter{Confusion Matrices}
+\chapter{Extended Results}
 \label{App: confusion matrices}
 
 \begin{figure}
@@ -1032,4 +1059,12 @@ The base RoBERTa architecture consists of 12 encoders each with 12 attention hea
     \label{fig: cm split5}
 \end{figure}
 
+\begin{table}
+    \begin{adjustbox}{width=1\textwidth}
+        \input{figures/test_results_150.tex}
+    \end{adjustbox}
+    \caption{Test Set Accuracies for Each Instance of the RoBERTa-large Model Trained with Minimum Input Length of 150 Words.}
+    \label{tab:roberta-large_150 test acc}
+\end{table}
+    
 \end{document}
