@@ -535,6 +535,15 @@ Class balance following the extraction of speech turns is as below.
     \item {Anxious: 36.7 \% of speech turns}
 \end{itemize}
 
+As evident in Figure \ref{fig: class balance turn len}, classes are not equally distributed across all speech turn lengths.
+Specifically, secure patients are over-represented in the very short speech turns while anxious individuals are over-represented in the longer speech turns.
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{figures/log_dodge_turn_length_distribution_by_class.png}
+    \caption{Distribution of patient speech turn length per class.}
+    \label{fig: class balance turn len}
+\end{figure}
+
 \subsection{Approach}
 To begin development on the classification model, the data is split into 85 \% training and 15 \% test data.
 This split was chosen to allow the model as much data as possible for training, given the low amount of available data overall.
@@ -618,7 +627,7 @@ Discriminative fine-tuning slightly adjusts this process such that when a layer 
 Discriminative fine-tuning is implemented here with a decay factor of 0.38, by which the learning rate of newly unfrozen layers is decreased.
 
 \paragraph*{Optimisation and regularisation}
-Both classification training and masked language modelling are done using a cross-entropy loss.
+Both fine-tuning and masked language modelling are done using a cross-entropy loss.
 
 Optimisation is performed using the AdamW algorithm introduced by Loshchilov and Hutter \citeyear{AdamW}.
 This algorithm applies the classic Adam optimiser \cite{Adam} with weight decay.
@@ -916,7 +925,6 @@ In the future, this will enable scalable pipelines for research and clinical pra
     \label{fig: PACS turn length}
 \end{figure}
 
-
 \begin{figure}
     \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.13_11.54.44_model_7_val.png}
     \caption{Example A of accuracy over turn length for one model experiment.}
@@ -927,13 +935,6 @@ In the future, this will enable scalable pipelines for research and clinical pra
     \includegraphics[width=\textwidth]{figures/accuracy_by_length_2024.03.14_09.59.35_model_11_val.png}
     \caption{Example B of accuracy over turn length for one model experiment.}
     \label{fig: acc over turn len 11}
-\end{figure}
-
-
-\begin{figure}
-    \includegraphics[width=\textwidth]{figures/log_dodge_turn_length_distribution_by_class.png}
-    \caption{Distribution of patient speech turn length per class.}
-    \label{fig: class balance turn len}
 \end{figure}
 
 \chapter{Transformer Models}
