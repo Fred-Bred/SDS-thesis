@@ -692,9 +692,6 @@ Accuracy, then is
 $$\text{Accuracy} = \frac{\sum \text{diagonal elements}}{\sum \text{all elements}}$$
 
 \subsection*{Model Performance}
-% - Validation results
-% - Point out best model (roberta-large_150?)
-% - roberta-large test set results plot
 Validation results in the form of mean and standard deviation accuracy for each encoder and minimum input length combination are displayed in Table \ref{tab: val results}.
 The efforts to produce domain-adapted models do not seem to have been helpful for this task.
 This is the case for both my own pre-training and when using a domain-specific model (MentalRoBERTa; \citeNP{MentalBERT}) as well as for my further pre-training of the domain-specific model.
@@ -769,16 +766,6 @@ It is noteworthy that the accuracy score of the ensemble voting classifier using
 
 \section{Discussion}
 In this thesis, I set out to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
-
-% Discuss results.
-% - Do we beat the random baseline?
-% - Do we beat the majority baseline?
-% - Stability/reliability of results given low amount of data in both val and test sets
-% - Impact of increasing minimum input length on accuracy and stability
-
-% How far are we from something that's good enough?
-% Looks like pre-training is not helpful for this task or with this pre-training data
-% The larger model appears to produce the best overall results when performance and stability are both considered.
 
 It is clear that the models heavily weight the anxious class, a preference somewhat justified by the skewed distribution in both training and test sets using this preprocessing method.
 The training set class distribution when speech turns are concatenated to reach a length of at least 150 words is as follows:
