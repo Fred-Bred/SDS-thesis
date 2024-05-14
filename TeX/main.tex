@@ -54,7 +54,8 @@ The clinical utility of the approach is assessed first, through a review of the 
 
 Second, the feasibility of automatically classifying a patient's attachment style is investigated through a series of language modelling experiments, based on the limited available data.
 
-% Add something on the discussion here.
+Finally, implications and ethical considerations for research and practice are discussed based on current results and the promise of future developments.
+
 \subsubsection*{Terminology}
 Throughout this thesis, some terms may be used interchangeably.
 These include client and patient which are used entirely interchangeably.
@@ -78,6 +79,7 @@ From this theoretical perspective, an attachment may be understood as an affecti
 This tie and its associated behaviours bind the two individuals together in space and endures over time with the proximity-seeking behaviours being particularly prevalent during times of distress and varying in what is referred to as attachment patterns or styles \cite{Ainsworth1970,Bowlby1988}.
 
 \section{Current Understanding and Central Constructs}
+\label{sec: Current understanding}
 This section serves as an introduction to the most central constructs of attachment theory.
 It is not meant to be exhaustive, but rather to introduce the constructs which are most relevant to this thesis.
 As such, it briefly covers what makes an attachment figure, how attachment is conceptualised and measured, and how attachment characteristics manifest themselves as individual differences in mental models and behaviours.
@@ -138,7 +140,7 @@ Understanding the tendency to use either of these groupings of strategies is ben
 
 \section{Theoretical Development}
 With the central constructs of the theory in place, the following section lays out the development of the theory in broad terms.
-The purpose of this historical perspective is to make apparent how this framework, rooted in Freudian thought, outgrew its heritage to become an empirically grounded theory and earn its place in the contemporary scientific effort to improve mental health care.
+The purpose of this historical perspective is to make apparent how this framework, rooted in Freudian tradition, outgrew its heritage to become an empirically grounded theory and earn its place in the contemporary scientific effort to improve mental health care.
 Arguably, the most important aspect of attachment theory is the view of attachment as a distinct psychological need, rather than a response to inherently sexual fantasies or a collection of reinforced behaviours related primarily to feeding.
 Though this notion may seem self-evident today, this section will reveal that this was not always so.
 
@@ -151,10 +153,10 @@ At the time, psychoanalysts were mainly opposed in their views on development by
 However, neither psychology nor medicine offered any well-developed coherent theoretical explanations for the mechanisms leading from maternal care to mental health \cite{Bowlby1988, who1962deprivation} and Bowlby did not provide thorough theoretical explanations for the infant-mother bond in this publication.
 Nevertheless, the publication successfully brought attention to the importance of maternal care for developing children.
 
-Following the critique of his 1951 monograph, the search for theoretical mechanisms and answers to the yet unexplained observations published in his monograph led Bowlby to ethology.
+Following his 1951 monograph, the search for theoretical mechanisms led Bowlby to ethology.
 Here, in the study of animal behaviour, he found the concepts that would, in combination with cybernetics and psychoanalysis, eventually form the building blocks of his own theory, namely the concepts of critical periods or imprinting, instincts, and behaviour control systems \cite{Bowlby1988,bowlby1953critical}.
 
-By 1958 Bowlby's interdisciplinary efforts converged in a rare intersection of co-occurring empirical and theoretical advancements. The theoretical advancement came as Bowlby published \textit{The Nature of the Child's Tie to his Mother} \cite{Bowlby1958} developing the concept of attachment behaviours and advancing his view that the bond between infants and their mothers developed thanks to the infant's innate need for closeness.
+By 1958 Bowlby's interdisciplinary efforts converged in a rare intersection of co-occurring empirical and theoretical advancements. The theoretical advancement came as Bowlby published \textit{The Nature of the Child's Tie to his Mother} \cite{Bowlby1958}, developing the concept of attachment behaviours and advancing his view that the bond between infants and their mothers developed thanks to the infant's innate need for closeness.
 The same year, inspired by discussions with Bowlby, Harry Harlow published an account of a series of experiments with rhesus macaques and artificial surrogate mothers titled \textit{The Nature of Love} \cite{Harlow1958}.
 In these famous experiments, Harlow constructed surrogate mothers from metal wire and planks of wood and raised the macaques with only these surrogates as caretakers. The various experiments determined that infants would become attached to their particular mother, easily recognising and preferring it to all others.
 Three findings in particular would lay the foundation to the developing understanding of attachment.
@@ -166,7 +168,7 @@ This seems to indicate that the infant-mother bond is founded on desires separat
 
 Second, Harlow found, in experiments that included open fields to be explored and frightening objects making loud sounds to intimidate the macaque infants, that the mothers functioned as a secure base for exploration.
 This was apparent by the infants fleeing to seek the comfort and protection of their cloth mothers upon encountering novel and frightening situations and by their lack of exploration when no mother was present.
-These observations became central to the understanding of attachment figures as bases for exploration, enabling healthy infant development even in humans.
+These observations became central to the understanding of attachment figures as bases for exploration, enabling healthy infant development, even in humans.
 
 Finally, Harlow noticed that, compared to infants raised by cloth mothers, those raised by wire mothers had frequent digestive issues such as diarrhoea. Harlow attributed this to the stress induced by insufficient comfort provided by the wire mothers, providing the first empirically founded theoretical link between attachment deprivation and mental health \cite{Harlow1958}.
 
@@ -207,7 +209,7 @@ Most commonly, researchers have attempted to develop less demanding measures for
 This has resulted mostly in questionnaire-based measures (e.g., the Experiences in Close Relationships Scale, \citeNP{Brennan1998}; the Relationships Questionnaire, \citeNP{Bartholomew1991}; Attachment Style Questionnaire, \citeNP{Feeney1994ASQ}; Reciprocal Attachment Questionnaire, \citeNP{West1992}) but also interviews (e.g., Current Relationship Interview, \citeNP{Crowell1996}) and a picture-coding system \cite{George2012}.
 While these alternatives offer more scalable application for large-scale research and efficient measurement for clinical practice, they do so at the cost of at least some reliability and validity.
 Namely, compared to the AAI, self-report measures tend to show lower retest reliability \cite{Scharfe1994}.
-Longer self-report measures appear to be more reliable \cite{Sibley2005,Wongpakaran2021}, but the efforts to validate most measures has been rather limited.
+Longer self-report measures appear to be more reliable \cite{Sibley2005,Wongpakaran2021}, but the efforts to validate most measures has been rather limited, and the self-report measures offer, at best, a view of the patients' subjective appraisals of their attachment characteristics \cite{Talia2017}.
 
 Nevertheless, I would argue that the most paradigm-shifting developments in methods of measurement have only come within the last decade.
 This development consists of indirect measures in which transcripts are taken of psychotherapy sessions and discursive or narrative patterns are analysed for indicators of attachment characteristics.
@@ -925,7 +927,20 @@ This thesis begins the work of addressing the feasibility challenge by automatin
 In the future, this will enable scalable pipelines for research and clinical practice in which automatic speech recognition (a fast developing area in automated data processing) can feed into models such as the one presented here for classification or continuous assessment.
 
 \section{Conclusion}
+Attachment characteristics affect great influence on every day life, health outcomes, and the treatment effects and strategies of psychotherapy.
+However, its assessment is a time-consuming procedure, which risk losing validity upon close repetition \cite{Daniel2015,Hesse1999}.
+The Patient Attachment Coding System (PACS) enables repeated and nonintrusive assessment in the natural context of psychotherapy and offers an explainable link between patient speech patterns and attachment classification \cite{Talia2017,Talia2014}, but suffers the same issue of cost.
 
+As such, the prospect of automating the assessment of attachment characteristics in psychotherapy holds great value for both research and practice.
+This thesis investigated the feasibility of one method for automating this assessment.
+Based on a small dataset collected in earlier research \cite{Talia2017}, a variety of RoBERTa models \cite{roberta} were fine-tuned to predict the PACS classifications of psychotherapy patients from as little context as a single patient speech turn.
+
+Virtually all models perform above the random baseline.
+Test set predictions for cross-validation instances of the same model configuration beat the majority baseline when model instances are applied as a voting classifier, in spite of most of the single model instances not beating the test set majority baseline.
+This and further analysis provide initial support for the method despite unimpressive classification accuracy.
+
+Future work should aim to apply newer and larger models, more sophisticated stratification and training strategies, and, most importantly, larger datasets to begin approaching performance that would enable the deployment of these models.
+Deployment should begin in research were individual consequences of misclassification are mitigated by aggregation and application.
 
 \bibliography{references}
 
