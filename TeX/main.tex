@@ -792,7 +792,7 @@ This effect of data split indicates that these models may be able to learn more 
 Similarly, greater capacity, i.e. larger models, may enable models to simultaneously represent the various features that the different models have prioritised.
 
 To further investigate the impact of affording the model more context, Figure \ref{fig: roberta-large results} displays the mean test set accuracy and standard deviation for RoBERTa-large models across minimum input lengths.
-While it is not custom to run several models on the test set, I do so sparingly in this project to demonstrate the effects of additional context, which may provide direction for future research and development.2
+While it is not custom to run several models on the test set, I do so sparingly in this project to demonstrate the effects of additional context, which may provide direction for future research and development.
 As hypothesised, adding context to the very short speech turns tends to improve performance.
 However, it comes with a noticeable trade-off of stability as both training and testing sample sizes decrease and standard deviations in mean accuracy scores tend to increase.
 This seems to suggest that with a larger dataset, the model would have more opportunity to encode the relevant information required to predict attachment style by increasing the information and context available to it.
