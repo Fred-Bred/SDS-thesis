@@ -21,6 +21,7 @@
 % Citation style packages
 \usepackage{apacite} % Package for APA citations
 \bibliographystyle{apacite}
+\AtBeginDocument{\renewcommand{\APACrefYearMonthDay}[3]{\BBOP{#1}\BBCP}}
 % \bibliographystyle{plain}
 
 \onehalfspacing
@@ -785,7 +786,7 @@ In fact, this ensemble model achieves only a recall of 13.64 \%, indicating that
 Due to the bias for anxious classification in most models, in the ensemble classification, the mislabelled avoidant patients are instead classified as anxious.
 
 % Not sure if this should go here? Could maybe go in future directions in the bit where I also talk about capacity and data?
-The ensemble of all five models produces higher accuracy, precision, recall, and F1-scores than the majority of individual models and above the mean for each metric.
+The ensemble of all five models produces higher accuracy, precision, recall, and F1-scores than the majority of individual models and these scores are above the mean for each metric.
 Consistently outperforming the majority of models may suggest that individual models, trained on different portions of the data, have learned to represent different aspects of the problem.
 This could indicate that models have not converged on the similar representations that one would expect.
 This effect of data split indicates that these models may be able to learn more robust representations with access to more data.
@@ -813,8 +814,8 @@ Rather, in the test split, concatenating to at least 150 words results in an inc
     \item Anxious: 61.80 \%
 \end{itemize}
 
-This skewed distribution challenges the interpretation of the above results as demonstrating the begging of learning to distinguish classes.
-In fact, the majority of models do not perform above the majority baseline.
+This skewed distribution challenges the interpretation of the above results as demonstrating the beginning of learning to distinguish classes.
+In fact, the majority of models do not perform above this new majority baseline.
 In spite of this, I am optimistic that the models have generally learned to encode some relevant information for distinguishing the three classes.
 While several models do not improve in accuracy over the majority baseline, the ensemble model does.
 Additionally, based on the distribution in the larger training dataset, I believe that the majority baseline in the test set is, in a sense, artificially high.
@@ -855,6 +856,9 @@ As such, rather than relying entirely on the intuitive judgement of therapists w
 Machine and clinical judgement does not have to be a dichotomy.
 In fact, a union is not only legitimate but justified, given adequate performance in the future.
 In the ideal case, an automatic decision-support system for the assessment of attachment orientation can free up therapists' resources and allow them to be more present in their counselling sessions while providing more accurate and reliable repeated measurements for research and to inform treatment and intervention design.
+
+For the purpose of psychotherapy research, existing methods tend to either lack reliability as repeated measurements as individuals become accustomed to the interview procedure (AAI; \citeNP{Daniel2015}) or offer questionable validity due to the superficial nature of self-report measures \cite{Talia2017}.
+The method explored here offer a future solution to this problem as such a tool could deliver reliable and valid repeated measures to track attachment characteristics over time.
 
 \subsection{The Ethics of Automated Analysis}
 When applying any automated process, the potential for bias is always a serious concern.
