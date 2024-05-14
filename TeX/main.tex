@@ -739,8 +739,16 @@ Taking a majority vote between the five models to determine one prediction per s
 Subplot B to F display the confusion matrices for each instance of the model.
 Full size confusion matrices for each of the five individual models are included in Appendix \ref{App: confusion matrices}.
 The mean test set accuracy across these five models is 59.55 \% with a standard deviation of 5.82.
-Each accuracy score is reported in table \ref{tab:roberta-large_150 test acc} in Appendix \ref{App: confusion matrices}.
-It is noteworthy that the accuracy score of the ensemble voting classifier using all five instances of the RoBERTa-large model results in an accuracy of 67.42 \%.
+Metrics for each model are reported in table \ref{tab:roberta-large_150 test metrics}.
+The accuracy score of the ensemble voting classifier using all five instances of the RoBERTa-large model is 67.42 \%.
+
+\begin{table}
+    \begin{adjustbox}{width=1\textwidth}
+        \input{figures/test_results_150.tex}
+    \end{adjustbox}
+    \caption{Test set metrics for each instance of the RoBERTa-large model trained with minimum input length of 150 Words. Precision, recall and F1-scores are macro-averaged.}
+    \label{tab:roberta-large_150 test metrics}
+\end{table}
 
 \begin{figure}
     \includegraphics[width=0.95\textwidth]{figures/combined_confusion_matrix.png}
@@ -774,9 +782,17 @@ However, this does not appear to be the case, as these two classes are frequentl
 Namely, across the five models, the two insecure classes tend to be confused as often or more often than the secure class is confused with either of the insecure classes.
 Referencing the ensemble confusion matrix, the avoidant patients are recognised with the greatest difficulty.
 In fact, this ensemble model achieves only a recall of 13.64 \%, indicating that the vast majority of avoidant patients are misclassified.
-Due to the bias for anxious classification in most models, nn the ensemble classification, the mislabelled avoidant patients are instead classified as anxious.
+Due to the bias for anxious classification in most models, in the ensemble classification, the mislabelled avoidant patients are instead classified as anxious.
+
+% Not sure if this should go here? Could maybe go in future directions in the bit where I also talk about capacity and data?
+The ensemble of all five models produces higher accuracy, precision, recall, and F1-scores than the majority of individual models and above the mean for each metric.
+Consistently outperforming the majority of models may suggest that individual models, trained on different portions of the data, have learned to represent different aspects of the problem.
+This could indicate that models have not converged on the similar representations that one would expect.
+This effect of data split indicates that these models may be able to learn more robust representations with access to more data.
+Similarly, greater capacity, i.e. larger models, may enable models to simultaneously represent the various features that the different models have prioritised.
 
 To further investigate the impact of affording the model more context, Figure \ref{fig: roberta-large results} displays the mean test set accuracy and standard deviation for RoBERTa-large models across minimum input lengths.
+While it is not custom to run several models on the test set, I do so sparingly in this project to demonstrate the effects of additional context, which may provide direction for future research and development.2
 As hypothesised, adding context to the very short speech turns tends to improve performance.
 However, it comes with a noticeable trade-off of stability as both training and testing sample sizes decrease and standard deviations in mean accuracy scores tend to increase.
 This seems to suggest that with a larger dataset, the model would have more opportunity to encode the relevant information required to predict attachment style by increasing the information and context available to it.
@@ -790,7 +806,7 @@ This seems to suggest that with a larger dataset, the model would have more oppo
 This manner of concatenating speech turns to reach a minimum word count has an unintended side effect.
 Namely, the distribution between the three classes changes as more speech turns are concatenated.
 Unfortunately, the relatively small datasets mean that this effect is not uniform across training and test splits.
-Rather, in the test split, concatenating to at least 150 words results in an increased skew:
+Rather, in the test split, concatenating to at least 150 words results in an increased skew and in swapping the size rankings of the secure and avoidant classes:
 \begin{itemize}
     \item Avoidant: 24.72 \%
     \item Secure: 13.48 \%
@@ -1021,13 +1037,5 @@ The base RoBERTa architecture consists of 12 encoders each with 12 attention hea
     \caption{Confusion matrix for roberta-large model trained with minimum input length of 150 words on split 5 of the cross-validation splits.}
     \label{fig: cm split5}
 \end{figure}
-
-\begin{table}
-    \begin{adjustbox}{width=1\textwidth}
-        \input{figures/test_results_150.tex}
-    \end{adjustbox}
-    \caption{Test Set Accuracies for Each Instance of the RoBERTa-large Model Trained with Minimum Input Length of 150 Words.}
-    \label{tab:roberta-large_150 test acc}
-\end{table}
     
 \end{document}
