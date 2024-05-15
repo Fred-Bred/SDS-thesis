@@ -209,15 +209,7 @@ She introduced the classification of attachment patterns by observing the proxim
 Ainsworth originally proposed three different patterns of behaviour based on her observations of infants.
 In a 1970 study of infants aged 49-51 weeks, Ainsworth and Bell studied attachment and exploration behaviours during a procedure called \textit{The Strange Situation} in which infants are introduced to an unfamiliar environment with their mothers and briefly left alone with a stranger.
 Ainsworth and Bell found that upon reunion with their mothers, infants' behaviours could be categorised into three broad classes.
-
-The first group of infants, classified as secure, felt increasingly safe to explore the experimental room with their mother present, treating her as a secure base for exploration to which they could return to have their attachment needs met.
-During separation episodes, these infants showed less exploration and increased attachment behaviours such as crying and looking around for the mother. Upon reunion, infants later classified as secure increased proximity-seeking and contact-maintaining behaviours.
-
-However, for a subset of infants, both contact-maintaining \textit{and} contact-resisting behaviours were heightened in the reunion episodes.
-This suggests that these infants have great need for proximity but may feel anger towards the mother following the separation episode, which is generally interpreted as ambivalence, thus naming the ambivalent childhood attachment classification.
-
-Finally, some infants appeared almost indifferent to the separation and displayed proximity-avoiding behaviours during reunion episodes.
-These infants would be classified as avoidant.
+These classes correspond to the ones described in section \ref{sec: Current understanding}.
 
 \subsubsection{Adult Assessment Tools}
 The theory was expanded into a clinically applicable framework for adults when the Adult Attachment Interview (AAI; \citeNP{AAITest}) was developed to assess the adult equivalents of the childhood patterns of attachment behaviours.
@@ -225,9 +217,9 @@ The AAI is a semi-structured interview that asks respondents about autobiographi
 The interview is coded according to the ways in which these childhood experiences are described and the reflections offered by respondents.
 Thus, the coding process is less concerned with the valence or specific content of memories and more interested in the organisation of thoughts and memories.
 The AAI classifies individuals as secure if they provide coherent and mostly complete descriptions of their childhood experiences.
-The childhood classification for ambivalent attachment is replaced with the preoccupied pattern, referred to as anxious in this thesis.
+The preoccupied pattern of the AAI is referred to as anxious in this thesis.
 Individuals with this classification provide incoherent, vague, or emotionally exaggerated narratives of their childhood experiences.
-Likewise, the childhood classification of avoidant attachment is replaced in adults with the dismissing classification, referred to as avoidant in this thesis.
+Likewise, the dismissing classification is referred to as avoidant in this thesis.
 Individuals with this classification, tend to provide overly succinct, somewhat superficial, and unemotional accounts of their childhood experiences \cite{Hesse1999, AAITest}.
 
 Perhaps owing to the immense empirical support and validation for the AAI \cite{BakermansKranenburg1993, IJzendoorn1995, Crowell1996Discriminant, Sagi1994}, it has become the de facto gold standard of attachment research \cite{AAITest, Talia2019, haltigan2014adult}.
@@ -590,6 +582,7 @@ The split was performed with stratification according to class balance, a measur
 It is important to split at the document level to avoid data leakage and ensure that the model is not learning to recognise individuals but rather generalisable speech patterns according to PACS classification.
 The relatively small amount of samples in the test set is somewhat made up for by applying cross-validation and reporting a mean accuracy for all models of the best performing configuration.
 All models were implemented using the Massive Choice, Ample Tasks (MaChAmp) framework for transfer- and multi-task learning developed by van der Goot et al. \citeyear{MaChAmp}, which itself relies on the HuggingFace Transformers library \cite{HuggingFace} and PyTorch \cite{PyTorch}.
+The source code for this project is available at \url{https://github.com/Fred-Bred/PACS-AI}.
 
 \subsubsection{Domain-Adaptive Pre-Training}
 To investigate whether models could learn more task-appropriate representations from being exposed to more unlabelled data from the task domain, I conducted domain-adaptive pre-training with both a RoBERTa-base model \cite{roberta} and the pre-trained MentalRoBERTa model presented by Ji et al. \citeyear{MentalBERT}.
