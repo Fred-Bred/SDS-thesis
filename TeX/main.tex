@@ -15,7 +15,7 @@
 %KUstyle
 % \usepackage{KUstyle}
 % \ptype{Social Data Science}
-% \subtitle{An Attachment-Based Therapy Metric}
+% \subtitle{Automatic Classification from Psychotherapy Transcripts}
 
 
 % Citation style packages
@@ -27,11 +27,33 @@
 \onehalfspacing
 
 % This changes the content of the frontpage
-\title{The Language of Attachment: Automatic Classification from Psychotherapy Transcripts}
-\author{Frederik Bredgaard}
-\date{May 31st 2024}
+\makeatletter
+\newcommand{\supervisors}[1]{\def\@supervisors{#1}} % Define a new command for the supervisors
+\newcommand{\university}[1]{\def\@university{#1}} % Define a new command for the university
+\newcommand{\faculty}[1]{\def\@faculty{#1}} % Define a new command for the faculty
 
-\renewcommand{\contentsname}{Table of Content}
+\renewcommand{\maketitle}{
+    \begin{titlepage}
+        \centering
+        % \includegraphics[width=\paperwidth]{figures/KU_SAMF_logo.pdf}\par\vspace{1cm} % Include a logo
+        % \vspace{1cm}
+        \textsc{\LARGE \@title}\par\vspace{1.5cm} % Use the \title command to get the title
+        \textsc{\large \@author}\par\vspace{1cm} % Use the \author command to get the author name
+        \textsc{\large Supervisors: \@supervisors}\par\vspace{1cm} % Use the \supervisors command to get the supervisors
+        \@date % Use the \date command to get the date
+        \vfill
+        \textsc{\large \@faculty}\par % Use the \faculty command to get the faculty name
+        \textsc{\large \@university}\par % Use the \university command to get the university name
+    \end{titlepage}
+}
+\makeatother
+
+\title{The Language of Attachment: Modelling Attachment Dynamics in Psychotherapy}
+\author{Frederik Bredgaard}
+\supervisors{Rosa Ellen Lavelle-Hill \& Sandro Ferreira Sousa}
+\university{University of Copenhagen}
+\faculty{The Faculty of Social Sciences}
+\date{May 31st 2024}
 
 \begin{document}
 
