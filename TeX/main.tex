@@ -28,7 +28,8 @@
 
 % This changes the content of the frontpage
 \makeatletter
-\newcommand{\supervisors}[1]{\def\@supervisors{#1}} % Define a new command for the supervisors
+\newcommand{\supervisorOne}[1]{\def\@supervisorOne{#1}} % Define a new command for the first supervisor
+\newcommand{\supervisorTwo}[1]{\def\@supervisorTwo{#1}} % Define a new command for the second supervisor
 \newcommand{\university}[1]{\def\@university{#1}} % Define a new command for the university
 \newcommand{\faculty}[1]{\def\@faculty{#1}} % Define a new command for the faculty
 
@@ -39,9 +40,11 @@
         \vspace{1cm}
         \textsc{\LARGE \@title}\par\vspace{1.5cm} % Use the \title command to get the title
         \textsc{\large \@author}\par\vspace{1cm} % Use the \author command to get the author name
-        \textsc{\large Supervisors: \@supervisors}\par\vspace{1cm} % Use the \supervisors command to get the supervisors
-        \@date % Use the \date command to get the date
+        \textsc{\large Supervisors:}\par % Add a "Supervisors:" line
+        \textsc{\large \@supervisorOne}\par % Use the \supervisorOne command to get the first supervisor
+        \textsc{\large \@supervisorTwo}\par\vspace{1cm} % Use the \supervisorTwo command to get the second supervisor
         \vfill
+        \@date\par\vspace{0.5cm} % Use the \date command to get the date
         \textsc{\large \@faculty}\par % Use the \faculty command to get the faculty name
         \textsc{\large \@university}\par % Use the \university command to get the university name
     \end{titlepage}
@@ -50,10 +53,11 @@
 
 \title{The Language of Attachment: Modelling Attachment Dynamics in Psychotherapy}
 \author{Frederik Bredgaard}
-\supervisors{Rosa Ellen Lavelle-Hill \& Sandro Ferreira Sousa}
+\supervisorOne{Rosa Ellen Lavelle-Hill}
+\supervisorTwo{Sandro Ferreira Sousa}
 \university{University of Copenhagen}
 \faculty{The Faculty of Social Sciences}
-\date{May 31st 2024}
+\date{May 31\textsuperscript{st} 2024}
 
 \begin{document}
 
