@@ -36,7 +36,9 @@
 \begin{document}
 
 \maketitle
-\
+\begin{abstract}
+    Abstract.
+\end{abstract}
 \tableofcontents
 
 \chapter*{Introduction}
@@ -502,6 +504,14 @@ Included in this thesis are also six transcripts from the same sample of patient
 All transcripts were originally collected for other research projects.
 All transcripts are in English and were conducted in New York, treating patients with either Brief Relational Therapy \cite{Safran2000} or Cognitive Behavioural Therapy \cite{Beck2011}.
 Transcription was conducted verbatim, following standards of the AAI, with the addition of laughing and crying \cite{Talia2017, Talia2014}.
+Names and personal identifiers are not included in transcripts.
+Even so, this is an extraordinarily sensitive corpus of text.
+To protect the participants, the data was transferred using an encrypted, password-protected service provided by the University of Copenhagen from which data is automatically wiped after a set time.
+For security, all data is stored on a secure location likewise provided by the University of Copenhagen.
+Upon the completion of the project, data will be deleted and made unrecoverable by the university IT department.
+Data processing, including the training of models, occurred on a local server hosted at the University of Copenhagen.
+This server is accessible only when connected to the university network physically or over virtual network and access is password-protected, requiring two-factor authentication.
+This server directly mounts the password protected secure drive storing the data.
 
 The task data consists of 78 documents each representing a therapy session lasting approximately one hour.
 Using the RoBERTa tokeniser from HuggingFace Transformers, which forms the entry point for the processing pipeline of all models in this project, these documents make up a total of 488,483 tokens.
@@ -512,7 +522,7 @@ These classes are represented in the dataset according to the below distribution
     \item {Secure: 30.8 \% of transcripts}
     \item {Anxious: 43.6 \% of transcripts}
 \end{itemize}
-The majority class in this dataset is anxious.
+Although classes are reasonably well balanced, the majority class in this dataset is anxious.
 As noted, it was shown by Feeney and Ryan \citeyear{Feeney1994} that those with anxious attachment styles were more prone to seeking medical attention and more likely to report having had therapy.
 However, considering the review of 'the first 10,000 adult attachment interviews' by Bakermans-Kranenburg and IJzendoorn \citeyear{Bakermanskranenburg2009} which found that in clinical populations 23 \% were avoidant, 21 \% secure, 13 \% anxious, and 43 \% were unresolved, this is somewhat surprising.
 As Talia et al. \citeyear{Talia2017} speculate, this difference in class distribution could be due to the unique criteria which excluded patients with mania, bipolar disorders, thought disorders, substance abuse, and any history of self-harm or records of interactions with the legal system from this study.
@@ -927,17 +937,18 @@ This thesis begins the work of addressing the feasibility challenge by automatin
 In the future, this will enable scalable pipelines for research and clinical practice in which automatic speech recognition (a fast developing area in automated data processing) can feed into models such as the one presented here for classification or continuous assessment.
 
 \section{Conclusion}
-Attachment characteristics affect great influence on every day life, health outcomes, and the treatment effects and strategies of psychotherapy.
+Attachment characteristics affect great influence over important aspects of every day life, health outcomes, and the treatment effects and strategies of psychotherapy.
 However, its assessment is a time-consuming procedure, which risk losing validity upon close repetition \cite{Daniel2015,Hesse1999}.
-The Patient Attachment Coding System (PACS) enables repeated and nonintrusive assessment in the natural context of psychotherapy and offers an explainable link between patient speech patterns and attachment classification \cite{Talia2017,Talia2014}, but suffers the same issue of cost.
+The Patient Attachment Coding System (PACS) enables repeated and nonintrusive assessment in the natural context of psychotherapy and offers an explainable link between patient speech patterns and attachment classification \cite{Talia2017,Talia2014}.
+The PACS offer invaluable theoretical insight but is similarly time-consuming to learn and apply.
 
 As such, the prospect of automating the assessment of attachment characteristics in psychotherapy holds great value for both research and practice.
 This thesis investigated the feasibility of one method for automating this assessment.
-Based on a small dataset collected in earlier research \cite{Talia2017}, a variety of RoBERTa models \cite{roberta} were fine-tuned to predict the PACS classifications of psychotherapy patients from as little context as a single patient speech turn.
+Based on a small dataset collected as part of a PACS validation study \cite{Talia2017}, a variety of RoBERTa models \cite{roberta} were fine-tuned to predict the PACS classifications of psychotherapy patients from as little context as a single patient speech turn.
 
 Almost all models perform above the random baseline.
 Test set predictions for cross-validation instances of the same model configuration beat the majority baseline when model instances are applied as a voting classifier, in spite of most of the single model instances not beating the test set majority baseline.
-This and further analysis provide initial support for the method despite unimpressive classification accuracy.
+This and further analysis provide initial but tentative support for the method despite unimpressive classification accuracy.
 
 Future work should aim to apply newer and larger models, more sophisticated stratification and training strategies, and, most importantly, larger datasets to begin approaching performance that would enable the deployment of these models.
 Deployment should begin in research were individual consequences of misclassification are mitigated by aggregation and application.
