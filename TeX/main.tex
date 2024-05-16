@@ -512,21 +512,9 @@ I believe that this project is an example of this.
 \subsection{Transformer Models}
 The models applied in this project are all variants of the RoBERTa model first made available by Liu et al. \citeyear{roberta}.
 The RoBERTa name is derived from its claim of being a robustly optimised BERT approach.
-As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor.
-For the unfamiliar yet interested reader, a superficial overview of the underlying transformer architecture is provided in Appendix \ref{App: transformers}.
+As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor develop by Sun et al. \citeyear{Sun2020}.
+For a brief introduction to the transformer architecture applied here, see Appendix \ref{App: transformers}.
 
-\subsubsection*{RoBERTa}
-The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \citeyear{BERT} and trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160 GB of raw text.
-Liu et al. \citeyear{roberta} replicate most of the BERT methodology, but train RoBERTa only on the masked token prediction task.
-They also make other changes such as increasing the size of batches during training, changing the text encoding procedure to create a larger and more flexible vocabulary, and including longer sequences than the original BERT had been exposed to.
-The main difference in training methodology, however, is found in the data and its augmentation.
-Namely, Liu et al. \citeyear{roberta} showed that BERT was significantly under-trained by collecting a significantly larger corpus of text and by making each sentence in this corpus available to the model on several occasions.
-To avoid the model overfitting to specific instances that it had previously encountered, the RoBERTa methodology applies dynamic masking such that each token is masked with probability 0.15 each time the model encounters a sequence.
-This essentially means that any given sequence can be presented to the model as a new task on several occasions while limiting its opportunity to overfit.
-According to Liu et al., the combination of training on more data with longer inputs and larger batches, using dynamic masking, and omitting the next-sequence prediction task produces a more robust model with more resilient and generalisable embeddings.
-They demonstrate this through RoBERTa outperforming not only the original BERT but also all models published in the interim on all applied benchmarks \cite{roberta}.
-
-\subsubsection*{Fine-tuning}
 The generalised understanding of language gained from masked language modelling means that RoBERTa models are well suited for fine-tuning to more specific down-stream tasks.
 In this case, this is performed by adding a classification head to the model which takes as input the output of the final encoder layer and outputs probabilities for each class.
 The model is then trained on data related to the new task.
