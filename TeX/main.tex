@@ -32,6 +32,8 @@
 \newcommand{\supervisorTwo}[1]{\def\@supervisorTwo{#1}} % Define a new command for the second supervisor
 \newcommand{\university}[1]{\def\@university{#1}} % Define a new command for the university
 \newcommand{\faculty}[1]{\def\@faculty{#1}} % Define a new command for the faculty
+\newcommand{\pageCount}[1]{\def\@pageCount{#1}} % Define a new command for the page count
+\newcommand{\charCount}[1]{\def\@charCount{#1}} % Define a new command for the character count
 
 \renewcommand{\maketitle}{
     \begin{titlepage}
@@ -43,6 +45,8 @@
         \textsc{\large Supervisors:}\par % Add a "Supervisors:" line
         \textsc{\large \@supervisorOne}\par % Use the \supervisorOne command to get the first supervisor
         \textsc{\large \@supervisorTwo}\par\vspace{1cm} % Use the \supervisorTwo command to get the second supervisor
+        \textsc{\small Standard pages: \@pageCount}\par % Use the \pageCount command to get the page count
+        \textsc{\small Character count: \@charCount}\par % Use the \charCount command to get the character count
         \vfill
         \@date\par\vspace{0.5cm} % Use the \date command to get the date
         \textsc{\large \@faculty}\par % Use the \faculty command to get the faculty name
@@ -57,7 +61,9 @@
 \supervisorTwo{Sandro Ferreira Sousa}
 \university{University of Copenhagen}
 \faculty{The Faculty of Social Sciences}
-\date{May 31\textsuperscript{st} 2024}
+\pageCount{40}
+\charCount{96,000}
+\date{May 31st 2024}
 
 \begin{document}
 
@@ -910,6 +916,7 @@ Second, allocational harms may arise when algorithms are employed in distributin
 
 While attachment behaviours are theoretically expected to be very similar across cultures, owing to their theorised evolutionary and biological basis, their exact verbal expression may vary across cultures and socio-economic divides.
 As such, differences may exist that the model is poorly equipped to learn based on both its original training data and the somewhat homogeneous task data.
+Of particular concern are the exclusion criteria for the original data collection \cite{Talia2017} which mean that this model cannot be expected to perform well on subsets of the clinical population which might stand to benefit greatly from its application.
 This may lead this and other models to systematically mislabel patients of different demographics than those of the majority of their training data.
 It is essential for progress in the combined field of natural language processing and psychotherapy that the generation of future datasets involve representatives from the communities meant to be served by the products.
 The approach presented in this thesis protects the users to some extent by maintaining the therapist as the decision-maker, acting entirely as a complimentary tool or decision support, but ultimately leaving it up to each therapist to apply their own judgement in shaping the course of treatment.
