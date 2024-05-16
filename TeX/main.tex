@@ -507,14 +507,14 @@ I believe that this project is an example of this.
 The models applied in this project are all variants of the RoBERTa model first made available by Liu et al. \citeyear{roberta}.
 The RoBERTa name is derived from its claim of being a robustly optimised BERT approach.
 As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor.
-For the unfamiliar yet interested reader, a superficial overview of the transformer architecture is provided in Appendix \ref{App: transformers}.
+For the unfamiliar yet interested reader, a superficial overview of the underlying transformer architecture is provided in Appendix \ref{App: transformers}.
 
 \subsubsection*{RoBERTa}
 The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \citeyear{BERT} and trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160 GB of raw text.
 Liu et al. \citeyear{roberta} replicate most of the BERT methodology, but train RoBERTa only on the masked token prediction task.
 They also make other changes such as increasing the size of batches during training, changing the text encoding procedure to create a larger and more flexible vocabulary, and including longer sequences than the original BERT had been exposed to.
 The main difference in training methodology, however, is found in the data and its augmentation.
-Namely, Liu et al. showed that BERT was significantly under-trained by collecting a significantly larger corpus of text and by making each sentence in this corpus available to the model on several occasions.
+Namely, Liu et al. \citeyear{roberta} showed that BERT was significantly under-trained by collecting a significantly larger corpus of text and by making each sentence in this corpus available to the model on several occasions.
 To avoid the model overfitting to specific instances that it had previously encountered, the RoBERTa methodology applies dynamic masking such that each token is masked with probability 0.15 each time the model encounters a sequence.
 This essentially means that any given sequence can be presented to the model as a new task on several occasions while limiting its opportunity to overfit.
 According to Liu et al., the combination of training on more data with longer inputs and larger batches, using dynamic masking, and omitting the next-sequence prediction task produces a more robust model with more resilient and generalisable embeddings.
@@ -522,7 +522,8 @@ They demonstrate this through RoBERTa outperforming not only the original BERT b
 
 \subsubsection*{Fine-tuning}
 The generalised understanding of language gained from masked language modelling means that RoBERTa models are well suited for fine-tuning to more specific down-stream tasks.
-In this case, this is performed by adding a classification head to the model which takes as input the output of the final encoder layer and then training on data related to the new task.
+In this case, this is performed by adding a classification head to the model which takes as input the output of the final encoder layer and outputs probabilities for each class.
+The model is then trained on data related to the new task.
 This classification head is a simple fully connected feed-forward neural network and can consist of any number of layers.
 During fine-tuning, the parameters of both the classification head and the encoder are updated to let the model gain specialised knowledge needed for the specific task.
 
@@ -535,14 +536,14 @@ Transcription was conducted verbatim, following standards of the AAI, with the a
 Names and personal identifiers are not included in transcripts.
 Even so, this is an extraordinarily sensitive corpus of text.
 To protect the participants, the data was transferred using an encrypted, password-protected service provided by the University of Copenhagen from which data is automatically wiped after a set time.
-For security, all data is stored on a secure location likewise provided by the University of Copenhagen.
+For security, all data is stored on a secure location, likewise provided by the University of Copenhagen.
 Upon the completion of the project, data will be deleted and made unrecoverable by the university IT department.
 Data processing, including the training of models, occurred on a local server hosted at the University of Copenhagen.
 This server is accessible only when connected to the university network physically or over virtual network and access is password-protected, requiring two-factor authentication.
-This server directly mounts the password protected secure drive storing the data.
+This server directly accesses the password protected secure drive storing the data.
 
 The task data consists of 78 documents each representing a therapy session lasting approximately one hour.
-Using the RoBERTa tokeniser from HuggingFace Transformers, which forms the entry point for the processing pipeline of all models in this project, these documents make up a total of 488,483 tokens.
+Using the RoBERTa tokeniser from HuggingFace Transformers \cite{HuggingFace}, which forms the entry point for the processing pipeline of all models in this project, these documents make up a total of 488,483 tokens.
 Each document has been labelled with one of three classes, avoidant, secure, or anxious, according to its scores on the PACS scales.
 These classes are represented in the dataset according to the below distribution.
 \begin{itemize}
@@ -550,9 +551,9 @@ These classes are represented in the dataset according to the below distribution
     \item {Secure: 30.8 \% of transcripts}
     \item {Anxious: 43.6 \% of transcripts}
 \end{itemize}
-Although classes are reasonably well balanced, the majority class in this dataset is anxious.
+Although classes are reasonably balanced, the majority class in this dataset is anxious.
 As noted, it was shown by Feeney and Ryan \citeyear{Feeney1994} that those with anxious attachment styles were more prone to seeking medical attention and more likely to report having had therapy.
-However, considering the review of 'the first 10,000 adult attachment interviews' by Bakermans-Kranenburg and IJzendoorn \citeyear{Bakermanskranenburg2009} which found that in clinical populations 23 \% were avoidant, 21 \% secure, 13 \% anxious, and 43 \% were unresolved, this is somewhat surprising.
+However, considering the review of 'the first 10,000 adult attachment interviews' by Bakermans-Kranenburg and IJzendoorn \citeyear{Bakermanskranenburg2009} which found that in clinical populations 23 \% were avoidant, 21 \% secure, 13 \% anxious, and 43 \% were unresolved, the present distribution is somewhat surprising.
 As Talia et al. \citeyear{Talia2017} speculate, this difference in class distribution could be due to the unique criteria which excluded patients with mania, bipolar disorders, thought disorders, substance abuse, and any history of self-harm or records of interactions with the legal system from this study.
 
 In the current state and understanding of attachment theory, the classifications unresolved, disorganised, and fearful are the least theoretically coherent patterns.
@@ -589,7 +590,7 @@ Specifically, secure patients are over-represented in the very short speech turn
 To begin development on the classification model, the data is split into 85 \% training and 15 \% test data.
 This split was chosen to allow the model as much data as possible for training, given the low amount of available data overall.
 The split was performed with stratification according to class balance, a measure necessitated by the low amount of documents.
-It is important to split at the document level to avoid data leakage and ensure that the model is not learning to recognise individuals but rather generalisable speech patterns according to PACS classification.
+It is necessary to split at the document level to avoid data leakage and ensure that the model is not learning to recognise individuals but rather generalisable speech patterns according to PACS classification.
 The relatively small amount of samples in the test set is somewhat made up for by applying cross-validation and reporting a mean accuracy for all models of the best performing configuration.
 All models were implemented using the Massive Choice, Ample Tasks (MaChAmp) framework for transfer- and multi-task learning developed by van der Goot et al. \citeyear{MaChAmp}, which itself relies on the HuggingFace Transformers library \cite{HuggingFace} and PyTorch \cite{PyTorch}.
 The source code for this project is available at \url{https://github.com/Fred-Bred/PACS-AI}.
@@ -658,7 +659,7 @@ While a learning rate of $5 \times 10^{-5}$ was found by Sun et al. \citeyear{Su
 
 A slanted triangular learning rate schedule is implemented similar to the formulation by Howard and Ruder \citeyear{Howard2018}, albeit with slightly different values.
 This schedule implements a linear warm-up for a specified fraction of the training steps, here, 0.3, before linearly decreasing the learning rate over the remaining steps, referred to as annealing.
-This method is implemented with a ratio of 32 as the difference between the smallest and base learning rates.
+Following MaChAmp standards \cite{MaChAmp}, the schedule is implemented with a ratio of 32 between the smallest and base learning rates.
 Additionally, gradual unfreezing and discriminative fine-tuning are implemented.
 Gradual unfreezing refers to a method in which training begins by adjusting only the classification head, keeping the encoder constant.
 Once the first epoch has been completed, the second-to-last layer in the model is unfrozen and adjusted during the second epoch.
@@ -683,24 +684,24 @@ This technique encourages the model to learn robust features, preventing overfit
 I hypothesised that the very short sequences of e.g. less than five words, would be less informative for the model.
 To test this hypothesis, I first tracked performance over different input sequence lengths during the early experimentation.
 For the majority of test, this did not confirm my initial hypothesis, and, in fact, many models exhibited their best performance on the very short sequences.
-See Figures \ref{fig: acc over turn len 7} and \ref{fig: acc over turn len 11} in Appendix \ref{App: Figures} for an example of a plot of one such experiment.
+See Figures \ref{fig: acc over turn len 7} and \ref{fig: acc over turn len 11} in Appendix \ref{App: Figures} for examples of such experiments.
 I suspected that this was because the classes were less balanced in this portion of the dataset.
 Findings by Daniel \citeyear{Daniel2011} and Miller-Bottome et al. \citeyear{MillerBottome2018}, as reported in section \ref{sec:Differentiable approaches}, would suggest that avoidant patients should be overrepresented here, if they primarily use short speech turns.
 However, if they generally take fewer speech turns, they may be underrepresented in all counts.
-Figure \ref{fig: class balance turn len} in Appendix \ref{App: Figures} reveals that, in fact, the class balance in the short speech turns varies substantially from the distribution in the full dataset.
+Figure \ref{fig: class balance turn len} reveals that, in fact, the class balance in the short speech turns varies substantially from the distribution in the full dataset.
 In the very short speech turns, secure patients are overrepresented compared with their share of total transcripts but, somewhat surprisingly, the two other classes are represented roughly as expected from their overall contribution to the dataset.
 
 It is not clear how the shifting class balance over turn lengths influences the models' ability to differentiate classes or to learn generalisable patterns.
-To investigate whether models would benefit from seeing only longer sequence of patient speech I conducted preprocessing experiments in which I would define a minimum speech turn length, measured in word count, and combine speech turns within documents until the minimum count had been reached.
+To investigate whether models would benefit from seeing only longer sequence of patient speech I conducted preprocessing experiments in which I defined a minimum speech turn length, measured in word count, and combined speech turns within documents until the minimum count had been reached.
 I ran these experiments with minimum turn lengths of 50, 100, 150, and 250 words.
 In these experiments, each client speech turn is included in the dataset as-is if it is at or above the defined minimum.
 If it is below the threshold, it is combined with the following speech turn in the same document and then checked again, where the same rule is applied.
 The final speech turn in each document is included only if it meets the threshold alone or if it has already been combined with (a) previous turn(s).
 
 \paragraph*{Encoders}
-The pre-trained model which encodes the input sequence before passing it on to the classification head can massively impact the performance of the model.
+The pre-trained model which encodes the input sequence before passing it on to the classification head can massively impact the performance of the final model.
 This encoder represents almost the entirety of the model and the parameters to be adjusted during training.
-To optimise for the best suited encoder in the RoBERTa species, I tested five different encoders.
+To optimise for the best suited encoder in the RoBERTa family, I tested five different encoders.
 The first two are the base and large versions of the RoBERTa model originally trained by Liu et at. \citeyear{roberta}.
 The three remaining models are all domain-adapted to some degree.
 First, the base size MentalRoBERTa model trained by Ji et al. \citeyear{MentalBERT}.
