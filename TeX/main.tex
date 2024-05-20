@@ -472,8 +472,8 @@ Conversely, the aim for therapists of anxious patients is to help them regulate 
 \chapter{Present Study}
 \section{Scope of the Present Study}
 The following sections describe empirical work carried out as an initial test of the feasibility of automatically classifying patients' attachment characteristics during psychotherapy.
-This work aims to determine whether tested methods in the field of Natural Language Processing (NLP) can begin to solve this complex task with some proficiency.
-As such, the aim is not to develop on the technical solutions available for this type of task, nor to produce major advancements in theory or clinical practice.
+This work aims to determine whether well-known methods in the field of Natural Language Processing (NLP) can begin to solve this complex task with some proficiency.
+As a result, the aim is not to develop on the technical solutions available for this type of task, nor to produce major advancements in theory or clinical practice.
 Rather, this thesis may serve as a pilot to determine whether this avenue of research is worthy of more dedicated pursuit and large-scale investment.
 
 The state-of-the-art in Natural Language Processing (NLP) is represented by variants of the transformer architecture first published by Vaswani et al. \citeyear{Vaswani2017}.
@@ -487,14 +487,21 @@ Malgaroli et al. \citeyear{Malgaroli2023} further report that transformer-based 
 A key feature which is particularly important for the study of abstract verbal behaviours and the management of attunement is the contextually influenced embeddings of words that is among the distinguishing features of the transformer model.
 Namely, the attention mechanism allows the model to dynamically update its representation of words given their context.
 This ability distinguishes the transformer model from more traditional methods in which words are necessarily assumed to have static meaning across contexts \cite{Demszky2023}.
-Demszky et al. \citeyear{Demszky2023} highlight the astonishing performance of modern language models and point to their efficiency and speed as major factors in scaling the analysis of psychologically relevant text data to a previously unthinkable degree.
+Demszky et al. \citeyear{Demszky2023} highlight the astonishing performance of modern language models and point to their efficiency and speed as major factors in scaling the analysis of psychologically relevant text to a previously unthinkable degree.
+
+The main drawback of transformer models is their poor interpretability.
+However, considering that the PACS has effectively mapped the relationship between patient speech and attachment orientation, a more relaxed approach to transparency and explainability in automating patient classification is appropriate.
+Thanks to the work of Talia et al. \citeyear{Talia2017, Talia2014} the links between data and prediction and between theory and application are better understood than ever.
+With this understanding, the potential impact of research into speech patterns and attachment organisation is much greater when treating the issue as a prediction problem rather than a causal inference problem.
+As Kleinberg et al. \citeyear{PredictionPolicyProblems} point out, these types of problems are often overlooked in research in spite of their potential for great societal impact.
+As such, this area stands to benefit more from a poorly interpretable prediction model than a reinterpretation of the feature-outcome mapping.
 
 \section{Methods}
 
 \subsection{Transformer Models}
 The models applied in this project are all variants of the RoBERTa model first made available by Liu et al. \citeyear{roberta}.
 The RoBERTa name is derived from its claim of being a robustly optimised BERT approach.
-As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor develop by Sun et al. \citeyear{Sun2020}.
+As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor developed by Devlin et al. \citeyear{BERT}.
 For a brief introduction to the transformer architecture applied here, see Appendix \ref{App: transformers}.
 
 The generalised understanding of language gained from masked language modelling means that RoBERTa models are well suited for fine-tuning to more specific down-stream tasks.
@@ -507,7 +514,7 @@ During fine-tuning, the parameters of both the classification head and the encod
 The labelled data for this project consists of the English part of the datasets from the 2017 validation study of the PACS \cite{Talia2017}.
 Included in this thesis are also six transcripts from the same sample of patients that did not have an associated AAI classification, and thus were not included in the validation study, but which have nevertheless been coded using the PACS.
 All transcripts were originally collected for other research projects.
-All transcripts are in English and were conducted in New York, treating patients with either Brief Relational Therapy \cite{Safran2000} or Cognitive Behavioural Therapy \cite{Beck2011}.
+All transcripts are in English and sessions were conducted in New York, treating patients with either Brief Relational Therapy \cite{Safran2000} or Cognitive Behavioural Therapy \cite{Beck2011}.
 Transcription was conducted verbatim, following standards of the AAI, with the addition of laughing and crying \cite{Talia2017, Talia2014}.
 Names and personal identifiers are not included in transcripts.
 Even so, this is an extraordinarily sensitive corpus of text.
@@ -515,8 +522,8 @@ To protect the participants, the data was transferred using an encrypted, passwo
 For security, all data is stored on a secure location, likewise provided by the University of Copenhagen.
 Upon the completion of the project, data will be deleted and made unrecoverable by the university IT department.
 Data processing, including the training of models, occurred on a local server hosted at the University of Copenhagen.
-This server is accessible only when connected to the university network physically or over virtual network and access is password-protected, requiring two-factor authentication.
-This server directly accesses the password protected secure drive storing the data.
+This server is accessible only when connected to the university network physically or via a virtual private network and access is password-protected, requiring two-factor authentication.
+This server directly accesses the secure drive storing the data.
 
 The task data consists of 78 documents each representing a therapy session lasting approximately one hour.
 Using the RoBERTa tokeniser from HuggingFace Transformers \cite{HuggingFace}, which forms the entry point for the processing pipeline of all models in this project, these documents make up a total of 488,483 tokens.
@@ -563,7 +570,7 @@ Specifically, secure patients are over-represented in the very short speech turn
 \end{figure}
 
 \subsection{Approach}
-To begin development on the classification model, the data is split into 85 \% training and 15 \% test data.
+To begin development on the classification model, the data was split into 85 \% training and 15 \% test data.
 This split was chosen to allow the model as much data as possible for training, given the low amount of available data overall.
 The split was performed with stratification according to class balance, a measure necessitated by the low amount of documents.
 It is necessary to split at the document level to avoid data leakage and ensure that the model is not learning to recognise individuals but rather generalisable speech patterns according to PACS classification.
@@ -603,10 +610,9 @@ Nevertheless, one encoder pre-trained on Reddit data (MentalRoBERTa; \citeNP{Men
 \paragraph*{Pre-training approach}
 For each of the pre-training datasets, 20 \% of the utterances were kept from the model during training as a development set.
 All the remaining data from all three datasets where combined in a single raw text file to train on.
-I applied an approach similar to the RoBERTa training methodology.
+I applied an approach similar to the RoBERTa training methodology and that applied by Gururangan et al. \citeyear{Gururangan2020}.
 This includes dynamic masking, where each token is masked with probability 0.15 and the model is exposed to each sequence on several occasions during training.
 Despite this not being implemented in MaChAmp \cite{MaChAmp}, I deemed it to be necessary due to the relatively low amount of data for masked language modelling.
-Additionally, as prescribed by Gururangan et al. \citeyear{Gururangan2020}, only the masked language modelling objective was used.
 Following recommendations from MaChAmp documentation, I duplicated the training data four times, leaving me with a training dataset five times the original size.
 Each model trained on this data, consisting of a total of 3,053,385 tokens (610,677 before duplication), for 20 epochs, seeing each sample once, and evaluating perplexity on the development set after each epoch.
 With five copies of the training data, this corresponds to training five epochs with a more frequent evaluation strategy.
@@ -631,7 +637,7 @@ During training, batches are shuffled between epochs, such that each epoch prese
 
 \paragraph*{Learning rate schedule}
 Following experiments, a base learning rate of $1 \times 10^{-5}$ was selected.
-While a learning rate of $5 \times 10^{-5}$ was found by Sun et al. \citeyear{Sun2020} to work well for text classification tasks with similar types of pre-trained models, experiments with this and higher base learning rates produced unstable training, while lower learning rates generally produced poorer metrics, likely as models would be unable to escape local minima.
+While a learning rate of $5 \times 10^{-5}$ was found by Sun et al. \citeyear{Sun2020} to work well for text classification tasks with similar types of pre-trained models, experiments with this and higher base learning rates produced unstable training, while lower learning rates generally produced poorer metrics, likely as models would be unable to escape local minima in the loss function.
 
 A slanted triangular learning rate schedule is implemented similar to the formulation by Howard and Ruder \citeyear{Howard2018}, albeit with slightly different values.
 This schedule implements a linear warm-up for a specified fraction of the training steps, here, 0.3, before linearly decreasing the learning rate over the remaining steps, referred to as annealing.
@@ -661,14 +667,9 @@ I hypothesised that the very short sequences of e.g. less than five words, would
 To test this hypothesis, I first tracked performance over different input sequence lengths during the early experimentation.
 For the majority of test, this did not confirm my initial hypothesis, and, in fact, many models exhibited their best performance on the very short sequences.
 See Figures \ref{fig: acc over turn len 7} and \ref{fig: acc over turn len 11} in Appendix \ref{App: Figures} for examples of such experiments.
-I suspected that this was because the classes were less balanced in this portion of the dataset.
-Findings by Daniel \citeyear{Daniel2011} and Miller-Bottome et al. \citeyear{MillerBottome2018}, as reported in section \ref{sec:Differentiable approaches}, would suggest that avoidant patients should be overrepresented here, if they primarily use short speech turns.
-However, if they generally take fewer speech turns, they may be underrepresented in all counts.
-Figure \ref{fig: class balance turn len} reveals that, in fact, the class balance in the short speech turns varies substantially from the distribution in the full dataset.
-In the very short speech turns, secure patients are overrepresented compared with their share of total transcripts but, somewhat surprisingly, the two other classes are represented roughly as expected from their overall contribution to the dataset.
 
 It is not clear how the shifting class balance over turn lengths influences the models' ability to differentiate classes or to learn generalisable patterns.
-To investigate whether models would benefit from seeing only longer sequence of patient speech I conducted preprocessing experiments in which I defined a minimum speech turn length, measured in word count, and combined speech turns within documents until the minimum count had been reached.
+To investigate whether models would benefit from seeing only longer sequences of patient speech, I conducted preprocessing experiments in which I defined a minimum speech turn length, measured in word count, and combined speech turns within documents until the minimum count had been reached.
 I ran these experiments with minimum turn lengths of 50, 100, 150, and 250 words.
 In these experiments, each client speech turn is included in the dataset as-is if it is at or above the defined minimum.
 If it is below the threshold, it is combined with the following speech turn in the same document and then checked again, where the same rule is applied.
@@ -690,7 +691,7 @@ Following early experiments, validation results were observed to be rather unsta
 In order to obtain more reliable results and to better determine the best configuration of encoder and minimum input length, I performed a grid search with five-fold cross-validation through each combination of the selected encoders and minimum input length.
 Five-fold cross-validation is a method of obtaining more reliable results in which the training data is split into training and validation data five different times, producing five different splits.
 Different models are trained and validated on each split, and the final result is the mean of the validation performance across folds.
-This result is used to determine the best configuration (i.e., combination of encoder and minimum input length) which can then be applied to the test set in a similar fashion.
+This result is used to determine the best configuration (i.e., combination of encoder and minimum input length), which can then be applied to the test set in a similar fashion.
 With five encoders and five minimum lengths to search over, five-fold cross-validation resulted in 125 models to train.
 As the available computational resources were somewhat limited, I opted to not test any larger models, nor to include grid-search over other hyperparameters.
 
