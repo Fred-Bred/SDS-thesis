@@ -471,33 +471,23 @@ Conversely, the aim for therapists of anxious patients is to help them regulate 
 
 \chapter{Present Study}
 \section{Scope of the Present Study}
-This thesis attempts to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
-The main focus is on establishing whether automatic classification of attachment styles through language analysis is a tractable problem with promising potential for further development.
-As such, performance above the random baseline would indicate that there are generalisable patterns relevant to each of the three main attachment classifications and that these patterns can be picked up as signal by using the right tools.
-On the contrary, if the statistical models applied here are unable to detect this signal at all, it is unlikely that more data will deliver more performance.
-This would indicate that the approach is, with the currently available technology, not worth pursuing over other potentially promising avenues of research.
+The following sections describe empirical work carried out as an initial test of the feasibility of automatically classifying patients' attachment characteristics during psychotherapy.
+This work aims to determine whether tested methods in the field of Natural Language Processing (NLP) can begin to solve this complex task with some proficiency.
+As such, the aim is not to develop on the technical solutions available for this type of task, nor to produce major advancements in theory or clinical practice.
+Rather, this thesis may serve as a pilot to determine whether this avenue of research is worthy of more dedicated pursuit and large-scale investment.
 
-\subsection*{Machine and Clinical Judgement}
-In the pursuit of automation and machine-driven decision-making, it is essential to consider the aspects of interpretability and fairness.
-This is particularly crucial in the context of complex discursive behaviours, such as those studied in this project, where the interpretation of patient-therapist interactions often extends beyond the literal meaning of the words exchanged.
-While traditional methods may struggle to capture the intricacies of these interactions, this thesis employs natural language processing (NLP) techniques representative of the state-of-the-art, acknowledging that they may not be fully interpretable.
-Given the long-term goal of developing a practical tool, the primary focus is on achieving optimal performance, even if it means sacrificing some degree of interpretability.
-I argue that the end-users of such a tool, whether therapists and patients or researchers, would ultimately benefit more from a performant model than one that is easily interpretable.
-
-The field of NLP was forever changed when the transformer architecture was made public in 2017 \cite{Vaswani2017}, enabling drastic leaps in performance across NLP tasks.
-Since then, variants of the transformer architecture have represented the state-of-the-art in NLP.
-While applications in the realm of clinical psychology have so far been limited, I posit that we now have the understanding and data to begin leveraging this technology for improved treatment outcomes.
+The state-of-the-art in Natural Language Processing (NLP) is represented by variants of the transformer architecture first published by Vaswani et al. \citeyear{Vaswani2017}.
+While applications in the realm of clinical psychology have so far been limited, this thesis aims to begin leveraging this technology for improvements in research and treatment outcomes in psychotherapy.
 This seems to be in line with trends in the application of various NLP methods in fields related to clinical psychology.
 For instance, in a 2023 review, Malgaroli et al. \citeyear{Malgaroli2023} report a rising trend in the publication of peer-reviewed literature applying NLP to mental health interventions research.
 While not exclusively so, a large portion of the increase in publications is carried by an increase in applications of deep learning and word embedding techniques.
-The authors report that most recently, transformer models were the most applied NLP tool in the domain of mental health interventions, likely owing to their ability to extract semantically meaningful features, attention mechanisms, and relatively large context windows \cite{Malgaroli2023}.
-Malgaroli et al. further report that transformer-based models outperform other input features on tasks such as identifying emotional valence and accurately rating symptoms.
+The authors report that most recently, transformer models were the most applied NLP tool in the domain of mental health interventions, likely owing to their ability to extract semantically meaningful features, attention mechanisms, and relatively large context windows.
+Malgaroli et al. \citeyear{Malgaroli2023} further report that transformer-based models outperform other input features on tasks such as identifying emotional valence and accurately rating symptoms.
 
 A key feature which is particularly important for the study of abstract verbal behaviours and the management of attunement is the contextually influenced embeddings of words that is among the distinguishing features of the transformer model.
 Namely, the attention mechanism allows the model to dynamically update its representation of words given their context.
 This ability distinguishes the transformer model from more traditional methods in which words are necessarily assumed to have static meaning across contexts \cite{Demszky2023}.
 Demszky et al. \citeyear{Demszky2023} highlight the astonishing performance of modern language models and point to their efficiency and speed as major factors in scaling the analysis of psychologically relevant text data to a previously unthinkable degree.
-I believe that this project is an example of this.
 
 \section{Methods}
 
@@ -812,9 +802,10 @@ Namely, across the five models, the two insecure classes tend to be confused as 
 Referencing the ensemble confusion matrix, the avoidant patients are recognised with the greatest difficulty.
 In fact, this ensemble model achieves only a recall of 13.64 \%, indicating that the vast majority of avoidant patients are misclassified.
 Due to the bias for anxious classification in most models, in the ensemble classification, the mislabelled avoidant patients are instead classified as anxious.
+% Maybe insert comparison to PACS kappa from Talia2017 here? If it's out of place in Machien and Clinical Judgement.
 
 % Not sure if this should go here? Could maybe go in future directions in the bit where I also talk about capacity and data?
-The ensemble of all five models produces higher accuracy, precision, recall, and F1-scores than the majority of individual models and these scores are above the mean for each metric.
+The ensemble of all five models produces higher accuracy, $\kappa$, precision, recall, and F1-scores than the majority of individual models and these scores are above the mean for each metric.
 Consistently outperforming the majority of models may suggest that individual models, trained on different portions of the data, have learned to represent different aspects of the problem.
 This could indicate that models have not converged on the similar representations that one would expect.
 This effect of data split indicates that these models may be able to learn more robust representations with access to more data.
@@ -849,7 +840,7 @@ While several models do not improve in accuracy over the majority baseline, the 
 Additionally, based on the distribution in the larger training dataset, I believe that the majority baseline in the test set is, in a sense, artificially high.
 While a robust well-performing model would not necessarily struggle with this distribution, it does set a somewhat inflated baseline for comparison.
 
-\subsection{Implications}
+\subsection{Machine and Clinical Judgement}
 Clinical judgement is a complicated and subjective task and tends to produce far from perfect inter-rater agreement.
 The results of this thesis must be viewed not only in light of the low amounts of data available but also with the broader difficulties involved in clinical judgement in mind.
 To provide a fitting frame of reference, I will briefly review some data on the reliability of expert and clinical judgement in psychology, before considering the implications of this project.
@@ -868,6 +859,14 @@ Considering more directly the reliability of the gold standard attachment measur
 For instance, Sagi et al. \citeyear{Sagi1994} found 90-100 \% agreement between their raters on three-way classification (secure, anxious, avoidant) of their AAI transcripts ($\kappa = .82 - 1.0$ for comparisons between three raters). Their test-retest agreement across raters was 90 \% ($\kappa = .79$).
 Similarly, Bakermans-Kranenburg and van IJzendoorn \citeyear{BakermansKranenburg1993} found test-retest reliability for three-way classification of the AAI of 78 \% ($\kappa = .63$).
 More recently, Talia et al. \citeyear{Talia2020} found an inter-rater agreement of .88 on their test of a small sample of interviews coded according to the AAI manual.
+
+In the evaluation of classification models, two baselines for comparison are common: The random baseline and the majority baseline, i.e., the accuracy achieved by a model which consistently predicts the majority label.
+Considering the subjective nature of the ground truth in clinical psychology, I believe that a third baseline is appropriate, namely the human baseline.
+While no such measure exists for this exact task, comparisons can be made to similar tasks and to related measures of inter-rater agreement for the PACS.
+Cohen's $\kappa$ calculates inter-rater agreement while accounting for the probability of agreement by chance.
+On three-way classification in the original validation study, PACS raters were in excellent agreement with $\kappa = 0.87$ \cite{Talia2017}.
+In comparison, the mean $\kappa$ in classifying the test samples for the RoBERTa-large models trained with minimum input length of 150 words was just 0.15 (see Table \ref{tab:roberta-large_150 test metrics}).
+As any value above 0 indicates greater performance than would be expected by chance, even this low value provides an initial indication that the models have learned meaningful representations for the classification task.
 
 Even in the absence of directly comparable measures, it is clear that human expert raters generally fare better than the models presented here, albeit with their own limitations.
 However, this edge in performance must be considered in light of the additional information available to human raters.
