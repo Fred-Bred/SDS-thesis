@@ -777,8 +777,6 @@ The accuracy score of the ensemble voting classifier using all five instances of
 \end{figure}
 
 \section{Discussion}
-In this thesis, I set out to assess the feasibility and utility of automatically classifying patients' attachment characteristics during psychotherapy.
-
 It is clear that the models heavily weight the anxious class, a preference somewhat justified by the skewed distribution in both training and test sets using this preprocessing method.
 The training set class distribution when speech turns are concatenated to reach a length of at least 150 words is as follows:
 \begin{itemize}
@@ -787,7 +785,7 @@ The training set class distribution when speech turns are concatenated to reach 
     \item Anxious: 47.67 \%
 \end{itemize}
 
-It should be noted that while the ensemble confusion matrix presents heavily skewed towards an over-reliance on the majority class, the same degree of skewness is not present in all instances of the model.
+It should be noted that while the ensemble confusion matrix is heavily skewed towards an over-reliance on the majority class, the same degree of bias is not present in all instances of the model.
 However, a closer look at the classification patterns of the models is warranted.
 In the therapy setting, the most trivial error would likely be to confuse a secure patient for being either type of insecure.
 As covered in section \ref{sec:Differentiable approaches}, secure patients may be better able to profit from treatment regardless of the specifics of its organisation.
@@ -797,11 +795,11 @@ Most dire are the consequences of confusing the two insecure attachment patterns
 If a therapist were to follow the prescription by Slade \citeyear{Slade2016} by structuring the course of their treatment and approaching the alliance building process according to the attachment characteristics of the patient, doing so on the basis of a misclassification could be detrimental.
 The approaches suggested to align best with these two attachment patterns are almost exactly mirrored, risking serious adverse outcomes from the misguided structuring of treatment according to a misclassification.
 
-Given that the three-class problem corresponds to a flattening of the two-dimensional space described by the dimensions of anxiety and avoidance, one would expect any capable classifier to most easily distinguish the extremes of the scale, i.e., between anxious and avoidant patients.
+Given that the three-class problem corresponds to a flattening of the two-dimensional space described by the dimensions of anxiety and avoidance, one would expect any capable classifier to most easily distinguish the extremes of the scale, i.e., anxious and avoidant patients.
 However, this does not appear to be the case, as these two classes are frequently confused across all five models.
 Namely, across the five models, the two insecure classes tend to be confused as often or more often than the secure class is confused with either of the insecure classes.
 Referencing the ensemble confusion matrix, the avoidant patients are recognised with the greatest difficulty.
-In fact, this ensemble model achieves only a recall of 13.64 \%, indicating that the vast majority of avoidant patients are misclassified.
+In fact, this ensemble model achieves only a recall of 13.64 \% for the avoidant class, indicating that the vast majority of avoidant patients are misclassified.
 Due to the bias for anxious classification in most models, in the ensemble classification, the mislabelled avoidant patients are instead classified as anxious.
 % Maybe insert comparison to PACS kappa from Talia2017 here? If it's out of place in Machien and Clinical Judgement.
 
@@ -861,16 +859,16 @@ For instance, Sagi et al. \citeyear{Sagi1994} found 90-100 \% agreement between 
 Similarly, Bakermans-Kranenburg and van IJzendoorn \citeyear{BakermansKranenburg1993} found test-retest reliability for three-way classification of the AAI of 78 \% ($\kappa = .63$).
 More recently, Talia et al. \citeyear{Talia2020} found an inter-rater agreement of .88 on their test of a small sample of interviews coded according to the AAI manual.
 
-In the evaluation of classification models, two baselines for comparison are common: The random baseline and the majority baseline, i.e., the accuracy achieved by a model which consistently predicts the majority label.
+In the evaluation of classification models, two baselines for comparison are common: The random baseline and the majority baseline.
 Considering the subjective nature of the ground truth in clinical psychology, I believe that a third baseline is appropriate, namely the human baseline.
 While no such measure exists for this exact task, comparisons can be made to similar tasks and to related measures of inter-rater agreement for the PACS.
 Cohen's $\kappa$ calculates inter-rater agreement while accounting for the probability of agreement by chance.
-On three-way classification in the original validation study, PACS raters were in excellent agreement with $\kappa = 0.87$ \cite{Talia2017}.
-In comparison, the mean $\kappa$ in classifying the test samples for the RoBERTa-large models trained with minimum input length of 150 words was just 0.15 (see Table \ref{tab:roberta-large_150 test metrics}).
-As any value above 0 indicates greater performance than would be expected by chance, even this low value provides an initial indication that the models have learned meaningful representations for the classification task.
+On three-way classification in the original validation study, PACS raters were in excellent agreement with $\kappa = .87$ \cite{Talia2017}.
+In comparison, the mean $\kappa$ in classifying the test samples for the RoBERTa-large models trained with minimum input length of 150 words was just .15 (see Table \ref{tab:roberta-large_150 test metrics}).
+As any value above 0 indicates greater performance than would be expected by chance, even this unimpressive value provides an initial indication that the models have learned meaningful representations for the classification task.
 
-Even in the absence of directly comparable measures, it is clear that human expert raters generally fare better than the models presented here, albeit with their own limitations.
-However, this edge in performance must be considered in light of the additional information available to human raters.
+Even in the absence of good directly comparable measures, it is clear that human expert raters generally fare better than the models presented here, albeit with their own limitations.
+However, this edge in performance should be considered in light of the additional information available to human raters.
 Depending on the task, these experts may have the option of asking follow-up questions, and they typically work with much greater context.
 For instance, when classifying an AAI, the rater has access to the entire transcript at once.
 This allows not only for the analysis of long-term patterns in speech and behaviour but also for inclusion of relevant context such as the therapist or interviewer speech turns, which were not made available to models in this project.
