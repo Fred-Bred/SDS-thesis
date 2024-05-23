@@ -249,7 +249,7 @@ The scores on these five scales can be used to infer the patient's classificatio
 Specifically, a patient's in-session attachment is classified as secure if scores are highest on Proximity Seeking, Contact Maintaining, or Exploring.
 Avoidant or anxious (called preoccupied in the PACS) classifications are assigned if the scales Avoidance or Resistance, respectively, are higher.
 In a 2017 validation study, Talia et al. \citeyear{Talia2017} found excellent inter-rater agreement for three-way classification with independent coders using the PACS ($r=.91, \kappa = .87, p<0.001$).
-Comparing the PACS and AAI classifications for the same patients, the authors found $r=0.87$ $(\kappa = .81, p<0.001)$, also indicating excellent agreement.
+Comparing the PACS and AAI classifications for the same patients, the authors found $r=.87$ $(\kappa = .81, p<0.001)$, also indicating excellent agreement.
 
 In summary, the PACS provides a novel method for assessing attachment on the basis of in-session behaviour, showing what is according to convention \cite{Cicchetti1994} both excellent reliability and excellent concurrent validity with the Adult Attachment Interview.
 Further, in this thesis, the approach provides the basis for the automation of attachment assessments from in-session behaviour in terms of both theory and data.
@@ -478,13 +478,11 @@ The model is then trained on data related to the new task.
 \subsection{Data}
 The labelled data for this project consists of the English part of the datasets from the 2017 validation study of the PACS \cite{Talia2017}.
 Included in this thesis are also six transcripts from the same sample of patients that did not have an associated AAI classification, and thus were not included in the validation study, but which have nevertheless been coded using the PACS.
-All transcripts were originally collected for other research projects.
-All transcripts are in English and sessions were conducted in New York, treating patients with either Brief Relational Therapy \cite{Safran2000} or Cognitive Behavioural Therapy \cite{Beck2011}.
+All sessions were conducted in New York, treating patients with either Brief Relational Therapy \cite{Safran2000} or Cognitive Behavioural Therapy \cite{Beck2011}.
 Transcription was conducted verbatim, following standards of the AAI, with the addition of laughing and crying \cite{Talia2017, Talia2014}.
 Names and personal identifiers are not included in transcripts.
 Even so, this is an extraordinarily sensitive corpus of text.
-To protect the participants, the data was transferred using an encrypted, password-protected service provided by the University of Copenhagen from which data is automatically wiped after a set time.
-All data is stored on a secure location, likewise provided by the University of Copenhagen.
+To protect the participants, data was transferred using an encrypted, password-protected service from which data is automatically wiped after a set time, and stored on a secure location, both provided by the University of Copenhagen.
 Upon the completion of the project, data will be deleted and made unrecoverable by the university IT department.
 Data processing, including the training of models, occurred on a local server hosted at the University of Copenhagen.
 This server is accessible only when connected to the university network physically or via a virtual private network and access is password-protected, requiring two-factor authentication.
@@ -501,10 +499,10 @@ These classes are represented in the dataset according to the below distribution
 \end{itemize}
 Although classes are reasonably balanced, the majority class in this dataset is anxious.
 As noted, it was shown by Feeney and Ryan \citeyear{Feeney1994} that those with anxious attachment styles were more prone to seeking medical attention and more likely to report having had therapy.
-However, considering the review of 'the first 10,000 adult attachment interviews' by Bakermans-Kranenburg and IJzendoorn \citeyear{Bakermanskranenburg2009} which found that in clinical populations 23 \% were avoidant, 21 \% secure, 13 \% anxious, and 43 \% were unresolved, the present distribution is somewhat surprising.
+However, considering the review of the first 10,000 adult attachment interviews by Bakermans-Kranenburg and IJzendoorn \citeyear{Bakermanskranenburg2009} which found that in clinical populations 23 \% were avoidant, 21 \% secure, 13 \% anxious, and 43 \% were unresolved, the present distribution is somewhat surprising.
 As Talia et al. \citeyear{Talia2017} speculate, this difference in class distribution could be due to the unique criteria which excluded patients with mania, bipolar disorders, thought disorders, substance abuse, and any history of self-harm or records of interactions with the legal system from this study.
 
-Due to the original study's focus on the three main organised attachment patterns, patients with other classifications are labelled according to their secondary (organised) classification were one is available and otherwise excluded from the study.
+Due to the original study's focus on the three main organised attachment patterns, patients with other classifications are labelled according to their secondary (organised) classification where one is available and otherwise excluded.
 Patients who could not be classified are not included.
 Working with three classes corresponds to "flattening" the two orthogonal dimensions of anxiety and avoidance, projecting them onto a single continuum.
 In this continuum, a person can move away from feelings of security in either direction: Toward avoidance, becoming dismissive of attachments and relying on down-regulation of the attachment system to avoid feelings of attachment insecurity, or toward anxiety, becoming preoccupied with attachments and relying on hyper-activating the attachment system to resolve insecurities.
@@ -541,14 +539,14 @@ The source code for this project is available at \url{https://github.com/Fred-Br
 To investigate whether models could learn more task-appropriate representations from being exposed to more unlabelled data from the task domain, I conducted domain-adaptive pre-training with both a RoBERTa-base model \cite{roberta} and the pre-trained MentalRoBERTa model presented by Ji et al. \citeyear{MentalBERT}.
 
 In domain-adaptive pre-training, the base language model undergoes continued training on domain-relevant unlabelled data.
-Text is considered domain-relevant if it concerns topics relevant to the task, is of a relevant genre, or originates from forum discussing the topic.
+Text is considered domain-relevant if it concerns topics relevant to the task, is of a relevant genre, or originates from forums discussing the topic.
 Training is done on masked language modelling objective (i.e., cross-entropy loss on predicting randomly masked tokens).
 This type of training has been found to consistently improve performance of RoBERTa on classification tasks in low-resource settings \cite{Gururangan2020}.
 
 \paragraph*{Domain data}
 The domain data used for pre-training came from three different datasets.
 
-First, the AnnoMI dataset \cite{Wu2022}, which consists of professionally transcribed and annotated dialogues of both high- and low-quality motivational interviewing.
+First, the AnnoMI dataset \cite{Wu2022}, which consists of professionally transcribed and annotated motivational interviewing.
 From this dataset 4,817 client utterances were extracted for use in pre-training.
 Setting aside 20 \% of instances to validate the model during training leaves 91,479 tokens for pre-training.
 
@@ -565,18 +563,13 @@ These, and similar entirely text-based datasets, were deemed too far removed fro
 Nevertheless, one encoder pre-trained on Reddit data (MentalRoBERTa; \citeNP{MentalBERT}) was included in the experiments to test this assumption.
 
 \paragraph*{Pre-training approach}
-For each of the pre-training datasets, 20 \% of the utterances were kept from the model during training as a development set.
-All the remaining data from all three datasets where combined in a single raw text file to train on.
+Excluding the text extracted for validation, the data from all three datasets where combined in a single raw text file to train on.
 I applied an approach similar to the RoBERTa training methodology and that applied by Gururangan et al. \citeyear{Gururangan2020}.
 This includes dynamic masking, where each token is masked with probability 0.15 and the model is exposed to each sequence on several occasions during training.
 Despite this not being implemented in MaChAmp \cite{MaChAmp}, I deemed it to be necessary due to the relatively low amount of data for masked language modelling.
 Following recommendations from MaChAmp documentation, I duplicated the training data four times, leaving me with a training dataset five times the original size.
 Each model trained on this data, consisting of a total of 3,053,385 tokens (610,677 before duplication), for 20 epochs, seeing each sample once, and evaluating perplexity on the development set after each epoch.
 With five copies of the training data, this corresponds to training five epochs with a more frequent evaluation strategy.
-
-Nevertheless, the best model, as determined by the validation set performance on the MLM task, was consistently the first of 20.
-This is curious as the model at this point has yet to see all the unique samples.
-This might suggest that not enough pre-training data was made available for the approach to have the expected results or that this domain is particularly difficult to adapt to.
 
 \subsubsection{Target Task Fine-Tuning}
 Hyperparameter values were chosen based on what had been previously demonstrated to work well for similar applications and on the basis of both theory and experiments.
@@ -596,17 +589,17 @@ During training, batches are shuffled between epochs, such that each epoch prese
 Following experiments, a base learning rate of $1 \times 10^{-5}$ was selected.
 While a learning rate of $5 \times 10^{-5}$ was found by Sun et al. \citeyear{Sun2020} to work well for text classification tasks with similar types of pre-trained models, experiments with this and higher base learning rates produced unstable training, while lower learning rates generally produced poorer metrics, likely as models would be unable to escape local minima in the loss function.
 
-A slanted triangular learning rate schedule is implemented similar to the formulation by Howard and Ruder \citeyear{Howard2018}, albeit with slightly different values.
+A slanted triangular learning rate schedule was implemented similar to the formulation by Howard and Ruder \citeyear{Howard2018}, albeit with slightly different values.
 This schedule implements a linear warm-up for a specified fraction of the training steps, here, 0.3, before linearly decreasing the learning rate over the remaining steps, referred to as annealing.
-Following MaChAmp standards \cite{MaChAmp}, the schedule is implemented with a ratio of 32 between the smallest and base learning rates.
-Additionally, gradual unfreezing and discriminative fine-tuning are implemented.
+Following MaChAmp standards \cite{MaChAmp}, the schedule was implemented with a ratio of 32 between the smallest and base learning rates.
+Additionally, gradual unfreezing and discriminative fine-tuning were implemented.
 Gradual unfreezing refers to a method in which training begins by adjusting only the classification head, keeping the encoder constant.
 Once the first epoch has been completed, the second-to-last layer in the model is unfrozen and adjusted during the second epoch.
 This process continues until all layers are unfrozen and actively being adjusted.
 During the unfreezing process, the learning rate is cyclically increased and annealed according to the slanted triangular schedule within each epoch.
 Once all layers have been unfrozen, the learning rate is increased and annealed over all remaining training iterations.
 Discriminative fine-tuning slightly adjusts this process such that when a layer is first unfrozen, it is trained with a lower learning rate than the rest of the model.
-Discriminative fine-tuning is implemented here with a decay factor of 0.38, by which the learning rate of newly unfrozen layers is decreased.
+Discriminative fine-tuning was implemented here with a decay factor of 0.38, by which the learning rate of newly unfrozen layers is decreased.
 
 \paragraph*{Optimisation and regularisation}
 Both fine-tuning and masked language modelling are done using a cross-entropy loss.
@@ -640,7 +633,6 @@ The first two are the base and large versions of the RoBERTa model originally tr
 The three remaining models are all domain-adapted to some degree.
 First, the base size MentalRoBERTa model trained by Ji et al. \citeyear{MentalBERT}.
 This model is an instance of the base RoBERTa model which has been further trained on Reddit posts related to mental health on the masked language modelling objective.
-In theory, this might make the model and its embeddings more attuned to patterns related to mental health and themes related to psychotherapy.
 Finally, as described above, I conducted my own pre-training of a base RoBERTa model as well as continued domain-adaptive training of the MentalRoBERTa model.
 
 \paragraph*{Grid search and cross-validation}
@@ -653,6 +645,12 @@ With five encoders and five minimum lengths to search over, five-fold cross-vali
 As the available computational resources were somewhat limited, I opted to not test any larger models, nor to include grid-search over other hyperparameters.
 
 \section{Results}
+\paragraph*{Domain adaptation}
+During pre-training, the best model, as determined by the validation set performance on the MLM task, was consistently the first of 20.
+This is curious as the model at this point has yet to see all the unique samples.
+This might suggest that not enough pre-training data was made available for the approach to have the expected results or that this domain is particularly difficult to adapt to.
+
+\paragraph*{Validation results}
 Validation results in the form of mean and standard deviation accuracy for each encoder and minimum input length combination are displayed in Table \ref{tab: val results}.
 The efforts to produce domain-adapted models do not seem to have been helpful for this task.
 This is the case for both my own pre-training and when using a domain-specific model (MentalRoBERTa; \citeNP{MentalBERT}) as well as for my further pre-training of the domain-specific model.
@@ -704,10 +702,11 @@ This is undoubtedly due to the lower number of instances available in the valida
 %     \bottomrule
 % \end{tabular}
 
-It is my assessment that the model configuration that provides the optimal balance between performance and stability is the RoBERTa-large variant with a minimum input length of 150 words, performing at an average accuracy of 56.15 \%.
+Based on mean and standard deviation accuracy scores, the model configuration that provides the optimal balance between performance and stability is the RoBERTa-large variant with a minimum input length of 150 words, performing at an average accuracy of 56.15 \% ($SD=5.21$ \%pt).
 The RoBERTa-large model appears to hold the greatest promise out of the encoders tested, perhaps suggesting that larger models with greater capacity should have been included in the tests.
 The RoBERTa-large encoder will be the centre of the remaining analysis, focusing primarily on the 150 words minimum input length variant.
 
+\paragraph*{Test set results}
 Following cross-validation, five instances of the RoBERTa-large model were saved.
 Taking a majority vote between the five models to determine one prediction per sample in the test set produced the confusion matrix in subplot A of Figure \ref{fig: all confusion matrices}.
 % $$
@@ -749,8 +748,7 @@ As covered in section \ref{sec:Differentiable approaches}, secure patients may b
 Confusing either of the insecure orientations for being secure is likely to lead to worse outcomes as therapists may alter their strategies for building the therapeutic alliance and structuring the course of treatment in counterproductive ways.
 However, this error may be less severe for avoidant patients, as the association between this orientation and therapy outcomes is weaker while this group of patients tend to hold more stable views of their therapists and working alliance (see sections \ref{sec: Health} and \ref{sec:Applying attachment in therapy}).
 Most dire are the consequences of confusing the two insecure attachment patterns.
-If a therapist were to follow the prescription by Slade \citeyear{Slade2016} by structuring the course of their treatment and approaching the alliance building process according to the attachment characteristics of the patient, doing so on the basis of a misclassification could be detrimental.
-The approaches suggested to align best with these two attachment patterns are almost exactly mirrored, risking serious adverse outcomes from the misguided structuring of treatment according to a misclassification.
+The approaches proposed by Slade (\citeyearNP{Slade2016}; see section \ref{sec:Differentiable approaches}) to align best with these two attachment patterns are almost exactly mirrored, risking serious adverse outcomes from the misguided structuring of treatment according to a misclassification.
 
 Given that the three-class problem corresponds to a flattening of the two-dimensional space described by the dimensions of anxiety and avoidance, one would expect any capable classifier to most easily distinguish the extremes of the scale, i.e., anxious and avoidant patients.
 However, this does not appear to be the case, as these two classes are frequently confused across all five models.
@@ -758,13 +756,12 @@ Namely, across the five models, the two insecure classes tend to be confused as 
 Referencing the ensemble confusion matrix, the avoidant patients are recognised with the greatest difficulty.
 In fact, this ensemble model achieves only a recall of 13.64 \% for the avoidant class, indicating that the vast majority of avoidant patients are misclassified.
 Due to the bias for anxious classification in most models, in the ensemble classification, the mislabelled avoidant patients are instead classified as anxious.
-% Maybe insert comparison to PACS kappa from Talia2017 here? If it's out of place in Machien and Clinical Judgement.
+% Maybe insert comparison to PACS kappa from Talia2017 here? If it's out of place in Machine and Clinical Judgement.
 
 % Not sure if this should go here? Could maybe go in future directions in the bit where I also talk about capacity and data?
 The ensemble of all five models produces higher accuracy, $\kappa$, precision, recall, and F1-scores than the majority of individual models and these scores are above the mean for each metric.
-Consistently outperforming the majority of models may suggest that individual models, trained on different portions of the data, have learned to represent different aspects of the problem.
-This could indicate that models have not converged on the similar representations that one would expect.
-This effect of data split indicates that these models may be able to learn more robust representations with access to more data.
+This may suggest that individual models, trained on different portions of the data, have learned to represent different aspects of the problem and that models have not converged on the similar representations that one would expect.
+The effect of data split indicates that these models may be able to learn more robust representations with access to more data.
 Similarly, greater capacity, i.e. larger models, may enable models to simultaneously represent the various features that the different models have prioritised.
 
 To further investigate the impact of affording the model more context, Figure \ref{fig: roberta-large results} displays the mean test set accuracy and standard deviation for RoBERTa-large models across minimum input lengths.
@@ -797,28 +794,24 @@ While a robust well-performing model would not necessarily struggle with this di
 
 \subsection{Machine and Clinical Judgement}
 Clinical judgement is a complicated and subjective task.
-The results of this thesis must be viewed not only in light of the low amounts of data available but also with the broader difficulties involved in clinical judgement in mind.
-To provide a fitting frame of reference, I will briefly review some data on the reliability of expert and clinical judgement in psychology, before considering the implications of this project.
-
-Very recently, Wagner et al. \citeyear{Wagner2023} found 76-80 \% inter-rater overlap for evaluations of mental health status when different experts rated the same samples in their dataset of psychotherapy text.
-While this is generally considered good inter-rater agreement, Wagner et al. also point out how it highlights the subjective nature of psychological evaluations.
-
-Inter-rater agreement on psychiatric diagnosis tends to be quite high when patients are assessed through structured interviews.
-Ruskin et al. \citeyear{Ruskin1998} reported a mean $\kappa$ of .83 for major depression, bipolar disorder, panic disorder, and alcohol dependence when assessed using a structured clinical interview.
-Psychotic disorders, however, tend to have substantially lower agreement between raters.
-For instance, Maj et al. \citeyear{Maj2000} found only $\kappa = .22$ for schizoaffective disorder, while the affective disorders manic and major depressive episodes produced $\kappa$ of .71 and .82, respectively.
-
-In a study of 217 psychiatric consultations, Al-Huthail \citeyear{Al-Huthail2008} found that the accuracy of initial psychiatric impression by primary medical providers when compared with final psychiatric diagnosis was just 60 \% for cognitive disorders, 50 \% for depression and 46 \% for anxiety disorders.
-
-Considering more directly the reliability of the gold standard attachment measure, the adult attachment interview (AAI) has produced remarkably high inter-rater agreement and test-retest reliability scores.
-For instance, Sagi et al. \citeyear{Sagi1994} found 90-100 \% agreement between their raters on three-way classification (secure, anxious, avoidant) of their AAI transcripts ($\kappa = .82 - 1.0$ for comparisons between three raters). Their test-retest agreement across raters was 90 \% ($\kappa = .79$).
-Similarly, Bakermans-Kranenburg and van IJzendoorn \citeyear{BakermansKranenburg1993} found test-retest reliability for three-way classification of the AAI of 78 \% ($\kappa = .63$).
-More recently, Talia et al. \citeyear{Talia2020} found an inter-rater agreement of .88 on their test of a small sample of interviews coded according to the AAI manual.
-
+The results and implications of this thesis must be viewed not only in light of the low amounts of data available but also with the broader difficulties involved in clinical judgement in mind.
 In the evaluation of classification models, two baselines for comparison are common: The random baseline and the majority baseline.
 Considering the subjective nature of the ground truth in clinical psychology, I believe that a third baseline is appropriate, namely the human baseline.
 While no such measure exists for this exact task, comparisons can be made to similar tasks and to related measures of inter-rater agreement for the PACS.
-Cohen's $\kappa$ calculates inter-rater agreement while accounting for the probability of agreement by chance.
+For instance, Wagner et al. \citeyear{Wagner2023} found 76-80 \% inter-rater overlap for evaluations of mental health status when different experts rated the same samples of psychotherapy text.
+While this is generally considered good inter-rater agreement, the authors also point out how it highlights the subjective nature of psychological evaluations.
+
+Structured interviews for psychiatric assessment tend to produce high inter-rater agreement.
+Ruskin et al. \citeyear{Ruskin1998} reported a mean $\kappa$ of .83 for major depression, bipolar disorder, panic disorder, and alcohol dependence when assessed using a structured clinical interview.
+Psychotic disorders, however, tend to have substantially lower agreement between raters.
+For instance, Maj et al. \citeyear{Maj2000} found only $\kappa = .22$ for schizoaffective disorder, while the affective disorders manic and major depressive episodes produced $\kappa$ of .71 and .82, respectively.
+Furhter, first psychiatric impressions by primary medical providers often differ from final psychiatric diagnoses with accuracies of 46-60 \% for anxiety, depressive, and cognitive disorders \cite{Al-Huthail2008}.
+
+Considering more directly the reliability of the gold standard attachment measure, the adult attachment interview (AAI) has produced remarkably high inter-rater agreement and test-retest reliability scores.
+For instance, Sagi et al. \citeyear{Sagi1994} found 90-100 \% agreement between their raters on three-way classification (secure, anxious, avoidant) of AAI transcripts ($\kappa = .82 - 1.0$ for comparisons between three raters). Their test-retest agreement across raters was 90 \% ($\kappa = .79$).
+Similarly, Bakermans-Kranenburg and van IJzendoorn \citeyear{BakermansKranenburg1993} found test-retest reliability for three-way classification of the AAI of 78 \% ($\kappa = .63$).
+More recently, Talia et al. \citeyear{Talia2020} found an inter-rater agreement of .88 on their test of a small sample of interviews coded according to the AAI manual.
+
 On three-way classification in the original validation study, PACS raters were in excellent agreement with $\kappa = .87$ \cite{Talia2017}.
 In comparison, the mean $\kappa$ in classifying the test samples for the RoBERTa-large models trained with minimum input length of 150 words was just .15 (see Table \ref{tab:roberta-large_150 test metrics}).
 As any value above 0 indicates greater performance than would be expected by chance, even this unimpressive value provides an initial indication that the models have learned meaningful representations for the classification task.
@@ -834,9 +827,7 @@ In spite of the somewhat lacklustre results of the models presented here, I beli
 The high reliability of structured psychiatric interviews as well as both the PACS and the AAI and the comparatively low reliability of unstructured clinical judgement suggests that conducting clinically relevant judgement of psychological phenomena in one's patients is an exceedingly difficult task.
 These issues are not unrecognised by psychiatrists, and Matuszak and Piasecki \citeyear{Matuszak2012} suggest that more structured approaches be applied to both the anamnesis and diagnosis processes.
 Exacerbating the issue, it seems likely that in the somewhat unstructured psychotherapy dialogue in which the therapist's emotional and cognitive resources are likely to be focused elsewhere, the task of accurately assessing a patient's psychological characteristics becomes increasingly difficult.
-As such, rather than relying entirely on the intuitive judgement of therapists who may need to direct their focus elsewhere, I suggest that qualified decision support is warranted.
-Machine and clinical judgement does not have to be a dichotomy.
-In fact, a union is not only legitimate but justified, given adequate performance in the future.
+Thus, qualified decision support appears warranted, eradicating the dichotomy of machine and clinical judgement.
 In the ideal case, an automatic decision-support system for the assessment of attachment orientation can free up therapists' resources and allow them to be more present in their counselling sessions while providing more accurate and reliable repeated measurements for research and to inform treatment and intervention design.
 
 For the purpose of psychotherapy research, existing methods tend to either lack reliability as repeated measurements as individuals become accustomed to the interview procedure (AAI; \citeNP{Daniel2015}) or offer questionable validity due to the superficial nature of self-report measures \cite{Talia2017}.
@@ -869,7 +860,7 @@ With the current state of explainability research in NLP, this remains irreconci
 While the present results do not represent a tool ready for clinical deployment, they show the potential of these methods for broader application.
 The most appropriate application at this stage of maturity is in research.
 Here, large-scale projects can leverage the efficiency of automating classification while alleviating the individual consequences of potential misclassifications.
-This may enable research projects at all scales to develop knowledge on and strategies for managing attachment insecurity and how it affects the therapeutic process.
+This may enable research to develop knowledge on and strategies for managing attachment insecurity and how it affects the therapeutic process.
 
 \subsection{Limitations and Future Direction}
 The primary challenge to the investigation of the utility and feasibility of automatic classification in this domain is the low amount of data available.
