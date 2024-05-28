@@ -62,7 +62,7 @@
 \university{University of Copenhagen}
 \faculty{The Faculty of Social Sciences}
 \pageCount{40}
-\charCount{95,938}
+\charCount{95,933}
 \date{May 31st 2024}
 
 \begin{document}
@@ -73,7 +73,7 @@
     Attachment styles predictably affect individuals' perceptions and interactions with their environment.
     This, in turn, influences a breadth of life outcomes as well as the development and treatment of psychopathologies.
     In therapy, insight into a patient's attachment characteristics can inform the organisation of treatment or represent the primary objective.
-    The assessment of attachment style is resource intensive and the best tools do not lend themselves well to repeated measurement.
+    However, the assessment of attachment style is resource intensive and the best tools do not lend themselves well to repeated measurement.
     This thesis aims to investigate the feasibility of new, automated methods driven by machine learning in assessing patient attachment characteristics from psychotherapy transcripts.
     It builds on assumptions and data from the Patient Attachment Coding System \cite{Talia2017} to develop an automated pipeline robust to therapist characteristics and therapeutic modality.
     Fine-tuned RoBERTa-large encoders for classification reach a mean test set accuracy of 59.55 \% ($SD=5.82$) in distinguishing between the three classes of anxious, secure, and avoidant attachment styles.
@@ -87,20 +87,20 @@
 Early childhood caregiver interactions play a fundamental role in shaping our lives.
 These early experiences influence how we view relationships, develop coping mechanisms, and regulate emotions -- all of which have a lasting impact on our well-being.
 Attachment theory seeks to explain this influence and has provided significant gains not only in understanding everyday interpersonal interactions but also in psychotherapy outcomes and the therapeutic process itself.
-Recognising the relevance of attachment styles, therapists and researchers have sought effective methods to assess them in patients.
+Recognising the relevance of attachment styles, therapists and researchers have sought effective methods to assess them in patients \shortcite{Haas1994,Bowlby1988}.
 
 However, existing assessment tools often present limitations.
 Traditional methods can be quite time-consuming to administer and may be difficult to repeat due to potential patient familiarity with the protocols \cite{Daniel2015}.
-Fortunately, the past decade has witnessed the emergence of novel assessment techniques that analyse patient speech within psychotherapy sessions, culminating in the Patient Attachment Coding System (PACS; \citeNP{Talia2017}).
+Notably, the past decade has witnessed the emergence of novel assessment techniques that analyse patient speech within psychotherapy sessions, culminating in the Patient Attachment Coding System (PACS; \citeNP{Talia2017}).
 While promising, these methods can be challenging to learn and implement due to their complexity and time-consuming nature.
 
 This project seeks to build upon these advancements by investigating the potential of using machine learning to automate parts of the attachment assessment process.
 This approach aligns perfectly with the core principle of talk therapy -- healing through language.
 The machine learning methods employed in this thesis are specifically designed to analyse and model language in its natural, unstructured form, as encountered within psychotherapy sessions.
-By beginning to automate aspects of the assessment, this project aims to contribute to a more efficient and potentially more objective approach to understanding patient attachment styles.
+By beginning to automate aspects of the assessment, this project aims to contribute to a more efficient and reliable approach to understanding patient attachment styles.
 
-While both manual assessment methods and machine learning method for natural language processing are well understood, this application is new, and the available data is very limited.
-As a result, this project serves as a pilot which can aid in determining the utility of investing more seriously in the approach.
+While both manual assessment methods and machine learning methods for natural language processing are well understood, this application is new, and the available data is very limited.
+As a result, this project serves as a pilot which can aid in determining the utility of investing more resources in the approach.
 As such, the present thesis will investigate the following research question:
 \begin{quote}
     \textit{To what extent can automatic natural language processing be applied to assess patients' attachment characteristics in ways meaningful for research and clinical applications in psychotherapy?}
@@ -151,7 +151,7 @@ The anxiety scale corresponds to some degree to one's perception or mental model
 Attachment anxiety is ultimately the self-doubt and worry related to a lack of confidence that attachment figures will meet one's attachment needs.
 When relationship ruptures occur or insecurity appears, individuals with high attachment anxiety will tend to overcompensate with exaggerated attachment behaviours.
 The avoidance scale is roughly analogous to one's mental models of others.
-Attachment avoidance can be reduced to a lack of trust in the kindness of potential attachment figures, leading one to avoid them and potentially forego deep emotional connection altogether.
+Attachment avoidance can be described as a lack of trust in the kindness of potential attachment figures, leading one to avoid them and potentially forego deep emotional connection altogether.
 This understanding of attachment as existing in two orthogonal dimensions is the one most widely accepted today.
 Nevertheless, categorical classification remains widely used in both scientific studies and clinical applications \cite{Mikulincer2013,Mikulincer2007}.
 
@@ -160,7 +160,7 @@ An attachment style or pattern is a pattern in behaviour, thought, mental models
 
 Secure attachment, corresponding to low scores on both dimensions, is associated with the belief that one is worthy of love and close relationships and that others are capable of providing for one's attachment needs and are generally reliable and trustworthy.
 This roughly corresponds to holding positive mental representations of both the self and others.
-This means that secure individuals tend to be more comfortable in both expressing emotions and seeking support and more effective and constructive in their affect-regulation.
+This means that secure individuals tend to be more comfortable in both expressing emotions and seeking support and more effective and constructive in their affect-regulation \cite{Mikulincer2003}.
 
 Importantly, insecure attachment is often experienced as either a lack of or an excess of emotions and can be expressed through different coping mechanisms which also tend to form somewhat predictable patterns.
 The anxious pattern of attachment, described by high anxiety and low avoidance, is characterised by the belief that one is less worthy of love and close relationships and anxiety around the certainty of others and their relationships.
@@ -185,13 +185,13 @@ Understanding the tendency to use either of these groupings of strategies is ben
 
 \section{Theoretical Development}
 With the central constructs of the theory in place, the following section lays out the development of the theory in broad terms.
-The purpose of this historical perspective is to make apparent how this framework, rooted in Freudian tradition, outgrew its heritage to become an empirically grounded theory and earn its place in the contemporary scientific effort to improve mental health care.
+The purpose of this historical perspective is to make apparent how this framework, rooted in Freudian tradition, outgrew its heritage to become an empirically grounded theory and earned its place in the contemporary scientific effort to improve mental health care.
 
 While the foundation for the theory and its conclusions had been laid long before, the first widely influential published piece on the effects of childhood care and attachment on mental health was Bowlby's 1951 monograph published by the World Health Organization under the title \textit{Maternal Care and Mental Health} \cite{bowlby1951WHO}.
 The central assertion of this work, which reviewed the limited existing empirical data, was that healthy infant development presumes a warm and continuous relationship with the mother.
-At the time, this proposition was controversial as it broke with traditional views on child-rearing and development. The dominant view at the time considered physical contact with infants to be harmful, leading nurseries and hospitals to be sterile and contact-less \cite{Karen1994}.
+At the time, this proposition was controversial as it broke with traditional views on child-rearing and development. The dominant view at the time considered physical contact with infants to be harmful, leading nurseries and hospitals to be sterile and contactless \cite{Karen1994}.
 Bowlby's view contrasted with this by emphasising the relational and emotional needs of children. As such, Bowlby found himself opposing the psychoanalytic views that originally inspired him and that attributed the infant's bond with their mother to internalized needs and unconscious sexual desires.
-At the time, psychoanalysts were mainly opposed in their views on development by behaviourist perspectives that viewed the same bond as a result of learned feeding behaviours.
+At the time, psychoanalysts were mainly opposed in their views on development by behaviourist perspectives that viewed the same bond as a result of learned feeding behaviours \cite{Mikulincer2003}.
 
 By 1958 Bowlby's efforts at developing a coherent theory would converge in a rare intersection of co-occurring empirical and theoretical advancements.
 This year, Bowlby published \textit{The Nature of the Child's Tie to his Mother} \cite{Bowlby1958}, developing the concept of attachment behaviours and advancing his view that the bond between infants and their mothers developed thanks to the infant's innate need for closeness.
@@ -205,30 +205,31 @@ Third, compared to infants raised by cloth mothers, those raised by wire mothers
 Harlow attributed this to the stress induced by insufficient comfort provided by the wire mothers, providing the first empirically founded theoretical link between attachment deprivation and mental health \cite{Harlow1958}.
 
 Through the next two decades Bowlby would elaborate on the theory of attachment over several major publications, particularly the three-volume magnum opus \textit{Attachment and Loss} \cite{Bowlby1969attachment, Bowlby1973separation,Bowlby1980loss}.
-In 1988, almost four decades post its initial release, he claimed to have finally remedied the empirical and theoretical deficiencies of \textit{Maternal care and mental health} \cite{Bowlby1988}.
+In 1988, almost four decades post its initial release, he claimed to have finally remedied any empirical and theoretical deficiencies of \textit{Maternal care and mental health} \cite{Bowlby1988}.
 
 \subsection{Assessing Attachment}
-Mary Ainsworth introduced the classification of attachment patterns by observing the proximity-seeking behaviours of children as they were reunited with their mothers in a procedure named \textit{The Strange Situation} in which infants are introduced to an unfamiliar environment with their mothers and briefly left alone with a stranger \shortcite{Ainsworth1979, Ainsworth1970}.
-During the first observations of this procedure, Ainsworth and Bell found that upon reunion with their mothers, infants' behaviours could be categorised into three broad classes.
+Mary Ainsworth first introduced the classification of attachment patterns by observing the proximity-seeking behaviours of children as they were reunited with their mothers in a procedure named \textit{The Strange Situation}.
+In this, infants are introduced to an unfamiliar environment with their mothers and briefly left alone with a stranger \shortcite{Ainsworth1979, Ainsworth1970}.
+During the first observations of this procedure, Ainsworth and Bell \citeyear{Ainsworth1970} found that upon reunion with their mothers, infants' behaviours could be categorised into three broad classes.
 These classes correspond to the ones described in section \ref{sec: Current understanding}.
 
 The theory was expanded into a clinically applicable framework for adults when the Adult Attachment Interview \shortcite<AAI;>{AAITest} was developed to assess the adult equivalents of the childhood patterns of attachment behaviours.
 The AAI is a semi-structured interview that asks respondents about autobiographical memories from early childhood.
 The interview is coded according to the ways in which these childhood experiences are described and the reflections offered by respondents.
 Thus, the coding process is less concerned with the valence or specific content of memories and more interested in the organisation of thoughts and memories.
-The AAI classifies individuals as secure if they provide coherent and mostly complete descriptions of their childhood experiences,
-as anxious (preoccupied in the AAI) if they provide incoherent, vague, or emotionally exaggerated narratives of their childhood experiences,
+The AAI classifies individuals as secure if they provide coherent and mostly complete descriptions of their childhood experiences;
+as anxious (preoccupied in the AAI) if they provide incoherent, vague, or emotionally exaggerated narratives of their childhood experiences;
 and as avoidant (dismissing in the AAI) if they provide overly succinct, somewhat superficial, and unemotional accounts of their childhood experiences \cite{Hesse1999, AAITest}.
 
-Perhaps owing to the immense empirical support and validation for the AAI \cite{BakermansKranenburg1993, IJzendoorn1995, Crowell1996Discriminant, Sagi1994}, it has become the de facto gold standard of attachment research \shortcite{AAITest, Talia2019, haltigan2014adult}.
+Perhaps owing to the immense empirical support for and validation of the AAI \cite{BakermansKranenburg1993, IJzendoorn1995, Crowell1996Discriminant, Sagi1994}, it has become the de facto gold standard of attachment research \shortcite{AAITest, Talia2019, haltigan2014adult}.
 The AAI is expected to require 60 to 90 minutes for administration, four to ten hours for verbatim transcription, and at least four hours for coding, which in addition requires extensive training, prompting some researcher to search for simpler or less resource-intensive methods of measurement \shortcite{Haas1994}.
 
-Most commonly, researchers have attempted to develop less demanding measures for use in academic research.
+Most commonly, researchers have attempted to develop less demanding methods for use in academic research.
 This has resulted mostly in questionnaire-based measures (e.g., the Experiences in Close Relationships Scale, \citeNP{Brennan1998}; the Relationships Questionnaire, \citeNP{Bartholomew1991}; Attachment Style Questionnaire, \shortciteNP{Feeney1994ASQ}; Reciprocal Attachment Questionnaire, \citeNP{West1992}) but also interviews (e.g., Current Relationship Interview, \citeNP{Crowell1996}) and a picture-coding system \cite{George2012}.
-While these alternatives offer more scalable application for large-scale research and efficient measurement for clinical practice, compared to the AAI, self-report measures tend to show lower retest reliability \cite{Scharfe1994}.
+While these alternatives offer more scalable application for large-scale research and efficient measurement for clinical practice, compared to the AAI, self-report measures tend to show lower test-retest reliability \cite{Scharfe1994}.
 Longer self-report measures appear to be more reliable \shortcite{Sibley2005,Wongpakaran2021}, but the efforts to validate most measures has been rather limited, and the self-report measures offer, at best, a view of the patients' subjective appraisals of their attachment characteristics \cite{Talia2017}.
 
-Nevertheless, I would argue that the most paradigm-shifting developments in methods of measurement have only come within the last decade.
+Nevertheless, I would argue that the most paradigm-shifting development in measurement methods has come only within the last decade.
 This development consists of indirect measures in which transcripts are taken of psychotherapy sessions and discursive or narrative patterns are analysed for indicators of attachment characteristics.
 In this area, Slade \citeyear{Slade2016} highlights the Patient Attachment Coding System (PACS) as a groundbreaking method for assessing in-session attachment dynamics and inferring more stable patient characteristics.
 The analysis of in-session behaviour to infer attachment organisation may not be new, but the formalisation offered by Talia et al. \citeyear{Talia2017, Talia2014} provides a testable, valid measurement.
@@ -237,25 +238,25 @@ The PACS takes notice of these behaviours by coding 59 related discursive marker
 The five main scales assessed are Proximity Seeking, Contact Maintaining, Exploring, Avoidance, and Resistance.
 Scores on these five scales can be used to infer the patient's classification on the AAI through a simple algorithm.
 Specifically, a patient's in-session attachment is classified as secure if scores are highest on Proximity Seeking, Contact Maintaining, or Exploring.
-Avoidant or anxious (called preoccupied in the PACS) classifications are assigned if the scales Avoidance or Resistance, respectively, are higher.
+Avoidant or anxious (preoccupied in the PACS) classifications are assigned if the scales Avoidance or Resistance, respectively, are higher.
 In a 2017 validation study, Talia et al. \citeyear{Talia2017} found excellent inter-rater agreement for three-way classification with independent coders using the PACS ($r=.91, \kappa = .87, p<0.001$).
 Comparing the PACS and AAI classifications for the same patients, the authors found $r=.87$ $(\kappa = .81, p<0.001)$, also indicating excellent agreement.
 
 In summary, the PACS provides a novel method for assessing attachment on the basis of in-session behaviour, showing what is according to convention \cite{Cicchetti1994} both excellent reliability and excellent concurrent validity with the Adult Attachment Interview.
 Further, in this thesis, the approach provides the basis for the automation of attachment assessments from in-session behaviour in terms of both theory and data.
 
-\chapter{The Significance of Attachment for Health and Daily Life}
+\chapter{An Overview of the Significance of Attachment}
 \label{sec:theory and review}
-Whereas most early theory statements and empirical analyses focused on the mother-child relationship, for adults, attachment style is generally considered relevant to almost all relations, ranging from close family and romantic partners to friends and professional relationships.
-See e.g. \citeNP{Rosenthal2010, Karantzas2011ArthritisAS, Rowe2005, Tancredy2006} for examples of research ranking or comparing attachment figures.
+Whereas most early theory statements and empirical analyses focused on the mother-child relationship, for adults, attachment style is generally considered relevant to almost all relations, ranging from close family and romantic partners to friends and professional relationships
+(see e.g. \citeNP{Rosenthal2010, Karantzas2011ArthritisAS, Rowe2005, Tancredy2006} for examples of research ranking or comparing attachment figures).
 The following sections provide a cursory overview of empirical data making apparent the clinical relevance of different patterns of attachment and how the theory more broadly explains or mediates the effects of psychotherapy.
 
 \section{Stability and Change}
-To understand predictive ability of attachment style, which constitutes the most direct link between theory and evidence, the assumption of stability must be addressed.
+To understand the predictive ability of attachment style, which constitutes the most direct link between theory and evidence, the assumption of stability must be addressed.
 This was convincingly done in a meta-analysis of 127 studies on attachment stability with a total \textit{N} of 21,072 by Pinquart et al. \citeyear{Pinquart2013}.
-Here, the authors found medium-sized stability with a test-retest coefficient of .39.
+Here, the authors found medium-sized stability with a test-retest coefficient of $r=.39$.
 Coefficients were larger for shorter time intervals and for samples not comprised of at-risk children.
-This suggests that the applied attachment measures have good reliability, and that while attachment displays good stability for shorter time intervals, life events, circumstances, and perhaps deliberate interventions can change it over longer intervals.
+This suggests that the applied attachment measures have good reliability, and that while attachment displays good stability for shorter time intervals, life events, circumstances, and perhaps deliberate interventions may change it over longer intervals.
 
 Similarly, in a study by Zhang and Labouvie-Vief \citeyear{Zhang2004}, a sample of 370 individuals ranging in age form 15 to 87 was assessed regarding attachment, well-being, coping strategies, and depressive symptoms three times over a six-year period.
 Test-rest reliability in this sample was between .40 and .49 between the first and second assessment and between .24 and .45 between the first and third measurement. This could indicate that attachment style does change, although this change is most likely to occur over a period of more than two years.
@@ -265,8 +266,8 @@ In contrast, change towards greater security was predicted by flexible and reali
 Finally, Zhang and Labouvie-Vief found an effect of age on the direction of the observed changes.
 Specifically, it appears that over time, adults may become more secure and more avoidant but less anxious  \cite{Zhang2004}.
 
-Lending further support to the notion of increased attachment stability with age, Consedine and Magai assessed attachment in 415 older adults at age 72 and again at age 78.
-In this sample, more than 80 \% of participants remained stable in their classification \cite{Magai2016}.
+Lending further support to the notion of increased attachment stability with age, Consedine and Magai \cite{Magai2016} assessed attachment in 415 older adults at age 72 and again at age 78.
+In this sample, more than 80 \% of participants remained stable in their classification.
 
 Studies into the hierarchies of attachment also further our understanding of the quality of the development of attachment through the lifespan.
 Based on a study of mid- and late-adolescents recruited from a high school and a university, respectively, Rowe and Carnelley \citeyear{Rowe2005} concluded that peers become increasingly important attachment figures as people age. While the undergraduate students assessed did not rate their parents as any less important to their core self than the highschoolers did, they considered their friends significantly more central to their core self.
@@ -283,19 +284,19 @@ Similarly, Cozzarelli et al. \citeyear{Cozzarelli2003} did not find strong assoc
 The best evidence on how attachment changes has come more recently.
 Fraley et al. \citeyear{Fraley2021} followed a sample of over 4,000 people assessed in multiple waves for between six and 40 months.
 They found that changes in attachment security occurred following life-events related to relationships, career, family, and more. However, most changes were transient and the majority of people would revert to their original attachment style given enough time after most life events.
-Nevertheless, some events did tend to lead to enduring changes, suggesting that some experiences are likely to cause lasting changes to attachment style.
+Nevertheless, some events did tend to lead to enduring changes.
 The greatest enduring effects on increasing general attachment anxiety occurred following such events as entering retirement, receiving a work-related promotion, starting school or university, or moving to a new location. A shared characteristic of these events is a great change in social network.
 Following such life-changing events, individuals likely enter new communities, and an increased anxiety around relationships may follow from spending more time with new, less close, relationships which inherently feel less secure.
 Simultaneously, spending less time in one's existing close relationships may weaken these relations or one's certainty of them, effectively making them less secure.
-Notably, Fraley et al. only found one event which had a significant lasting effect on \textit{decreasing} general attachment anxiety.
+Notably, Fraley et al.  only found one event which had a significant lasting effect on \textit{decreasing} general attachment anxiety.
 This event was finding out that oneself or one's partner was pregnant, which had the second-largest enduring effect on general attachment anxiety, only exceeded in magnitude by the opposite effect of retiring from work.
 Compared to the anxiety measure, avoidance was more stable in this sample.
 In fact, Fraley et al. only found two events to be associated with significant enduring changes in general attachment avoidance; getting married and oneself or one's partner giving birth, associated with increased and decreased avoidance, respectively.
-Importantly, there were significant individual differences in the extent to which people changed.
+Importantly, there were significant individual differences in the extent to which people changed \cite{Fraley2021}.
 
 Finally, volitional change to one's attachment style is important, yet poorly described.
 Perhaps the best data to describe this phenomenon was published by Hudson et al. \citeyear{Hudson2020} who conducted two studies to construct and validate a measure of people's desire to change attachment characteristics followed by a 16-wave weekly longitudinal study totalling more than 4,000 participants combined.
-In the first two studies, Hudson et al. found significant individual differences in desire to change attachment-related attributes.
+In the first two studies, the authors found significant individual differences in desire to change attachment-related attributes.
 Crucially, people with greater dissatisfaction in relevant domains as well as people with higher measured levels of anxiety or avoidance were more likely to want to change those traits.
 Finally, the 16–wave weekly longitudinal study showed that desire to change predicted observed change both at the level of security-insecurity and in the expected domain of anxiety or avoidance.
 Impressively these effects remain significant when controlling for relationship status changes.
@@ -320,8 +321,8 @@ For instance, insecurely attached partners in romantic relationships tend to rea
 
 Lastly, concerning everyday distress and social functioning, Sheinbaum et al. \citeyear{Sheinbaum2015} followed 206 young adults using an experience-sampling methodology.
 They found that cognitive appraisals, social functioning, and moment-to-moment affective states were predicted by attachment style.
-Namely, individuals with anxious attachment experienced higher negative affect, stress and perceived more social rejection in their day-to-day experience and interactions.
-Individuals with avoidant attachment, however, seemed to experience greater degree of deactivation such as decreased positive states and lowered desire for social interaction when alone.
+Namely, individuals with anxious attachment experienced higher negative affect, stress, and perceived more social rejection in their day-to-day experience and interactions.
+Individuals with avoidant attachment, however, seemed to experience a greater degree of deactivation such as decreased positive states and lowered desire for social interaction when alone.
 
 \section{Health and Psychological Distress}
 \label{sec: Health}
@@ -335,7 +336,7 @@ This effect seems to be carried primarily by the anxious participants.
 Further support comes from a large study of 5,645 participants by Meng et al. \citeyear{Meng2015}.
 They found that individuals who reported insecure attachment styles were significantly more likely to have used a variety of healthcare services including having had a session of psychotherapy or a prescription for pharmacological treatment of mental or behavioural problems.
 
-Among the most convincing evidence that attachment is associated with prevalence and phenomenology of mental distress and psychiatric illness is a review of 25 years of studies conducted with the AAI, totalling more than 10,000 interviews, by Bakermans-Kranenburg and van IJzendoorn \citeyear{Bakermanskranenburg2009}.
+Among the most convincing evidence that attachment is associated with the prevalence and phenomenology of mental distress and psychiatric illness is a review of 25 years of studies conducted with the AAI, totalling more than 10,000 interviews, by Bakermans-Kranenburg and van IJzendoorn \citeyear{Bakermanskranenburg2009}.
 The authors found that across studies, anxious attachment was associated with predominantly internalising disorders such as borderline personality disorder, while avoidant attachment was associated with externalising disorders such as antisocial personality disorder.
 Moreover, there is evidence that anxiety and avoidance may be differentially related to different types of symptoms in patients with psychosis \shortcite{Korver-Nieberg2015} and persons with serious psychopathology more broadly \cite{Dozier1990}.
 
@@ -347,8 +348,8 @@ As described in the next section, the influence of attachment orientation on the
 
 \section{Applying Attachment Theory in Therapy}
 \label{sec:Applying attachment in therapy}
-Bowlby believed that the therapeutic relationship may be among the best in revealing attachment patterns \cite{Bowlby1988}.
-The specific ways in which attachment influences the process of therapy and the strategies that therapists employ to face the challenges of and leverage the opportunities offered by different attachment states of mind are complex.
+Bowlby \citeyear{Bowlby1988} believed that the therapeutic relationship may be among the best in revealing attachment patterns.
+The influence of attachment on the process of therapy and the strategies that therapists employ to face the challenges of and leverage the opportunities offered by different attachment styles are complex.
 There is however, a foundation of theory and research into this and related concepts, some of which is covered in the following sections on applying attachment-related concepts to clinical practice.
 It should be noted that although the attachment security of therapists may be an important variable influencing the patient's experience and the therapist's effectiveness (\citeNP{Daniel2006}; \shortciteNP{Dozier1994, Cologon2017}; \citeNP{Mikulincer2013}; \shortciteNP{Talia2020}), it is not covered in this thesis.
 
@@ -359,17 +360,17 @@ They argue that there is good reason to include attachment measurements not only
 According to Slade and Holmes \citeyear{Slade2019}, attachment-informed therapy offers three core principles that apply universally, regardless of a patient's attachment style.
 First, by recognising the basic attachment needs such as emotional safety and a secure base for exploration, therapists can more readily foster the environment and secure relationship needed for patients to address their challenges.
 Second, the adaptation of therapeutic practice to specific needs and the therapist's ability to recognise attachment behaviours and reactions related to insecurity is a key competence characteristic of experienced practitioners.
-Third, therapy can change attachment styles. In attachment-informed psychotherapy, the therapists aims to be a secure base for their clients to explore their experiences and emotions, thus fostering autonomy, openness, and an affectively coherent sense of self.
-Through the therapeutic process, clients can become more effective at regulating their anxiety in relation to attachments, as in relation to anything, and can learn to gradually change their behaviours and patterns of thought, over time leading to measurable change in attachment styles.
+Third, therapy can change attachment styles. In attachment-informed psychotherapy, the therapist aims to be a secure base for their clients to explore their experiences and emotions, thus fostering autonomy, openness, and an affectively coherent sense of self.
+Through the therapeutic process, clients can become more effective at regulating their anxiety in relation to attachments, and can learn to gradually change their behaviours and patterns of thought, over time leading to measurable change in attachment styles.
 These changes occur even in clinical samples with very serious psychopathology \cite{Fonagy1996}.
 In fact, patients with borderline personality disorder may be among those who can expect the greatest shift in the direction of security \cite{Levy2006, Stovall2003}.
 
 \subsection{The Therapeutic Alliance}
-The therapeutic alliance has emerged as stand-out measure in the vast literature on psychotherapy.
+The therapeutic alliance has emerged as a stand-out measure in the vast literature on psychotherapy.
 Summers and Barber \citeyear{Summers2003} argue that this is because it is shown to have robust effects on treatment outcomes across therapist traditions and patient conditions.
 In the original conceptualisation of the concept, Bordin \citeyear{Bordin1979} proposed that the working alliance consists of three key components: Alignment in both goals and tasks, and an attachment-like relationship that develops between therapist and client.
-A more recent meta-analysis of four decades of research on the therapeutic alliance, covering 295 studies with a total \textit{N} of more than 30,000 patients by Flückinger et al. \citeyear{Fluckinger2018} concluded that the positive correlations between various measures of both the therapeutic alliance and patient outcomes are very robust.
-This was the case irrespective of treatment approach, patient characteristics and whether the therapy was conducted face-to-face or online.
+A more recent meta-analysis of four decades of research on the therapeutic alliance, covering 295 studies with a total \textit{N} of more than 30,000 patients by Flückinger et al. \citeyear{Fluckinger2018}, concluded that the positive correlations between various measures of both the therapeutic alliance and patient outcomes are very robust.
+This was the case irrespective of treatment approach, patient characteristics, and whether the therapy was conducted face-to-face or online.
 
 The robustness of these findings has led some scholars to posit that a strong working alliance may be the central mechanism or primary facilitator of therapeutic change \cite{RodgersCailholBuiEtAl2010}.
 In a 2020 review of 37 studies, Baier et al. \citeyear{Baier2020} found that the therapeutic alliance mediated therapeutic outcomes in 70 \% of the studies included.
@@ -379,11 +380,11 @@ Therefore, the therapeutic alliance remains a crucial variable for understanding
 There is evidence to suggest that the patient's experience of the therapeutic relationship is influenced by their AAI classification \cite{Talia2019}.
 This is supported by a 2014 meta-analysis by Bernecker et al. \citeyear{Bernecker2014}, where weak but very robust negative associations were found between patient-rated working alliance and both attachment anxiety and avoidance.
 Patient attachment to their therapist is strongly related to ratings of the strength of therapeutic alliance with correlations around .80 \shortcite{Mallinckrodt1995}.
-A meta-analysis by Diener and Monroe \citeyear{Diener2011} found that greater attachment security predicted stronger therapeutic alliances.
+A meta-analysis by Diener and Monroe \citeyear{Diener2011} found that greater attachment security predicted stronger therapeutic alliance.
 This relationship was significant for both self- and therapist-rated therapeutic alliance but significantly stronger for patient ratings than therapist ratings.
 This could suggest that the therapist's own attachment characteristics play an appreciable role in the building and assessment of the alliance and perhaps that therapists should place lower confidence in their own ratings of the alliance when the patients have greater attachment insecurity.
 
-Avoidant patients seems to be less sensitive to or invested in the working relationship with their therapist overall.
+Avoidant patients seem to be less sensitive to or invested in the working relationship with their therapist overall.
 Following 36 former political prisoners over 10-12 months of therapy, Kanninnen et al. \citeyear{Kanninen2000} found that patients' view of the therapeutic alliance developed differently depending on their attachment style.
 While all three groups (secure, avoidant, anxious) rated their alliance similarly after the first session, avoidant patients were the only group to not experience a drop followed by an increase towards the end of their treatment.
 Rather, they rated their alliance similarly to the beginning in the middle of their treatment and then substantially worse at the end of treatment.
@@ -400,23 +401,23 @@ Beyond the established influence of in-session attachment dynamics on the therap
 Although this approach is not formalised in one universally accepted manual, I will review research showcasing its potential and demonstrating that experienced and skilled therapists already employ this type of tailoring in their practice.
 
 Part of the basis for this approach comes from the observation that patients behave very differently in therapy partly predictable from their attachment characteristics.
-In an exploratory study analysing patient’s speech patterns, Daniel \citeyear{Daniel2011} found notable differences between attachment styles with anxious patients talking more, taking longer speech turns, and more narrative initiative than their avoidant counterparts who tended to generate more pauses and be more passive.
+In an exploratory study analysing patients' speech patterns, Daniel \citeyear{Daniel2011} found notable differences between attachment styles with anxious patients talking more, taking longer speech turns, and more narrative initiative than their avoidant counterparts who tended to generate more pauses and be more passive.
 Interestingly, these differences were present in both psychodynamic and cognitive-behavioural therapy, even though the two approaches differ substantially in their focus, further suggesting that attachment-informed tailoring of psychotherapy has the potential to transcend the specifics of therapeutic modality.
 
-One method which arguably refines the analysis of in-session verbal behaviour in relation to patient attachment, is the Patient Attachment Coding System (PACS) developed by Talia, et al. \citeyear{Talia2014, Talia2017}.
-Analysing patterns in patients' in-session behaviour and management of attunement with their therapist, Talia and colleagues \citeyear{Talia2014} found significant differences according to patient attachment classification.
+One method, which arguably refines the analysis of in-session verbal behaviour in relation to patient attachment, is the Patient Attachment Coding System (PACS) developed by Talia et al. \citeyear{Talia2014, Talia2017}.
+By analysing patterns in patients' in-session behaviour and management of attunement with their therapist, Talia and colleagues \citeyear{Talia2014} found significant differences according to patient attachment classification.
 As expected, avoidant patients showed less contact-seeking behaviour than both secure and anxious patients, preferring to limit emotional proximity.
 Secure patients also displayed significantly more contact-seeking behaviour than anxious patients, and anxious patients resisted the help of therapists more than both secure and avoidant patients.
 
-Following up, in a similar study of in-session verbal behaviour investigating the mending of ruptures in the therapeutic alliance, Miller-Bottome et al. \citeyear{MillerBottome2018} found that securely attached patients would more openly reveal their emotions and invite the therapist to acknowledge them to resolve the rupture.
+Following up, in a similar study of in-session verbal behaviour investigating the mending of ruptures in the therapeutic alliance, Miller-Bottome et al. \citeyear{MillerBottome2018} found that securely attached patients would more openly reveal their emotions and invite the therapist to acknowledge them to resolve ruptures.
 Avoidant patients, however, would minimise their own contributions and attempt to limit disclosure of their own feelings, downplaying the importance or magnitude of both affect and implied alliance ruptures.
 In contrast, anxious patients would minimise the contributions of the therapist, limiting the attending to and resolution of alliance ruptures.
 This implies that therapists should not only differentiate their approach to building the therapeutic alliance but also their management and mending of ruptures according to the attachment characteristics of their clients.
-This is crucial because unresolved ruptures to the therapeutic alliance can prevent therapeutic progress.
+This is crucial because unresolved ruptures to the therapeutic alliance can prevent therapeutic progress \cite{RodgersCailholBuiEtAl2010}.
 
 How therapists adjust their practice according to their patients' attachment characteristics is the topic of some research.
 In a study of 12 peer-nominated experienced and highly effective therapists, Daly and Mallinckrodt \citeyear{Daly2009} found that the therapists' strategies were almost opposite over the course of treatment for clients with high attachment anxiety and avoidance.
-For clients high in anxiety, therapists would begin treatment with fulfilling clients' needs for emotional proximity and then gradually increase therapeutic distance, to let the client practise managing their frustration and eventually learn to function more autonomously.
+For clients high in anxiety, therapists would begin treatment with fulfilling clients' needs for emotional proximity and then gradually increase therapeutic distance to let the client practise managing their frustration and eventually learn to function more autonomously.
 For clients high in avoidance, therapists would begin by maintaining a therapeutic distance that avoidant clients found comfortable before gradually increasing proximity to let clients become comfortable with emotional closeness.
 These diverging strategies suggests that experienced and effective therapists, whether intuitively or deliberately, aim to create a type of corrective attachment relationship between themselves and their clients in order to facilitate favourable change in accordance with the client's attachment characteristics.
 This approach is consistent with findings suggesting that matching clients and therapists according to their activating or deactivating approaches is beneficial.
@@ -424,8 +425,9 @@ Specifically, clients with different attachment style show different preferences
 
 Arietta Slade \citeyear{Slade2016} concludes on the basis of much of this research that the work of skilled clinicians involves adapting treatment on the basis of their patients' characteristics.
 While neither this idea nor the specific techniques employed by experienced therapists are new, framing them in the context of attachment can guide inexperienced therapists and experts alike in more specific ways of adjusting to the needs of their patients.
-Namely, Slade concludes, in all cases, therapists should aim to build a strong alliance by responding "in style" with their patients early in the therapeutic process.
+Namely, Slade \citeyear{Slade2016} concludes, in all cases, therapists should aim to build a strong alliance by responding "in style" with their patients early in the therapeutic process.
 Later, once the relationship is well established, carefully responding "out of style" can help patients develop the necessary capacities for overcoming their challenges.
+Automated classification might support this process.
 
 \chapter{Present Study}
 \section{Scope of the Present Study}
@@ -434,7 +436,7 @@ This work aims to determine whether well-known methods in the field of Natural L
 As a result, the aim is not to develop on the technical solutions available for this type of task, nor to produce major advancements in theory or clinical practice.
 Rather, this thesis may serve as a pilot to determine whether this avenue of research is promising for large-scale investment.
 
-The state-of-the-art in Natural Language Processing (NLP) is represented by variants of the transformer architecture first published by Vaswani et al. \citeyear{Vaswani2017}.
+The state-of-the-art in NLP is represented by variants of the transformer architecture first published by Vaswani et al. \citeyear{Vaswani2017}.
 In a 2023 review, Malgaroli et al. \citeyear{Malgaroli2023} report a rising trend in the publication of peer-reviewed literature applying NLP to mental health interventions research.
 The authors report that most recently, transformer models were the most applied NLP tool in the domain of mental health interventions, likely owing to their ability to extract semantically meaningful features, attention mechanisms, and relatively large context windows.
 Malgaroli et al. \citeyear{Malgaroli2023} further report that transformer-based models outperform other input features on tasks such as identifying emotional valence and accurately rating symptoms.
@@ -465,7 +467,7 @@ The model is then trained on data related to the new task.
 
 \subsection{Data}
 The labelled data for this project consists of the English part of the datasets from the 2017 validation study of the PACS \cite{Talia2017}.
-Included in this thesis are also six transcripts from the same sample of patients that did not have an associated AAI classification, and thus were not included in the validation study, but which have nevertheless been coded using the PACS.
+Six transcripts from the same sample of patients that did not have an associated AAI classification, and thus were not included in the validation study, but which have nevertheless been coded using the PACS, are also included.
 All sessions were conducted in New York, treating patients with either Brief Relational Therapy \cite{Safran2000} or Cognitive Behavioural Therapy \cite{Beck2011}.
 Transcription was conducted verbatim, following standards of the AAI, with the addition of laughing and crying \cite{Talia2017, Talia2014}.
 Names and personal identifiers are not included in transcripts.
@@ -644,7 +646,7 @@ This is the case for both my own pre-training and when using a domain-specific m
 
 Additionally, providing the model with more context per sample by increasing the minimum input length seems to improve performance in most cases.
 However, albeit less consistently, it also tends to increase instability.
-This is undoubtedly due to the lower number of instances available in the validation set when more sample must be combined to reach a longer minimum length.
+This is undoubtedly due to the lower number of instances available in the validation set when more samples must be combined to reach a longer minimum length.
 \begin{table}
 \begin{adjustbox}{width=1\textwidth}
     \input{figures/val_results.tex}
@@ -731,7 +733,7 @@ The training set class distribution when speech turns are concatenated to reach 
 In the therapy setting, the most trivial error would likely be to confuse a secure patient for being either type of insecure.
 As covered in section \ref{sec:Differentiable approaches}, secure patients may be better able to profit from treatment regardless of the specifics of its organisation.
 Confusing either of the insecure orientations for being secure is likely to lead to worse outcomes as therapists may alter their strategies for building the therapeutic alliance and structuring the course of treatment in counterproductive ways.
-However, this error may be less severe for avoidant patients, as the association between this orientation and therapy outcomes is weaker while this group of patients tend to hold more stable views of their therapists and working alliance (see sections \ref{sec: Health} and \ref{sec:Applying attachment in therapy}).
+However, this error may be less severe for avoidant patients, as the association between this orientation and therapy outcomes is weaker and because this group of patients tend to hold more stable views of their therapists and working alliance (see sections \ref{sec: Health} and \ref{sec:Applying attachment in therapy}).
 Most dire are the consequences of confusing the two insecure attachment patterns.
 The approaches proposed by Slade (\citeyearNP{Slade2016}; see section \ref{sec:Differentiable approaches}) to align best with these two attachment patterns are almost exactly mirrored, risking serious adverse outcomes from the misguided structuring of treatment according to a misclassification.
 
@@ -790,7 +792,7 @@ Structured interviews for psychiatric assessment tend to produce high inter-rate
 Ruskin et al. \citeyear{Ruskin1998} reported a mean $\kappa$ of .83 for major depression, bipolar disorder, panic disorder, and alcohol dependence when assessed using a structured clinical interview.
 Psychotic disorders, however, tend to have substantially lower agreement between raters.
 For instance, Maj et al. \citeyear{Maj2000} found only $\kappa = .22$ for schizoaffective disorder, while the affective disorders manic and major depressive episodes produced $\kappa$ of .71 and .82, respectively.
-Furhter, first psychiatric impressions by primary medical providers often differ from final psychiatric diagnoses with accuracies of 46-60 \% for anxiety, depressive, and cognitive disorders \cite{Al-Huthail2008}.
+Further, first psychiatric impressions by primary medical providers often differ from final psychiatric diagnoses with accuracies of 46-60 \% for anxiety, depressive, and cognitive disorders \cite{Al-Huthail2008}.
 
 Considering more directly the reliability of the gold standard attachment measure, the adult attachment interview (AAI) has produced remarkably high inter-rater agreement and test-retest reliability scores.
 For instance, Sagi et al. \citeyear{Sagi1994} found 90-100 \% agreement between their raters on three-way classification (secure, anxious, avoidant) of AAI transcripts ($\kappa = .82 - 1.0$ for comparisons between three raters). Their test-retest agreement across raters was 90 \% ($\kappa = .79$).
@@ -806,6 +808,7 @@ However, this edge in performance should be considered in light of the additiona
 Depending on the task, these experts may have the option of asking follow-up questions, and they typically work with much greater context.
 For instance, when classifying an AAI, the rater has access to the entire transcript at once.
 This allows not only for the analysis of long-term patterns in speech and behaviour but also for inclusion of relevant context such as the therapist or interviewer speech turns, which were not made available to models in this project.
+
 These affordances highlight that the target for an automated assessment system is not perfect reliability, but rather to reliably reach or exceed the human baseline for comparable tasks.
 In spite of the somewhat lacklustre results of the models presented here, I believe that the present results -- achieved with limited data and models of moderate size -- demonstrate that automated decision support of the kind that this thesis begins to develop may achieve this in the near future.
 
@@ -815,8 +818,8 @@ In the somewhat unstructured psychotherapy dialogue the task of accurately asses
 Thus, qualified decision support appears warranted, eradicating the dichotomy of machine and clinical judgement.
 In the ideal case, an automatic decision-support system for the assessment of attachment orientation can free up therapists' resources and allow them to be more present in their counselling sessions while providing more accurate and reliable repeated measurements for research and to inform treatment and intervention design.
 
-For the purpose of psychotherapy research, existing methods tend to either lack reliability as repeated measurements as individuals become accustomed to the interview procedure (AAI; \citeNP{Daniel2015}) or offer questionable validity due to the superficial nature of self-report measures \cite{Talia2017}.
-The method explored here offer a future solution to this problem as such a tool could deliver reliable and valid repeated measures to track attachment characteristics over time.
+For the purpose of psychotherapy research, existing methods tend to either lack reliability as repeated measurements as individuals may become accustomed to the interview procedure (AAI; \citeNP{Daniel2015}) or offer questionable validity due to the nature of self-report measures \cite{Talia2017}.
+The method explored here offers a future solution to this problem as such a tool could deliver reliable and valid repeated measures to track attachment characteristics over time.
 
 \subsection{The Ethics of Automated Analysis}
 In the case of using language models in psychological research and practice, Demszky et al. \citeyear{Demszky2023} point to two primary sources or types of harm arising from bias.
@@ -846,7 +849,7 @@ This may enable research to develop knowledge on and strategies for managing att
 \subsection{Limitations and Future Direction}
 The primary challenge to the investigation of the utility and feasibility of automatic classification in this domain is the low amount of data available.
 Due to the sensitive nature of therapy transcripts, the collection and sharing of large corpora of transcripts is both ethically and logistically challenging.
-This project was severely limited by only working with 78 transcripts in total, and I believe that future work, should it succeed in gathering larger and more diverse corpora of relevant texts, would likely produce more impressive classification results that what has been demonstrated here.
+This project was severely limited by only working with 78 transcripts in total, and I believe that future work, should it succeed in gathering larger and more diverse corpora of relevant texts, would likely produce more impressive classification results than what has been demonstrated here.
 Furthermore, this project may have been hampered by its stratification strategy.
 As the split between training and test data was made at the document level to avoid data leakage, this is also the level at which stratification was considered.
 However, in spite of the initial stratification, this produced training and test sets with vastly different class distributions after the extraction and concatenation of speech turns.
@@ -869,7 +872,7 @@ Moreover, the fact that the larger models tended to produce the best results whe
 
 Continuous -- rather than categorical -- measures of attachment may be considered both more theoretically congruent and empirically more appropriate and thus be preferred.
 Future work should attend to this fact and work towards integrating it in the continued development of these types of methods.
-This may be done by e.g. tagging individual PACS discursive markers in transcripts or developing models to directly score the subscales given measures from the PACS or AAI.
+This may be done by e.g., tagging individual PACS discursive markers in transcripts or developing models to directly score the subscales given measures from the PACS or AAI.
 Because continuous measurements were not available at the development of this project, it aims instead to provide a proof of concept for the automatic classification of attachment using the categorical convention.
 Nevertheless, the study of in-session behaviour remains so highly relevant that its primary counterarguments arguably lie in the feasibility and scalability domains.
 The benefits to clinical practice, as outlined in section \ref{sec:Applying attachment in therapy}, are numerous.
@@ -883,7 +886,7 @@ In the future, this will enable scalable pipelines for research and clinical pra
 Attachment characteristics assert great influence over important aspects of every day life, health outcomes, and the treatment effects and strategies of psychotherapy.
 However, its assessment is a time-consuming procedure, which risks losing validity upon close repetition \cite{Daniel2015,Hesse1999}.
 The Patient Attachment Coding System (PACS) enables repeated and nonintrusive assessment in the natural context of psychotherapy and offers an explainable link between patient speech patterns and attachment classification \cite{Talia2017,Talia2014}.
-The PACS offer invaluable theoretical insight but is similarly time-consuming to learn and apply.
+The PACS offers invaluable theoretical insight but is similarly time-consuming to learn and apply.
 
 As such, the prospect of automating the assessment of attachment characteristics in psychotherapy holds great value for both research and practice.
 This thesis investigated the feasibility of one method for automating this assessment.
@@ -894,7 +897,7 @@ Test set predictions for cross-validation instances of the same model configurat
 This and further analysis provide initial but tentative support for the method despite unimpressive classification accuracy.
 
 Future work should aim to apply newer and larger models, more sophisticated stratification and training strategies, and, most importantly, larger datasets to begin approaching performance that would enable the deployment of these models.
-Deployment should begin in research were individual consequences of misclassification are mitigated by aggregation and application.
+Deployment should begin in research where individual consequences of misclassification are mitigated by aggregation and application.
 
 \bibliography{references}
 
