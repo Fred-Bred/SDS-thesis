@@ -62,7 +62,7 @@
 \university{University of Copenhagen}
 \faculty{The Faculty of Social Sciences}
 \pageCount{40}
-\charCount{95,933}
+\charCount{95,954}
 \date{May 31st 2024}
 
 \begin{document}
@@ -925,17 +925,19 @@ Deployment should begin in research where individual consequences of misclassifi
 \chapter{Transformer Models}
 \label{App: transformers}
 \subsubsection*{BERT}
-BERT, published by Devlin et al. in 2018 \cite{BERT}, is one of the first transformer-based language models and its key innovation consists in using the masked language modelling objective to train on full sentences, rather than the previously employed left-to-right or right-to-left strategy of predicting the next token or sequence based only on "previous" context.
-It is from this novel approach that the model takes its name. The Bidirectional Encoder Representations from Transformers solves its objectives by encoding rich contextual embeddings using transformers.
+BERT \cite{BERT} is one of the first transformer-based language models and its key innovation consists in using the masked language modelling objective to train on full sentences, rather than the previously employed left-to-right or right-to-left strategy of predicting the next token or sequence based only on "previous" context.
+It is from this novel approach that the model takes its name.
+The Bidirectional Encoder Representations from Transformers solves its objectives by encoding rich contextual embeddings using transformers.
 BERT is trained on two objectives and takes two sequences as input during its training.
 The first task is a masked language model objective where tokens are randomly masked, and the model is tasked with predicting its original vocabulary ID using context from both sides of the masked token.
 The second objective used when training BERT is a next-sequence prediction task, in which the model predicts whether the second sequence follows the first in the source text.
 The model is trained to perform on both objectives using the same encoder weights.
-According to Devlin et al., this setup forces the model to learn meaningful embeddings and to consider both the meaning of masked tokens and how it is affected by context on either side of it.
+According to Devlin et al. \citeyear{BERT}, this setup forces the model to learn meaningful embeddings and to consider both the meaning of masked tokens and how it is affected by context on either side of it.
 The original BERT was trained on two datasets: BookCorpus, containing 800M words, and English Wikipedia, which was 2,500M words at the time, with a total weight of 13 or 16 GB depending on preprocessing \cite{BERT, roberta}.
 
 \subsubsection*{RoBERTa}
-The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \citeyear{BERT} and trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160 GB of raw text.
+The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \citeyear{BERT}.
+It trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160 GB of raw text.
 Liu et al. \citeyear{roberta} replicate most of the BERT methodology, but train RoBERTa only on the masked token prediction task.
 They also make other changes such as increasing the size of batches during training, changing the text encoding procedure to create a larger and more flexible vocabulary, and including longer sequences than the original BERT had been exposed to.
 The main difference in training methodology, however, is found in the data and its augmentation.
@@ -947,7 +949,7 @@ They demonstrate this through RoBERTa outperforming not only the original BERT b
 
 \subsubsection*{Encoding and Attention}
 At their core, the BERT and RoBERTa architectures are transformer-based models.
-The transformer is a unique deep learning architecture originally demonstrated by Vaswani et al. \citeyear{Vaswani2017} for NLP purposes.
+The transformer is a unique deep learning architecture originally demonstrated by Vaswani et al. \citeyear{Vaswani2017} for natural language processing.
 The transformer embeds an input sequence by transforming it from a sequence of $n$ symbolic representations $(x_1, \ldots, x_n)$ to a sequence of continuous representation, $z = (z_1, \ldots, z_n)$, which may then be decoded to make decisions about a down-stream task such as classifying the input.
 This is achieved by first splitting the input sequence into recognised sub-words, known as tokens.
 Each unique token is associated with a vocabulary ID, allowing the model to look it up in its vocabulary.
@@ -968,10 +970,11 @@ This attention mechanism allows the model to dynamically adapt its representatio
 This is what allows transformer models to differentiate the financial institution from the bank of a river despite the two words having the same vocabulary ID.
 More importantly, it allows the model to gain an abstract understanding of language beyond a static dictionary meaning of each word \cite{Vaswani2017}.
 
-In transformers, attention is computed by taking the vector representation of the input sequence through three separate learned linear transformations ($W^q, W^k, W^v$), producing what are referred to as query ($q$), key ($k$), and value ($v$) reduced-dimension projections of the original embedding vectors.
+In the original implementation, as in BERT and RoBERTa, attention is computed by taking the vector representation of the input sequence through three separate learned linear transformations ($W^q, W^k, W^v$), producing what are referred to as query ($q$), key ($k$), and value ($v$) reduced-dimension projections of the original embedding vectors.
 The $W^q$, $W^k$, and $W^v$ weight matrices have dimension $d_{model} \times d_k$ where $d_{model}$ is the size of the input and $d_k$ is the dimension of the space the input is projected to.
 In BERT-style models, including RoBERTa, $d_k = d_{model}/h$ where $d_{model}$ is the dimension of the hidden layers in the model, which is the same as the dimension of the original embeddings, 768 for base models and 1024 for the large variant of RoBERTa.
-For all sizes of BERT and RoBERTa models this results in a sub-dimensional space of size 64.
+$h$ is the number of attention heads, i.e., the number of times this computation occurs in parallel in each encoder.
+For all sizes of BERT and RoBERTa models this results in a sub-dimensional space of size 64 for each attention head.
 Each token in any given sequence of length $n$ tokens is thus projected to three representations of size $d_k$ and the entire sequence is represented as three different matrices of shape $n \times d_k$.
 Taking the dot-product of the query and key matrices and applying a softmax function to the result produces an attention mask which, when applied to the value matrix, weights all parts of the input according to how they should 'attend to' one another.
 Conventionally, the dot-product of the query and key vectors is scaled by some magnitude, typically the square root of the dimension of the key vector, to avoid vanishing or exploding numbers.
