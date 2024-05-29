@@ -184,8 +184,7 @@ These strategies aim to down-regulate the attachment system by dismissing the im
 Understanding the tendency to use either of these groupings of strategies is beneficial not only for individuals to understand themselves and their patterns of thought and behaviour, but, as I demonstrate in section \ref{sec:Applying attachment in therapy}, for therapists in tailoring their approach to building the therapeutic alliance and achieving favourable therapeutic outcomes.
 
 \section{Theoretical Development}
-With the central constructs of the theory in place, the following section lays out the development of the theory in broad terms.
-The purpose of this historical perspective is to make apparent how this framework, rooted in Freudian tradition, outgrew its heritage to become an empirically grounded theory and earned its place in the contemporary scientific effort to improve mental health care.
+With the central constructs of the theory in place, this section traces its historical development, highlighting the foundational research that transformed the once-ridiculed notion of attachment as a universal need into an axiom for contemporary psychological theory and research.
 
 While the foundation for the theory and its conclusions had been laid long before, the first widely influential published piece on the effects of childhood care and attachment on mental health was Bowlby's 1951 monograph published by the World Health Organization under the title \textit{Maternal Care and Mental Health} \cite{bowlby1951WHO}.
 The central assertion of this work, which reviewed the limited existing empirical data, was that healthy infant development presumes a warm and continuous relationship with the mother.
@@ -211,7 +210,7 @@ In 1988, almost four decades post its initial release, he claimed to have finall
 Mary Ainsworth first introduced the classification of attachment patterns by observing the proximity-seeking behaviours of children as they were reunited with their mothers in a procedure named \textit{The Strange Situation}.
 In this, infants are introduced to an unfamiliar environment with their mothers and briefly left alone with a stranger \shortcite{Ainsworth1979, Ainsworth1970}.
 During the first observations of this procedure, Ainsworth and Bell \citeyear{Ainsworth1970} found that upon reunion with their mothers, infants' behaviours could be categorised into three broad classes.
-These classes correspond to the ones described in section \ref{sec: Current understanding}.
+These classes correspond to the anxious, avoidant, and secure classifications described in section \ref{sec: Current understanding}.
 
 The theory was expanded into a clinically applicable framework for adults when the Adult Attachment Interview \shortcite<AAI;>{AAITest} was developed to assess the adult equivalents of the childhood patterns of attachment behaviours.
 The AAI is a semi-structured interview that asks respondents about autobiographical memories from early childhood.
@@ -288,7 +287,7 @@ Nevertheless, some events did tend to lead to enduring changes.
 The greatest enduring effects on increasing general attachment anxiety occurred following such events as entering retirement, receiving a work-related promotion, starting school or university, or moving to a new location. A shared characteristic of these events is a great change in social network.
 Following such life-changing events, individuals likely enter new communities, and an increased anxiety around relationships may follow from spending more time with new, less close, relationships which inherently feel less secure.
 Simultaneously, spending less time in one's existing close relationships may weaken these relations or one's certainty of them, effectively making them less secure.
-Notably, Fraley et al.  only found one event which had a significant lasting effect on \textit{decreasing} general attachment anxiety.
+Notably, Fraley et al. \citeyear{Fraley2021} only found one event which had a significant lasting effect on \textit{decreasing} general attachment anxiety.
 This event was finding out that oneself or one's partner was pregnant, which had the second-largest enduring effect on general attachment anxiety, only exceeded in magnitude by the opposite effect of retiring from work.
 Compared to the anxiety measure, avoidance was more stable in this sample.
 In fact, Fraley et al. only found two events to be associated with significant enduring changes in general attachment avoidance; getting married and oneself or one's partner giving birth, associated with increased and decreased avoidance, respectively.
@@ -427,7 +426,7 @@ Arietta Slade \citeyear{Slade2016} concludes on the basis of much of this resear
 While neither this idea nor the specific techniques employed by experienced therapists are new, framing them in the context of attachment can guide inexperienced therapists and experts alike in more specific ways of adjusting to the needs of their patients.
 Namely, Slade \citeyear{Slade2016} concludes, in all cases, therapists should aim to build a strong alliance by responding "in style" with their patients early in the therapeutic process.
 Later, once the relationship is well established, carefully responding "out of style" can help patients develop the necessary capacities for overcoming their challenges.
-Automated classification might support this process.
+In my view, automated classification might facilitate this process.
 
 \chapter{Present Study}
 \section{Scope of the Present Study}
@@ -530,7 +529,7 @@ To investigate whether models could learn more task-appropriate representations 
 
 In domain-adaptive pre-training, the base language model undergoes continued training on domain-relevant unlabelled data.
 Text is considered domain-relevant if it concerns topics relevant to the task, is of a relevant genre, or originates from forums discussing the topic.
-Training is done on masked language modelling objective (i.e., cross-entropy loss on predicting randomly masked tokens).
+Training is done on a masked language modelling objective (i.e., cross-entropy loss on predicting randomly masked tokens).
 This type of training has been found to consistently improve performance of RoBERTa on classification tasks in low-resource settings \cite{Gururangan2020}.
 
 \paragraph*{Domain data}
@@ -562,9 +561,8 @@ Each model trained on this data, consisting of a total of 3,053,385 tokens (610,
 With five copies of the training data, this corresponds to training five epochs with a more frequent evaluation strategy.
 
 \subsubsection{Target Task Fine-Tuning}
-Hyperparameter values were chosen based on what had been previously demonstrated to work well for similar applications and on the basis of both theory and experiments.
+Hyperparameter values were chosen based on what had been previously demonstrated to work well for similar applications and on the basis of experiments.
 Experiments for hyperparameter tuning were run by training on 85 \% of the training data and tracking the training progress by tracking metrics on the remaining 15 \%.
-
 Once hyperparameters were fixed, experiments centred around preprocessing methods and comparing different encoders.
 
 \paragraph*{Inputs and batching}
@@ -627,7 +625,7 @@ Finally, as described above, I conducted my own pre-training of a base RoBERTa m
 \paragraph*{Grid search and cross-validation}
 Following early experiments, validation results were observed to be rather unstable during training.
 In order to obtain more reliable results and to better determine the best configuration of encoder and minimum input length, I performed a grid search with five-fold cross-validation through each combination of the selected encoders and minimum input length.
-Five-fold cross-validation is a method of obtaining more reliable results in which the training data is split into training and validation data five different times, producing five different splits.
+Five-fold cross-validation is a method of obtaining more reliable results in which the training data is split into training and validation sets five different times, producing five different splits.
 Different models are trained and validated on each split, and the final result is the mean of the validation performance across folds.
 This result is used to determine the best configuration (i.e., combination of encoder and minimum input length), which can then be applied to the test set in a similar fashion.
 With five encoders and five minimum lengths to search over, five-fold cross-validation resulted in 125 models to train.
@@ -717,7 +715,7 @@ The accuracy score of the ensemble voting classifier using all five instances of
 
 \begin{figure}
     \includegraphics[width=0.95\textwidth]{figures/combined_confusion_matrix.png}
-    \caption{Confusion matrix for the majority vote predictions and each of five iterations of RoBERTa-large trained with minimum input length of 150 words.}
+    \caption{Test set confusion matrix for the majority vote predictions and each of five iterations of RoBERTa-large trained with minimum input length of 150 words.}
     \label{fig: all confusion matrices}
 \end{figure}
 
@@ -797,7 +795,7 @@ Further, first psychiatric impressions by primary medical providers often differ
 Considering more directly the reliability of the gold standard attachment measure, the adult attachment interview (AAI) has produced remarkably high inter-rater agreement and test-retest reliability scores.
 For instance, Sagi et al. \citeyear{Sagi1994} found 90-100 \% agreement between their raters on three-way classification (secure, anxious, avoidant) of AAI transcripts ($\kappa = .82 - 1.0$ for comparisons between three raters). Their test-retest agreement across raters was 90 \% ($\kappa = .79$).
 Similarly, Bakermans-Kranenburg and van IJzendoorn \citeyear{BakermansKranenburg1993} found test-retest reliability for three-way classification of the AAI of 78 \% ($\kappa = .63$).
-More recently, Talia et al. \citeyear{Talia2020} found an inter-rater agreement of .88 on their test of a small sample of interviews coded according to the AAI manual.
+More recently, Talia et al. \citeyear{Talia2020} found $\kappa = .82$ on a small sample of interviews coded according to the AAI manual.
 
 On three-way classification in the original validation study, PACS raters were in excellent agreement with $\kappa = .87$ \cite{Talia2017}.
 In comparison, the mean $\kappa$ in classifying the test samples for the RoBERTa-large models trained with minimum input length of 150 words was just .15 (see Table \ref{tab:roberta-large_150 test metrics}).
@@ -840,6 +838,7 @@ This suggests that the core dimensions of attachment behaviour might be more uni
 However, it is important to distinguish this from universality in expression.
 Cultural variations in how attachment styles are manifested and expressed through cues in language might still exist, even if the underlying constructs are similar.
 Overall, however, these findings support the potential applicability of machine learning approaches to attachment assessment across cultures.
+Given the deployment of this type of tool, ongoing monitoring of biases related to culture and individual and demographic differences should be a priority.
 
 While the present results do not represent a tool ready for clinical deployment, they show the potential of these methods for broader application.
 The most appropriate application at this stage of maturity is in research.
@@ -925,6 +924,28 @@ Deployment should begin in research where individual consequences of misclassifi
 
 \chapter{Transformer Models}
 \label{App: transformers}
+\subsubsection*{BERT}
+BERT, published by Devlin et al. in 2018 \cite{BERT}, is one of the first transformer-based language models and its key innovation consists in using the masked language modelling objective to train on full sentences, rather than the previously employed left-to-right or right-to-left strategy of predicting the next token or sequence based only on "previous" context.
+It is from this novel approach that the model takes its name. The Bidirectional Encoder Representations from Transformers solves its objectives by encoding rich contextual embeddings using transformers.
+BERT is trained on two objectives and takes two sequences as input during its training.
+The first task is a masked language model objective where tokens are randomly masked, and the model is tasked with predicting its original vocabulary ID using context from both sides of the masked token.
+The second objective used when training BERT is a next-sequence prediction task, in which the model predicts whether the second sequence follows the first in the source text.
+The model is trained to perform on both objectives using the same encoder weights.
+According to Devlin et al., this setup forces the model to learn meaningful embeddings and to consider both the meaning of masked tokens and how it is affected by context on either side of it.
+The original BERT was trained on two datasets: BookCorpus, containing 800M words, and English Wikipedia, which was 2,500M words at the time, with a total weight of 13 or 16 GB depending on preprocessing \cite{BERT, roberta}.
+
+\subsubsection*{RoBERTa}
+The RoBERTa model primarily applied in this project develops on the architecture and training methodology proposed by Devlin et al. \citeyear{BERT} and trains on a larger corpus of text, adding data from online sources such as CommonCrawl to the original BERT pre-training data to reach a total of 160 GB of raw text.
+Liu et al. \citeyear{roberta} replicate most of the BERT methodology, but train RoBERTa only on the masked token prediction task.
+They also make other changes such as increasing the size of batches during training, changing the text encoding procedure to create a larger and more flexible vocabulary, and including longer sequences than the original BERT had been exposed to.
+The main difference in training methodology, however, is found in the data and its augmentation.
+Namely, Liu et al. \citeyear{roberta} showed that BERT was significantly under-trained by collecting a significantly larger corpus of text and by making each sentence in this corpus available to the model on several occasions.
+To avoid the model overfitting to specific instances that it had previously encountered, the RoBERTa methodology applies dynamic masking such that each token is masked with probability 0.15 each time the model encounters a sequence.
+This essentially means that any given sequence can be presented to the model as a new task on several occasions while limiting its opportunity to overfit.
+According to Liu et al., the combination of training on more data with longer inputs and larger batches, using dynamic masking, and omitting the next-sequence prediction task produces a more robust model with more resilient and generalisable embeddings.
+They demonstrate this through RoBERTa outperforming not only the original BERT but also all models published in the interim on all applied benchmarks \cite{roberta}.
+
+\subsubsection*{Encoding and Attention}
 At their core, the BERT and RoBERTa architectures are transformer-based models.
 The transformer is a unique deep learning architecture originally demonstrated by Vaswani et al. \citeyear{Vaswani2017} for NLP purposes.
 The transformer embeds an input sequence by transforming it from a sequence of $n$ symbolic representations $(x_1, \ldots, x_n)$ to a sequence of continuous representation, $z = (z_1, \ldots, z_n)$, which may then be decoded to make decisions about a down-stream task such as classifying the input.
