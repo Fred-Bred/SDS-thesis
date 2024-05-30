@@ -170,7 +170,7 @@ In contrast, the avoidant attachment pattern, described by low anxiety and high 
 To cope, avoidant individuals may suppress their emotions and even come to view emotions as weakness.
 This leads avoidant individuals to avoid close relationships and prioritise self-reliance and independence \cite{Mikulincer2013,Hudson2020}.
 
-Individuals with fearful attachment, characterised by high levels of anxiety and avoidance, exhibit an emotional paradox in their deep desire for close relationships coupled with a fear of intimacy, leading to avoidance behaviours that cause significant distress \cite{Bartholomew1991}.
+Individuals with fearful attachment, characterised by high levels of both anxiety and avoidance, exhibit an emotional paradox in their deep desire for close relationships coupled with a fear of intimacy, leading to avoidance behaviours that cause significant distress \cite{Bartholomew1991}.
 
 For the sake of clarity, I will, throughout this thesis, refer to attachment styles by the terms described above, aligning with their corresponding scores on the scales of avoidance and anxiety, even if they are, in some traditions, more commonly known by different names.
 Additionally, in the following sections, attachment style, orientation, pattern, and classification all refer to the same construct.
@@ -226,7 +226,7 @@ The AAI is expected to require 60 to 90 minutes for administration, four to ten 
 Most commonly, researchers have attempted to develop less demanding methods for use in academic research.
 This has resulted mostly in questionnaire-based measures (e.g., the Experiences in Close Relationships Scale, \citeNP{Brennan1998}; the Relationships Questionnaire, \citeNP{Bartholomew1991}; Attachment Style Questionnaire, \shortciteNP{Feeney1994ASQ}; Reciprocal Attachment Questionnaire, \citeNP{West1992}) but also interviews (e.g., Current Relationship Interview, \citeNP{Crowell1996}) and a picture-coding system \cite{George2012}.
 While these alternatives offer more scalable application for large-scale research and efficient measurement for clinical practice, compared to the AAI, self-report measures tend to show lower test-retest reliability \cite{Scharfe1994}.
-Longer self-report measures appear to be more reliable \shortcite{Sibley2005,Wongpakaran2021}, but the efforts to validate most measures has been rather limited, and the self-report measures offer, at best, a view of the patients' subjective appraisals of their attachment characteristics \cite{Talia2017}.
+Longer self-report measures appear to be more reliable \shortcite{Sibley2005,Wongpakaran2021}, but the efforts to validate most measures have been rather limited, and the self-report measures offer, at best, a view of the patients' subjective appraisals of their attachment characteristics \cite{Talia2017}.
 
 Nevertheless, I would argue that the most paradigm-shifting development in measurement methods has come only within the last decade.
 This development consists of indirect measures in which transcripts are taken of psychotherapy sessions and discursive or narrative patterns are analysed for indicators of attachment characteristics.
@@ -436,7 +436,7 @@ As a result, the aim is not to develop on the technical solutions available for 
 Rather, this thesis may serve as a pilot to determine whether this avenue of research is promising for large-scale investment.
 
 The state-of-the-art in NLP is represented by variants of the transformer architecture first published by Vaswani et al. \citeyear{Vaswani2017}.
-In a 2023 review, Malgaroli et al. \citeyear{Malgaroli2023} report a rising trend in the publication of peer-reviewed literature applying NLP to mental health interventions research.
+In a recent review, Malgaroli et al. \citeyear{Malgaroli2023} report a rising trend in the publication of peer-reviewed literature applying NLP to mental health interventions research.
 The authors report that most recently, transformer models were the most applied NLP tool in the domain of mental health interventions, likely owing to their ability to extract semantically meaningful features, attention mechanisms, and relatively large context windows.
 Malgaroli et al. \citeyear{Malgaroli2023} further report that transformer-based models outperform other input features on tasks such as identifying emotional valence and accurately rating symptoms.
 
@@ -458,7 +458,7 @@ As such, this area stands to benefit more from a poorly interpretable prediction
 The models applied in this project are all variants of the RoBERTa model first made available by Liu et al. \citeyear{roberta}.
 The RoBERTa name is derived from its claim of being a robustly optimised BERT approach.
 As such it is fundamentally a BERT model and shares most of its architecture with its 2018 ancestor developed by Devlin et al. \citeyear{BERT}.
-For a brief introduction to the transformer architecture applied here, see Appendix \ref{App: transformers}.
+For a brief introduction to the underlying transformer architecture, see Appendix \ref{App: transformers}.
 
 RoBERTa models are well suited for fine-tuning to more specific down-stream tasks \shortcite{roberta, Gururangan2020, Sun2020}.
 In this case, this is performed by adding a classification head to the model which takes as input the output of the final encoder layer and outputs probabilities for each class.
