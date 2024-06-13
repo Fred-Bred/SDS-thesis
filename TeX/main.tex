@@ -79,8 +79,7 @@
     Fine-tuned RoBERTa-large encoders for classification reach a mean test set accuracy of 59.55 \% ($SD=5.82$) in distinguishing between the three classes of anxious, secure, and avoidant attachment styles.
     Results highlight the complexity of the phenomenon of attachment and direct the focus of future research towards including more context, more capable base models, and larger training data sets.
     Implications for research and practice are discussed and ethical guidelines for the first steps in deployment are offered.
-    % Maybe the last half-sentence is a bit much considering how much I actually "offer/recommend"?
-\end{abstract}
+    \end{abstract}
 \tableofcontents
 
 \chapter*{Introduction}
@@ -741,9 +740,7 @@ Namely, across the five models, the two insecure classes tend to be confused as 
 Referencing the ensemble confusion matrix, the avoidant patients are recognised with the greatest difficulty.
 In fact, this ensemble model achieves only a recall of 13.64 \% for the avoidant class, indicating that the vast majority of avoidant patients are misclassified.
 Due to the bias for anxious classification in most models, in the ensemble classification, the mislabelled avoidant patients are instead classified as anxious.
-% Maybe insert comparison to PACS kappa from Talia2017 here? If it's out of place in Machine and Clinical Judgement.
 
-% Not sure if this should go here? Could maybe go in future directions in the bit where I also talk about capacity and data?
 The ensemble of all five models produces higher accuracy, $\kappa$, precision, recall, and F1-scores than the majority of individual models and these scores are above the mean for each metric.
 This may suggest that individual models, trained on different portions of the data, have learned to represent different aspects of the problem and that models have not converged on the similar representations that one would expect.
 The effect of data split indicates that these models may be able to learn more robust representations with access to more data.
