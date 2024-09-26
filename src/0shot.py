@@ -3,6 +3,15 @@ import argparse
 from transformers import pipeline, AutoConfig
 from huggingface_hub import login
 
+import os
+
+# Login
+token = os.getenv("HF_TOKEN")
+if token:
+    login(token=token)
+else:
+    raise ValueError("Token not found. Please set the HF_TOKEN environment variable.")
+
 # Parse command-line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--length", type=int, required=True, help="Turn length to classify")
@@ -18,26 +27,8 @@ path = f"Data/PACS_varying_lengths/{mode}_combined_{length}.csv"
 
 data = pd.read_csv(path, sep='\t')
 
-# # Set practice example
-# sample = "I don't want to talk about it."
-# labels = ["Preoccupied attachment", "Dismissing attachment", "Secure attachment"]
-
-# # Login
-# login(token="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")
-
-# # Load and correct the model configuration
-# config = AutoConfig.from_pretrained("meta-llama/Meta-Llama-3.1-70B-Instruct")
-# config.rope_scaling = {"type": "linear", "factor": 8.0}
-
-# # Initialize the classifier with the correct configuration
-# classifier = pipeline(model="meta-llama/Meta-Llama-3.1-70B-Instruct", task="zero-shot-classification", config=config)
-
-# # Classify the sample
-# result = classifier(sample, labels)
-# print(result)
-
 # Login
-login(token="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")
+login(token=token)
 
 # Load and correct the model configuration
 config = AutoConfig.from_pretrained(f"meta-llama/Meta-Llama-3.1-{size}B-Instruct")
