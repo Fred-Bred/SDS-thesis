@@ -11,7 +11,12 @@ venv/
 exploration.ipynb
 notebooks/
 
-# Data files or directories (customize as needed)
+# Various unused files
+src/cv_metrics_original.py
+src/test_samples.py
+src/plotting.ipynb
+
+# Data files or directories
 data/
 
 # VSCode workspace
